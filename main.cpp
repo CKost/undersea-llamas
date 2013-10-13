@@ -2,11 +2,9 @@
 **
 **   main.cpp
 **
-**   This file copyright 2013 Alex Fischer.
+**   This file copyright 2013 Team Crackpot.
 **   Work done for CpS 111 at Bob Jones University.
-**
-**   You may use this file however you see fit, with one exception:
-**   You may not pass this work off as your own.
+**   Login IDs: afisc855 bspar145 ckost598
 **
 **************************************************************************/
 
