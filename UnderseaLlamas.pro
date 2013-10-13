@@ -13,9 +13,11 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        ulmainwindow.cpp
+        ulmainwindow.cpp \
+    worldgenerator.cpp
 
-HEADERS  += ulmainwindow.hpp
+HEADERS  += ulmainwindow.hpp \
+    worldgenerator.hpp
 
 FORMS    += ulmainwindow.ui
 
