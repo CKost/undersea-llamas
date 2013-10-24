@@ -25,6 +25,9 @@ public:
     explicit ULMainWindow(QWidget *parent = 0);
     ~ULMainWindow();
     
+private slots:
+    void on_buttonInstructions_clicked();
+
 private:
     Ui::ULMainWindow *ui;
 };
