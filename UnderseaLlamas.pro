@@ -17,7 +17,8 @@ SOURCES += main.cpp\
     worldgenerator.cpp
 
 HEADERS  += ulmainwindow.hpp \
-    worldgenerator.hpp
+    worldgenerator.hpp \
+    Llama.h
 
 FORMS    += ulmainwindow.ui
 
