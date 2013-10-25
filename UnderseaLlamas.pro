@@ -14,7 +14,8 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         ulmainwindow.cpp \
-<<<<<<< HEAD
+<<<<<<< HEAD \
+    riddle.cpp
     worldgenerator.cpp \
     world.cpp
 
@@ -24,7 +25,8 @@ HEADERS  += \
     ulmainwindow.h \
     worldgenerator.h \
     stateengine.h \
-    chests.h
+    chests.h \
+    riddle.h
 
 FORMS    += ulmainwindow.ui
 

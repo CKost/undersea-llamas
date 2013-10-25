@@ -1,4 +1,4 @@
-/***************************************************************************
+/**************************************************************************
 **
 **   llama.h
 **
@@ -8,9 +8,16 @@
 **
 **************************************************************************/
 
+#include "chests.h"
+#include "riddle.h"
+#include "stateengine.h"
+#include "ulmainwindow.h"
+#include "world.h"
+#include "worldgenerator.h"
+
 #include <iostream>
 #include <cstring>
-#include <string>
+#include <QString>
 #include <cstdlib>
 #include <cassert>
 #include <cmath>
@@ -59,3 +66,5 @@ void setPesos(double newPesos){pesos=newPesos;}
 void setPunish(double newPunish){punish=newPunish;}
 
 };
+
+#endif // LLAMA_H

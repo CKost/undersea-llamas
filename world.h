@@ -1,4 +1,4 @@
-/***************************************************************************
+/**************************************************************************
 **
 **   world.h
 **
@@ -7,10 +7,18 @@
 **   Login IDs: afisc855 bspar145 ckost598
 **
 **************************************************************************/
+
 #ifndef WORLD_H
 #define WORLD_H
-#include <vector>
+
 #include "chests.h"
+#include "llama.h"
+#include "riddle.h"
+#include "stateengine.h"
+#include "ulmainwindow.h"
+#include "worldgenerator.h"
+
+#include <vector>
 #include <QString>
 
 class WorldCell

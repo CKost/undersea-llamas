@@ -1,6 +1,6 @@
-/**************************************************************************
+/***************************************************************************
 **
-**   worldgenerator.h
+**  riddle.cpp
 **
 **   This file copyright 2013 Team Crackpot.
 **   Work done for CpS 111 at Bob Jones University.
@@ -8,28 +8,20 @@
 **
 **************************************************************************/
 
-#ifndef WORLDGENERATOR_H
-#define WORLDGENERATOR_H
-
 #include "chests.h"
 #include "llama.h"
 #include "riddle.h"
 #include "stateengine.h"
 #include "ulmainwindow.h"
 #include "world.h"
+#include "worldgenerator.h"
 
-#include <QObject>
+using namespace std;
 
-class WorldGenerator : public QObject
+//This will hold all the contents of the riddle vector that is defined in the riddle.h header file
+
+
+for(int i=0,size,++i)
 {
-    Q_OBJECT
-public:
-    explicit WorldGenerator(QObject *parent = 0);
-    
-signals:
-    
-public slots:
-    
-};
-
-#endif // WORLDGENERATOR_H
+    //riddles.push_back(riddles here);
+}

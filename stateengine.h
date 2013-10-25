@@ -1,4 +1,4 @@
-/***************************************************************************
+/**************************************************************************
 **
 **   stateengine.h
 **
@@ -7,14 +7,21 @@
 **   Login IDs: afisc855 bspar145 ckost598
 **
 **************************************************************************/
+
 #ifndef STATEENGINE_H
 #define STATEENGINE_H
+
+#include "chests.h"
+#include "llama.h"
+#include "riddle.h"
+#include "ulmainwindow.h"
+#include "world.h"
+#include "worldgenerator.h"
 
 #include <QObject>
 #include <vector>
 #include <QTimer>
 #include <QString>
-#include "llama.h"
 
 class StateEngine : public QObject
 {
