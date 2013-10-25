@@ -1,9 +1,26 @@
-//Llama.h
-//CKost- Oct 24
+/**************************************************************************
+**
+**   llama.h
+**
+**   This file copyright 2013 Team Crackpot.
+**   Work done for CpS 111 at Bob Jones University.
+**   Login IDs: afisc855 bspar145 ckost598
+**
+**************************************************************************/
+
+#ifndef LLAMA_H
+#define LLAMA_H
+
+#include "chests.h"
+#include "riddle.h"
+#include "stateengine.h"
+#include "ulmainwindow.h"
+#include "world.h"
+#include "worldgenerator.h"
 
 #include <iostream>
 #include <cstring>
-#include <string>
+#include <QString>
 #include <cstdlib>
 #include <cassert>
 #include <cmath>
@@ -52,3 +69,5 @@ void setPesos(double newPesos){pesos=newPesos;}
 void setPunish(double newPunish){punish=newPunish;}
 
 };
+
+#endif // LLAMA_H

@@ -8,10 +8,14 @@
 **
 **************************************************************************/
 
-#include "ulmainwindow.hpp"
-#include "ui_ulmainwindow.h"
-#include "Llama.h"
 #include "chests.h"
+#include "llama.h"
+#include "riddle.h"
+#include "stateengine.h"
+#include "ulmainwindow.h"
+#include "world.h"
+#include "worldgenerator.h"
+
 #include <QMessageBox>
 
 ULMainWindow::ULMainWindow(QWidget *parent) :

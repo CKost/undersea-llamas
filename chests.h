@@ -8,12 +8,15 @@
 **
 **************************************************************************/
 
-#include "llama.h"
-#include "ulmainwindow.h"
-#include "world.h"
-
 #ifndef CHESTS_H
 #define CHESTS_H
+
+#include "llama.h"
+#include "riddle.h"
+#include "stateengine.h"
+#include "ulmainwindow.h"
+#include "world.h"
+#include "worldgenerator.h"
 
 class chest {
     int xLoc, yLoc;
