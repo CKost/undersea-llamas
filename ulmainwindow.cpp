@@ -10,6 +10,8 @@
 
 #include "ulmainwindow.hpp"
 #include "ui_ulmainwindow.h"
+#include "Llama.h"
+#include "chests.h"
 #include <QMessageBox>
 
 ULMainWindow::ULMainWindow(QWidget *parent) :
