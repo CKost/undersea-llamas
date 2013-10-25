@@ -14,6 +14,7 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         ulmainwindow.cpp \
+<<<<<<< HEAD
     worldgenerator.cpp \
     world.cpp
 
@@ -22,7 +23,8 @@ HEADERS  += \
     llama.h \
     ulmainwindow.h \
     worldgenerator.h \
-    stateengine.h
+    stateengine.h \
+    chests.h
 
 FORMS    += ulmainwindow.ui
 
