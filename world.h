@@ -1,3 +1,12 @@
+/***************************************************************************
+**
+**   world.h
+**
+**   This file copyright 2013 Team Crackpot.
+**   Work done for CpS 111 at Bob Jones University.
+**   Login IDs: afisc855 bspar145 ckost598
+**
+**************************************************************************/
 #ifndef WORLD_H
 #define WORLD_H
 #include <vector>

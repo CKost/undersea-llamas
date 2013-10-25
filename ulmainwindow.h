@@ -1,6 +1,6 @@
 /**************************************************************************
 **
-**   ulmainwindow.hpp
+**   ulmainwindow.h
 **
 **   This file copyright 2013 Team Crackpot.
 **   Work done for CpS 111 at Bob Jones University.
