@@ -1,0 +1,4 @@
+#ifndef STATEENGINE_H
+#define STATEENGINE_H
+
+#endif // STATEENGINE_H
