@@ -1,6 +1,6 @@
 /***************************************************************************
 **
-**   main.cpp
+**  riddle.cpp
 **
 **   This file copyright 2013 Team Crackpot.
 **   Work done for CpS 111 at Bob Jones University.
@@ -16,13 +16,12 @@
 #include "world.h"
 #include "worldgenerator.h"
 
-#include <QApplication>
+using namespace std;
 
-int main(int argc, char *argv[])
+//This will hold all the contents of the riddle vector that is defined in the riddle.h header file
+
+
+for(int i=0,size,++i)
 {
-    QApplication a(argc, argv);
-    ULMainWindow w;
-    w.show();
-    
-    return a.exec();
+    //riddles.push_back(riddles here);
 }

@@ -1,6 +1,6 @@
 /**************************************************************************
 **
-**   ulmainwindow.cpp
+**   worldgenerator.h
 **
 **   This file copyright 2013 Team Crackpot.
 **   Work done for CpS 111 at Bob Jones University.
@@ -8,8 +8,15 @@
 **
 **************************************************************************/
 
-#ifndef WORLDGENERATOR_HPP
-#define WORLDGENERATOR_HPP
+#ifndef WORLDGENERATOR_H
+#define WORLDGENERATOR_H
+
+#include "chests.h"
+#include "llama.h"
+#include "riddle.h"
+#include "stateengine.h"
+#include "ulmainwindow.h"
+#include "world.h"
 
 #include <QObject>
 
@@ -25,4 +32,4 @@ public slots:
     
 };
 
-#endif // WORLDGENERATOR_HPP
+#endif // WORLDGENERATOR_H

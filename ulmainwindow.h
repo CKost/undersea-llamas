@@ -1,6 +1,6 @@
 /**************************************************************************
 **
-**   ulmainwindow.hpp
+**   ulmainwindow.h
 **
 **   This file copyright 2013 Team Crackpot.
 **   Work done for CpS 111 at Bob Jones University.
@@ -8,8 +8,15 @@
 **
 **************************************************************************/
 
-#ifndef ULMAINWINDOW_HPP
-#define ULMAINWINDOW_HPP
+#ifndef ULMAINWINDOW_H
+#define ULMAINWINDOW_H
+
+#include "chests.h"
+#include "llama.h"
+#include "riddle.h"
+#include "stateengine.h"
+#include "world.h"
+#include "worldgenerator.h"
 
 #include <QMainWindow>
 
@@ -25,8 +32,11 @@ public:
     explicit ULMainWindow(QWidget *parent = 0);
     ~ULMainWindow();
     
+private slots:
+    void on_buttonInstructions_clicked();
+
 private:
     Ui::ULMainWindow *ui;
 };
 
-#endif // ULMAINWINDOW_HPP
+#endif // ULMAINWINDOW_H

@@ -14,11 +14,19 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         ulmainwindow.cpp \
-    worldgenerator.cpp
+<<<<<<< HEAD \
+    riddle.cpp
+    worldgenerator.cpp \
+    world.cpp
 
-HEADERS  += ulmainwindow.hpp \
-    worldgenerator.hpp \
-    Llama.h
+HEADERS  += \
+    world.h \
+    llama.h \
+    ulmainwindow.h \
+    worldgenerator.h \
+    stateengine.h \
+    chests.h \
+    riddle.h
 
 FORMS    += ulmainwindow.ui
 
