@@ -28,11 +28,28 @@ class StateEngine : public QObject
     Q_OBJECT
 
 public:
-    StateEngine();
+    static StateEngine instance();
+    Llama* getLlama(int id);
+    vector<QString> getRiddle();
+    void saveToFile(QString filename);
+    void loadFromFile(QString filename);
+
+    void punishLlama(int llamaID);
+    void payLlama(int llamaID);
+    bool moveLlama(int llamaID, double x, double y);
+    void openChest(int llamaID, double x, double y);
+
+    QString toStateString();
+    void fromStateString();
 
 private:
-    static vector<Llama*> llamas;
-    static QString currentRiddle, currentAnswer;
+    StateEngine();
+    vector<Llama*> llamas;
+    vector<int>hiscores;//Added 10/27, holds list of hiscores
+    QString currentRiddle, currentAnswer;
+    static StateEngine inst;
+    QTimer clock;
+    int numTicks;
 
 signals:
     void tick(int numTicks);
