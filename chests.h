@@ -22,6 +22,11 @@ class chest {
     int xLoc, yLoc;
     bool empty;
     virtual void openChest(Llama llama) {}
+
+    virtual int getChestX() { return this->xLoc; }
+    virtual int getChestY() { return this->yLoc; }
+    virtual bool getChestStatus() { return this->empty; }
+    virtual void setChestStatus(bool x) { empty = x; }
 };
 
 class treasureChest: public chest {
