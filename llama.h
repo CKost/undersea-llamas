@@ -38,11 +38,12 @@ int dir;
 //Counter of Llama's lives remaining
 int hp;
 
-//Pesos, count of points gathered by Llama
+//Pesos, count of points gathered by Llama. Also the score which will be called at the end to update hiscores
 int pesos;
 
 //Punishment, bad stuff happens. In terms of X amount of life lost
 int punish;
+
 
 public:
 
