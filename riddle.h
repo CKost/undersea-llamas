@@ -30,11 +30,10 @@ private:
     std::vector<string> riddles;
 
 public:
-    //Constuctor
-
-    //Get Method
-
-    //Set Method
+            //Return size of riddle
+            get_SizeRiddles(){return riddles.size();}
+            //call to add riddles to riddle vector
+             add_riddlesToriddles(string x){riddles.push_back(x);}
 
 };
 
