@@ -14,10 +14,10 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         ulmainwindow.cpp \
-<<<<<<< HEAD \
-    riddle.cpp
-    worldgenerator.cpp \
-    world.cpp
+        riddle.cpp \
+        stateengine.cpp
+        worldgenerator.cpp \
+        world.cpp
 
 HEADERS  += \
     world.h \

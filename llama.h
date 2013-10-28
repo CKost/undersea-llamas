@@ -44,6 +44,9 @@ int pesos;
 //Punishment, bad stuff happens. In terms of X amount of life lost
 int punish;
 
+//Number of dunce caps to draw on the llama.
+int dumbLevel;
+
 
 public:
 
@@ -57,6 +60,7 @@ int getDir() {return dir;}
 int getHP() {return hp;}
 int getPesos() {return pesos;}
 int getPunish() {return punish;}
+int getDumbLevel() {return dumbLevel;}
 
 //Set Methods
 void setX(double newX){x=newX;}
@@ -65,6 +69,7 @@ void setDir(double newDir){dir=newDir;}
 void setHP(double newHP){hp=newHP;}
 void setPesos(double newPesos){pesos=newPesos;}
 void setPunish(double newPunish){punish=newPunish;}
+void setDumbLevel() {return dumbLevel;}
 
 };
 

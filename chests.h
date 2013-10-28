@@ -18,34 +18,31 @@
 #include "world.h"
 #include "worldgenerator.h"
 
-class chest {
+class Chest {
     int xLoc, yLoc;
     bool empty;
-    virtual void openChest(Llama llama) {}
 
-    virtual int getChestX() { return this->xLoc; }
-    virtual int getChestY() { return this->yLoc; }
+    virtual void openChest(Llama* llama) {}
     virtual bool getChestStatus() { return this->empty; }
     virtual void setChestStatus(bool x) { empty = x; }
-};
 
-class treasureChest: public chest {
+class TreasureChest: public chest {
     int pesos;
-    int openChest(Llama llama) {
+    int openChest(Llama* llama) {
         return pesos;
     }
 };
 
-class enemyChest: public chest {
+class EnemyChest: public chest {
     int damage;
-    int openChest(Llama llama) {
+    int openChest(Llama* llama) {
         return (damage * -1);
     }
 };
 
-class riddleChest: public chest {
+class RiddleChest: public chest {
     int riddleNum;
-    int openChest(Llama llama) {
+    int openChest(Llama* llama) {
         return 0;
     }
 };
