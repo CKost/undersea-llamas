@@ -45,7 +45,7 @@ public:
 private:
     StateEngine();
     vector<Llama*> llamas;
-    vector<int>hiscores;//Added 10/27, holds list of hiscores
+    vector<int> highscores;//Added 10/27, holds list of highscores
     QString currentRiddle, currentAnswer;
     static StateEngine inst;
     QTimer clock;
@@ -58,3 +58,31 @@ private slots:
 };
 
 #endif // STATEENGINE_H
+
+class Highscore {
+    QString name;
+    int score;
+
+    Highscore(QString initName, int initScore):score(initScore), name(initName) {}
+    QString printAScore() {
+        return name + " " + to_string(store);
+    }
+};
+
+class HighscoreList {
+    vector<Highscore> list;
+
+public:
+    HighscoreList();
+
+    vector<Highscore> getList() {
+        return list;
+    }
+
+    //adds a highscore to the list of highscores
+    void addHighscore(string name, int score) {
+
+    }
+    void sort();
+
+};
