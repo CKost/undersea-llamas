@@ -45,7 +45,6 @@ public:
 private:
     StateEngine();
     vector<Llama*> llamas;
-    vector<int> highscores;//Added 10/27, holds list of highscores
     QString currentRiddle, currentAnswer;
     static StateEngine inst;
     QTimer clock;
