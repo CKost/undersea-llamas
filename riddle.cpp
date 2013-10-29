@@ -15,6 +15,7 @@
 #include "ulmainwindow.h"
 #include "world.h"
 #include "worldgenerator.h"
+#include <cstdlib>
 
 using namespace std;
 
@@ -31,3 +32,12 @@ add_riddlesToriddles(string riddle_2);
 
 string riddle_3="The more you take, the more you leave behind. What are they?%footsteps";
 add_riddlesToriddles(string riddle_3);
+
+string get_riddle()
+{
+    string ranRiddle;
+    int var=rand() % 3;
+    riddles[var]=ranRiddle;
+    return ranRiddle;
+
+}
