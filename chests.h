@@ -21,24 +21,26 @@
 class Chest {
     int xLoc, yLoc;
     bool empty;
-    virtual void openChest(Llama* llama) {}
-};
 
-class TreasureChest: public chest {
+    virtual void openChest(Llama* llama) {}
+    virtual bool getChestStatus() { return this->empty; }
+    virtual void setChestStatus(bool x) { empty = x; }
+
+class TreasureChest: public Chest {
     int pesos;
     int openChest(Llama* llama) {
         return pesos;
     }
 };
 
-class EnemyChest: public chest {
+class EnemyChest: public Chest {
     int damage;
     int openChest(Llama* llama) {
         return (damage * -1);
     }
 };
 
-class RiddleChest: public chest {
+class RiddleChest: public Chest {
     int riddleNum;
     int openChest(Llama* llama) {
         return 0;

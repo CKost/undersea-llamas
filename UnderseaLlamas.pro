@@ -12,12 +12,13 @@ TARGET = UnderseaLlamas
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
+SOURCES += main.cpp \
         ulmainwindow.cpp \
         riddle.cpp \
-        stateengine.cpp
+        stateengine.cpp \
         worldgenerator.cpp \
-        world.cpp
+        world.cpp \
+    chests.cpp
 
 HEADERS  += \
     world.h \

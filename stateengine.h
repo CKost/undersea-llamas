@@ -57,8 +57,6 @@ private slots:
     void on_timer_timeout();
 };
 
-#endif // STATEENGINE_H
-
 class Highscore {
     QString name;
     int score;
@@ -86,3 +84,5 @@ public:
     void sort();
 
 };
+
+#endif // STATEENGINE_H

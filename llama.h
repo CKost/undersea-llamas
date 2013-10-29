@@ -8,6 +8,9 @@
 **
 **************************************************************************/
 
+#ifndef LLAMA_H
+#define LLAMA_H
+
 #include "chests.h"
 #include "riddle.h"
 #include "stateengine.h"

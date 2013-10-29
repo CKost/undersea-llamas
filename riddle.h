@@ -18,7 +18,7 @@
 #include "ulmainwindow.h"
 #include "world.h"
 #include "worldgenerator.h"
-
+#include <string>
 #include <vector>
 #include <iostream>
 
