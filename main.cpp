@@ -15,14 +15,18 @@
 #include "ulmainwindow.h"
 #include "world.h"
 #include "worldgenerator.h"
-
+#include <cassert>
 #include <QApplication>
 
 int main(int argc, char *argv[])
 {
+
     QApplication a(argc, argv);
     ULMainWindow w;
     w.show();
     
     return a.exec();
+
+
+
 }

@@ -23,12 +23,15 @@ SOURCES += main.cpp \
 HEADERS  += \
     world.h \
     llama.h \
-    ulmainwindow.h \
     worldgenerator.h \
     stateengine.h \
     chests.h \
-    riddle.h
+    riddle.h \
+    ulmainwindow.h
 
 FORMS    += ulmainwindow.ui
 
 QMAKE_CXXFLAGS += -std=c++0x
+
+RESOURCES += \
+    resources.qrc
