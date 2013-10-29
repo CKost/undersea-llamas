@@ -33,6 +33,7 @@ public:
     vector<QString> getRiddle();
     void saveToFile(QString filename);
     void loadFromFile(QString filename);
+    void addLlama(int id, string username = "Player");
 
     void punishLlama(int llamaID);
     void payLlama(int llamaID);
