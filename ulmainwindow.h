@@ -34,6 +34,7 @@ public:
     
 private slots:
     void on_buttonInstructions_clicked();
+    void on_cheatButton_clicked(); //Typed in, not auto-created by go to slot on UI screen :L
 
 private:
     Ui::ULMainWindow *ui;
