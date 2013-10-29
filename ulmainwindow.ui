@@ -40,8 +40,7 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">
-</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string>How to Play</string>
@@ -71,6 +70,19 @@
     </property>
     <property name="text">
      <string>Pesos:</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="cheatButton">
+    <property name="geometry">
+     <rect>
+      <x>670</x>
+      <y>350</y>
+      <width>98</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Cheat Mode</string>
     </property>
    </widget>
   </widget>
