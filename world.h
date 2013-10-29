@@ -11,35 +11,17 @@
 #ifndef WORLD_H
 #define WORLD_H
 
-#include "chests.h"
 #include "llama.h"
 #include "riddle.h"
 #include "stateengine.h"
 #include "ulmainwindow.h"
 #include "worldgenerator.h"
+#include "chests.h"
 
 #include <vector>
 #include <QString>
 
-class WorldCell
-{
-public:
-    WorldCell(int x, int y, int terraintype, Chest* contents);
-
-    //Property: contents.
-    Chest* getContents();
-    void setContents(Chest* cnt);
-
-    //Property: terraintype.
-    int getTerrainType();
-    void setTerrainType(int type);
-
-    ~WorldCell() { delete contents; }
-private:
-    int x,y;
-    int terraintype;
-    Chest* contents;
-};
+using namespace std;
 
 class World
 {
@@ -52,6 +34,36 @@ public:
 private:
     vector<WorldCell*> cells;
     static World* inst;
+};
+
+
+class WorldCell
+{
+private:
+    int x,y;
+    int terraintype;
+    Chest* chest;
+
+public:
+    //WorldCell constructor
+    WorldCell(int newX, int newY, int newTerrainType, Chest* newContents) {
+        x = newX;
+        y = newY;
+        terraintype = newTerrainType;
+        chest = newContents;
+    }
+
+    WorldCell* getCell() { return this; }
+    //Property: contents.
+    Chest* getChest() { return chest; }
+    void setContents(Chest* cnt) { chest = cnt; }
+
+    //Property: terraintype.
+    int getTerrainType();
+    void setTerrainType(int type);
+
+    //WorldCell destructor
+    ~WorldCell() { delete chest; }
 };
 
 #endif // WORLD_H
