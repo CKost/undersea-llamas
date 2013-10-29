@@ -10,6 +10,8 @@
 
 #include "stateengine.h"
 #include "riddle.h"
+#include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -23,4 +25,10 @@ vector<QString> StateEngine::getRiddle()
     //TODO: GET CURT TO IMPLEMENT RIDDLE RETRIEVAL
 }
 
-void StateEngine::
+void StateEngine::saveToFile(QString filename)
+{
+    ofstream rvr(filename.toWCharArray());
+    rvr << "[ULState File v1.0]" << endl; //Important: this signature is used for validation.
+    rvr << "beginllamas" << endl;
+    rvr <<
+}

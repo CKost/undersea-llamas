@@ -50,6 +50,7 @@ private:
     static StateEngine inst;
     QTimer clock;
     int numTicks;
+    string currentWorldFile;
 
 signals:
     void tick(int numTicks);
