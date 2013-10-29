@@ -17,7 +17,6 @@
 #include "ulmainwindow.h"
 #include "world.h"
 #include "worldgenerator.h"
-
 #include <iostream>
 #include <cstring>
 #include <QString>

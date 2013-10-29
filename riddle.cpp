@@ -23,11 +23,11 @@ using namespace std;
 
 //Add first riddle to vector. Anwser seperated from riddle with a comma
 
-string riddle_1= "It wanders far, sometimes high sometimes low, but always finishs OK,CpS111_Grade";
+string riddle_1= "It wanders far, sometimes high sometimes low, but always finishs OK%CpS111_Grade";
 add_riddlesToriddles(string riddle_1);
 
-string riddle_2="What goes round the house and in the house but never touches the house,sun";
+string riddle_2="What goes round the house and in the house but never touches the house%sun";
 add_riddlesToriddles(string riddle_2);
 
-string riddle_3="The more you take, the more you leave behind. What are they?,footsteps";
+string riddle_3="The more you take, the more you leave behind. What are they?%footsteps";
 add_riddlesToriddles(string riddle_3);

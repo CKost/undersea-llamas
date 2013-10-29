@@ -31,9 +31,11 @@ private:
 
 public:
             //Return size of riddle
-            get_SizeRiddles(){return riddles.size();}
+            int get_SizeRiddles(){return riddles.size();}
             //call to add riddles to riddle vector
-             add_riddlesToriddles(string x){riddles.push_back(x);}
+            void add_riddlesToriddles(string x){riddles.push_back(x);}
+            //Get riddle method, generate random # and return that vector
+            string get_riddle();
 
 };
 
