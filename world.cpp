@@ -5,6 +5,8 @@
 #include <QString>
 #include <QFile>
 
+World* World::inst = new World(0);
+
 World::World(int size)
 {
     for(int i = 0; i < size; ++i)
