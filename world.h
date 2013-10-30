@@ -47,7 +47,7 @@ private:
 
 public:
     //WorldCell constructor
-    WorldCell(int newTerrainType, Chest* newContents) {
+    WorldCell(TerrainType newTerrainType, Chest* newContents) {
         terraintype = newTerrainType;
         chest = newContents;
     }
