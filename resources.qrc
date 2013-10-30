@@ -1,5 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>lama.jpg</file>
+        <file>images/llama.jpg</file>
     </qresource>
 </RCC>

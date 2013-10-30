@@ -21,6 +21,7 @@
 #include <vector>
 #include <QTimer>
 #include <QString>
+#include <string>
 
 class Llama;
 class StateEngine : public QObject
