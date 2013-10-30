@@ -35,7 +35,7 @@ private slots:
     void on_buttonInstructions_clicked();
     void on_cheatButton_clicked();
     void on_startButton_clicked();
-
+    void gameUpdate(int elapsedTicks);
 
 private:
     Ui::ULMainWindow *ui;

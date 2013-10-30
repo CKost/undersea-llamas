@@ -31,7 +31,6 @@ class StateEngine : public QObject
 public:
     static StateEngine* instance();
     Llama* getLlama(int id);
-    vector<QString> getRiddle();
     void saveToFile(QString filename);
     void loadFromFile(QString filename);
     void addLlama(QString username = "Player");
