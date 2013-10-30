@@ -21,7 +21,7 @@ class Chest {
 public:
     bool empty;
 
-    virtual int openChest(Llama* llama) {}
+    virtual int openChest(Llama* llama) { return NULL; }
     virtual bool getChestStatus() { return this->empty; }
     virtual void setChestStatus(bool x) { empty = x; }
 };
