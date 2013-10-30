@@ -23,8 +23,13 @@ World::World(int size)
 }
 WorldCell* World::getCell(int x, int y)
 {
-    return cells.at(x*size + y);
+    return cells.at(y*size+x);
 }
+void World::setCell(int x, int y, WorldCell* cell)
+{
+    cells.at(y*size+x) = cell;
+}
+
 void World::loadFromFile(QString filename)
 {
     QFile file(filename);
@@ -43,7 +48,8 @@ void World::loadFromFile(QString filename)
         if(!isFirstLine && size == -1)
         {
             delete inst;
-            inst = new World(line.toInt());
+            size = line.toInt();
+            inst = new World(size);
             continue;
         }
         if(size != -1)
@@ -86,7 +92,9 @@ void World::loadFromFile(QString filename)
                     temp->setTerrainType(ROUGH);
                     temp->setContents(new RiddleChest());
                 }
+                inst->setCell(i,currentline,temp);
             }
+            currentline++;
         }
     }
 }

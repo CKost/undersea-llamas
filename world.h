@@ -28,6 +28,7 @@ class World
 public:
     World(int size);
     WorldCell* getCell(int x, int y);
+    void setCell(int x, int y, WorldCell* cell);
     static void loadFromFile(QString filename);
     ~World();
     static World* instance() {return inst;}

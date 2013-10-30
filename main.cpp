@@ -36,9 +36,9 @@ bool unitTest()
     World* world = World::instance();
     se->loadFromFile(":/textfiles/statefile.ulstate");
     assert(se->getLlama(1)->getUsername() == "SpazDude");
-    assert(world->getCell(5,7)->getTerrainType() == OPEN);
-    assert(world->getCell(5,7)->getChest() != NULL);
-    assert(world->getCell(5,7)->getChest()->empty);
+    assert(world->getCell(4,6)->getTerrainType() == OPEN);
+    assert(world->getCell(4,6)->getChest() != NULL);
+    assert(world->getCell(4,6)->getChest()->empty);
     assert(se->getLlama(0)->getPesos()==400);
 
     assert(Riddle::get_SizeRiddles()==0);

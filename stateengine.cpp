@@ -111,7 +111,7 @@ void StateEngine::loadFromFile(QString filename)
             llama->setUsername(username);
             llamas.push_back(llama);
         }
-        if(!isFirstLine && !processingLlamas && line != "beginllamas")
+        if(!isFirstLine && !processingLlamas && !processingChests && line != "beginllamas")
         {
             currentWorldFile = line.toStdString();
             World::loadFromFile(line);
