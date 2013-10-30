@@ -11,7 +11,7 @@ World::World(int size)
     {
         for(int j = 0; j < size; ++j)
         {
-            WorldCell cell(0,NULL);
+            WorldCell* cell = new WorldCell(OPEN,NULL);
             cells.push_back(cell);
         }
     }
@@ -43,7 +43,7 @@ void World::loadFromFile(QString filename)
         {
             for(int i = 0; i < size; ++i)
             {
-                WorldCell* temp = new WorldCell();
+                WorldCell* temp = new WorldCell(OPEN,NULL);
                 switch(line.at(i))
                 {
                 case 'O':
