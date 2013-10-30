@@ -14,7 +14,6 @@
 #include "chests.h"
 #include "llama.h"
 #include "riddle.h"
-#include "ulmainwindow.h"
 #include "world.h"
 #include "worldgenerator.h"
 
@@ -23,6 +22,7 @@
 #include <QTimer>
 #include <QString>
 
+class Llama;
 class StateEngine : public QObject
 {
     Q_OBJECT
@@ -33,15 +33,15 @@ public:
     vector<QString> getRiddle();
     void saveToFile(QString filename);
     void loadFromFile(QString filename);
-    void addLlama(int id, string username = "Player");
+    void addLlama(string username = "Player");
 
-    void punishLlama(int llamaID);
-    void payLlama(int llamaID);
+    void punishLlama(int llamaID, int livesToTake);
+    void payLlama(int llamaID, int pesosToGive);
     bool moveLlama(int llamaID, double x, double y);
     void openChest(int llamaID, double x, double y);
 
     QString toStateString();
-    void fromStateString();
+    void fromStateString(QString string);
 
 private:
     StateEngine();
@@ -64,7 +64,7 @@ class Highscore {
 
     Highscore(QString initName, int initScore):score(initScore), name(initName) {}
     QString printAScore() {
-        return name + " " + to_string(store);
+        return QString::fromStdString(name.toStdString() + string(" ") + to_string(score));
     }
 };
 

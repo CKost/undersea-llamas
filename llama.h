@@ -13,7 +13,6 @@
 
 #include "chests.h"
 #include "riddle.h"
-#include "stateengine.h"
 #include "ulmainwindow.h"
 #include "world.h"
 #include "worldgenerator.h"
@@ -41,6 +40,8 @@ private:
     int punish;
     //Number of dunce caps to draw on the llama.
     int dumbLevel;
+    //Username of the player controlling the llama.
+    QString username;
 
 public:
     //Constructor
@@ -54,6 +55,7 @@ public:
     int getPesos() {return pesos;}
     int getPunish() {return punish;}
     int getDumbLevel() {return dumbLevel;}
+    QString getUsername() {return username;}
 
     //Set Methods
     void setX(int newX){x=newX;}
@@ -63,6 +65,7 @@ public:
     void setPesos(int newPesos){pesos=newPesos;}
     void setPunish(int newPunish){punish=newPunish;}
     void setDumbLevel(int newDumbLevel) {dumbLevel = newDumbLevel;}
+    void setUsername(QString newUserName) {username = newUserName;}
 
 };
 

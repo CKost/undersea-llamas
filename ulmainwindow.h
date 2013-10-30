@@ -11,18 +11,11 @@
 #ifndef ULMAINWINDOW_H
 #define ULMAINWINDOW_H
 
-#include "chests.h"
-#include "llama.h"
-#include "riddle.h"
 #include "stateengine.h"
-#include "world.h"
 #include "worldgenerator.h"
+#include "ui_ulmainwindow.h"
 
 #include <QMainWindow>
-
-namespace Ui {
-class ULMainWindow;
-}
 
 class ULMainWindow : public QMainWindow
 {

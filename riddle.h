@@ -12,12 +12,6 @@
 #ifndef RIDDLE_H
 #define RIDDLE_H
 
-#include "chests.h"
-#include "llama.h"
-#include "stateengine.h"
-#include "ulmainwindow.h"
-#include "world.h"
-#include "worldgenerator.h"
 #include <string>
 #include <vector>
 #include <iostream>

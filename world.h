@@ -11,17 +11,15 @@
 #ifndef WORLD_H
 #define WORLD_H
 
-#include "llama.h"
-#include "riddle.h"
-#include "stateengine.h"
-#include "ulmainwindow.h"
-#include "worldgenerator.h"
 #include "chests.h"
 
 #include <vector>
 #include <QString>
 
+
 using namespace std;
+class Chest;
+class WorldCell;
 
 class World
 {
@@ -31,9 +29,11 @@ public:
     static void loadFromFile(QString filename);
     ~World();
     static World* instance();
+    int getSize() { return size; }
 private:
     vector<WorldCell*> cells;
     static World* inst;
+    int size;
 };
 
 

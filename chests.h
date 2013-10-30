@@ -15,11 +15,10 @@
 #include "riddle.h"
 #include "stateengine.h"
 #include "ulmainwindow.h"
-#include "world.h"
 #include "worldgenerator.h"
 
 class Chest {
-    int xLoc, yLoc;
+public:
     bool empty;
 
     virtual int openChest(Llama* llama) {}
@@ -28,6 +27,7 @@ class Chest {
 };
 
 class TreasureChest: public Chest {
+public:
     int pesos;
     int openChest(Llama* llama) {
         return pesos;
@@ -35,6 +35,7 @@ class TreasureChest: public Chest {
 };
 
 class EnemyChest: public Chest {
+public:
     int damage;
     int openChest(Llama* llama) {
         return (damage * -1);
@@ -42,6 +43,7 @@ class EnemyChest: public Chest {
 };
 
 class RiddleChest: public Chest {
+public:
     int riddleNum;
     int openChest(Llama* llama) {
         return 0;
