@@ -21,6 +21,10 @@
 int main(int argc, char *argv[])
 {
 
+    assert(Riddle::get_SizeRiddles()==0);
+    Riddle::add_riddlesToriddles();
+    assert(Riddle::get_SizeRiddles()==3);
+
     QApplication a(argc, argv);
     ULMainWindow w;
     w.show();

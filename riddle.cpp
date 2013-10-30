@@ -22,7 +22,9 @@
 using namespace std;
 
 //This will hold all the contents of the riddle vector that is defined in the riddle.h header file
-
+string Riddle::riddle1="It wanders far, sometimes high sometimes low, but always finishs OK%CpS111_Grade";
+string Riddle::riddle2=" What goes round the house and in the house but never touches the house%sun";
+string Riddle::riddle3="The more you take, the more you leave behind. What are they?%footsteps";
 
 //Add riddles to vector. Anwser seperated from riddle with a percent sign
   void Riddle::add_riddlesToriddles()
