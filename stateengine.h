@@ -34,7 +34,7 @@ public:
     vector<QString> getRiddle();
     void saveToFile(QString filename);
     void loadFromFile(QString filename);
-    void addLlama(string username = "Player");
+    void addLlama(QString username = "Player");
 
     void punishLlama(int llamaID, int livesToTake);
     void payLlama(int llamaID, int pesosToGive);

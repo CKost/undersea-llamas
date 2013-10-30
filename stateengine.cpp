@@ -29,10 +29,10 @@ vector<QString> StateEngine::getRiddle()
 
 void StateEngine::saveToFile(QString filename)
 {
-    ofstream rvr(filename.toWCharArray());
+    ofstream rvr(filename.toWCharArray()); //change to filename.toWCharArray(wchar_t*));
     rvr << "[ULState File v1.0]" << endl; //Important: this signature is used for validation.
     rvr << "beginllamas" << endl;
-    for(int i = 0;i<llamas.size();++i)
+    for(int i = 0; i<llamas.size(); ++i)
     {
         Llama* llama = llamas.at(i);
         //<id>:<x>,<y>:<health>:<pesos>:<dumblevel>:<facing>:<optional username>
@@ -57,8 +57,8 @@ void StateEngine::saveToFile(QString filename)
 
 void StateEngine::loadFromFile(QString filename)
 {
-    ifstream rvr(filename.toWCharArray());
-    char linechar[] = new char[100];
+    ifstream rvr(filename.toWCharArray()); //change to filename.toWCharArray(wchar_t*));
+    char *linechar = new char[100];
     bool processingLlamas = false,processingChests = false,isFirstLine = true;
     while(rvr.getline(linechar,100))
     {
@@ -86,7 +86,7 @@ void StateEngine::loadFromFile(QString filename)
             int pesos = splitline[3].toInt();
             int dumbLevel = splitline[4].toInt();
             int facing = splitline[5].toInt();
-            string username = splitline[6].toInt();
+            QString username = QString(splitline[6]);   //formerly splitline[6].toInt();
             Llama* llama = new Llama(x,y,facing,health,pesos);
             llama->setDumbLevel(dumbLevel);
             llama->setUsername(username);
@@ -107,11 +107,11 @@ void StateEngine::loadFromFile(QString filename)
         }
     }
 }
-void StateEngine::addLlama(string username)
+void StateEngine::addLlama(QString username)
 {
     Llama* llama = new Llama(0,0,0,3,0);
     llama->setUsername(username);
     llamas.push_back(llama);
 }
-void
+//void
 

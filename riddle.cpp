@@ -32,6 +32,7 @@ using namespace std;
   }
 
 
+
 string Riddle::get_riddle()
 {
     string ranRiddle;
