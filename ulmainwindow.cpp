@@ -42,7 +42,7 @@ ULMainWindow::~ULMainWindow()
 //Instructions for the game
 void ULMainWindow::on_buttonInstructions_clicked()
 {
-    QMessageBox::information(this, "How to Play", "Here are instructions on how to play the game.");
+    QMessageBox::information(this, "How to Play", "Wondering how to play this game? First, click Start Game; then, use the WASD keys on your keyboard to move your llama around the screen. Press O to open a chest.");
 }
 
 void ULMainWindow::on_startButton_clicked()
@@ -85,6 +85,11 @@ void keyPressEvent(QKeyEvent *keyevent)
         {
             qDebug() << "D key pressed";
             //SetPos(loc,1,0);//Or some method call to move Right
+        }
+    if (keyevent->key()==Qt::Key_O)
+        {
+            qDebug() << "O key pressed";
+            //Open treasure chest
         }
 }
 
