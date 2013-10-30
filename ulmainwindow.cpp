@@ -69,22 +69,22 @@ void keyPressEvent(QKeyEvent *keyevent)
     if (keyevent->key()==Qt::Key_W)
         {
             qDebug() << "W key pressed";
-          //  SetPos(loc,0,1);//Or some method call to move up
+
         }
     if (keyevent->key()==Qt::Key_S)
         {
             qDebug() << "S key pressed";
-           // SetPos(loc,0,-1);//Or some method call to move down
+
         }
     if (keyevent->key()==Qt::Key_A)
         {
             qDebug() << "A key pressed";
-           // SetPos(loc,-1,0);//Or some method call to move Left
+
         }
     if (keyevent->key()==Qt::Key_D)
         {
             qDebug() << "D key pressed";
-            //SetPos(loc,1,0);//Or some method call to move Right
+
         }
     if (keyevent->key()==Qt::Key_O)
         {
