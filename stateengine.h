@@ -54,7 +54,8 @@ private:
     QString currentRiddle, currentAnswer;
     static StateEngine inst;
     QTimer clock;
-    int numTicks;
+    int numTicks;                                                                                   //numTicks perhaps requires some explanation. It's the variable storing the number
+                                                                                                    //of elapsed ticks since the start of the game. (In other words, the timer.)
     string currentWorldFile;
 
 signals:
