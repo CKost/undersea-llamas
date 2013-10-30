@@ -107,11 +107,43 @@ void StateEngine::loadFromFile(QString filename)
         }
     }
 }
+Llama* StateEngine::getLlama(int id)
+{
+    return llamas.at(id);
+}
+
 void StateEngine::addLlama(string username)
 {
     Llama* llama = new Llama(0,0,0,3,0);
     llama->setUsername(username);
     llamas.push_back(llama);
 }
-void
+void StateEngine::punishLlama(int llamaID, int livesToTake)
+{
+    Llama* llama = getLlama(llamaID);
+    llama->setPunish(llama->getPunish()-livestoTake);
+}
+void StateEngine::payLlama(int llamaID, int pesosToGive)
+{
+    Llama* llama = getLlama(llamaID);
+    llama->setPesos(llama->getPesos()+pesosToGive);
+}
+bool StateEngine::moveLlama(int llamaID, double x, double y)
+{
+    if(World::instance()->getCell((int)x,(int)y)->getTerrainType() != 0) return false;
+    else
+    {
+        Llama* llama = getLlama(llamaID);
+        llama->setX(int(x));
+        llama->setY(int(y));
+    }
+}
+void StateEngine::openChest(int llamaID, double x, double y)
+{
+    Chest* chest = World::instance()->getCell(x,y)->getChest();
+    if(chest == NULL) return;
+    else
+    {
 
+    }
+}
