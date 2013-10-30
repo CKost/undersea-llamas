@@ -31,7 +31,8 @@ HEADERS  += \
     chests.h \
     riddle.h \
     ulmainwindow.h \
-    llamalabel.h
+    llamalabel.h \
+    chestlabel.h
 
 FORMS    += ulmainwindow.ui
 
