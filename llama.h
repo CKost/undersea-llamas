@@ -33,7 +33,7 @@ private:
     //Direction direction player facing
     int dir;
     //Counter of Llama's lives remaining
-    int hp;
+    int lives;
     //Pesos, count of points gathered by Llama. Also the score which will be called at the end to update hiscores
     int pesos;
     //Punishment, bad stuff happens. In terms of X amount of life lost
@@ -45,13 +45,13 @@ private:
 
 public:
     //Constructor
-    Llama(int _x,int _y,int _dir,int _hp,int _pesos):x(_x),y(_y),dir(_dir),hp(_hp),pesos(_pesos){}
+    Llama(int _x,int _y,int _dir,int _lives,int _pesos):x(_x),y(_y),dir(_dir),lives(_lives),pesos(_pesos){}
 
     //Get Methods
     int getX() {return x;}
     int getY() {return y;}
     int getDir() {return dir;}
-    int getHP() {return hp;}
+    int getLives() {return lives;}
     int getPesos() {return pesos;}
     int getPunish() {return punish;}
     int getDumbLevel() {return dumbLevel;}
@@ -61,7 +61,7 @@ public:
     void setX(int newX){x=newX;}
     void setY(int newY){y=newY;}
     void setDir(int newDir){dir=newDir;}
-    void setHP(int newHP){hp=newHP;}
+    void setLives(int newLives){lives=newLives;}
     void setPesos(int newPesos){pesos=newPesos;}
     void setPunish(int newPunish){punish=newPunish;}
     void setDumbLevel(int newDumbLevel) {dumbLevel = newDumbLevel;}

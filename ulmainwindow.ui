@@ -7,14 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>822</width>
-    <height>480</height>
+    <height>478</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>ULMainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(235, 249, 255);</string>
+   <string notr="true">background-color: rgb(52, 104, 156);</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QWidget" name="widgetGame" native="true">
@@ -56,6 +56,9 @@
       <height>17</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);</string>
+    </property>
     <property name="text">
      <string>Lives:</string>
     </property>
@@ -68,6 +71,9 @@
       <width>66</width>
       <height>17</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);</string>
     </property>
     <property name="text">
      <string>Pesos:</string>

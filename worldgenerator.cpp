@@ -15,6 +15,7 @@
 #include <string>
 #include <sstream>
 #include <iostream>
+#include <cstdlib>
 
 WorldGenerator::WorldGenerator()
 {
@@ -72,4 +73,8 @@ bool WorldGenerator::generate(string name)
 {
     vector<string> world;
     vector<vector<string>*> cells = {&tile1, &tile2, &tile3, &tile4, &tile5, &tile6, &tile7, &tile8, &tile9, &tileA, &tileB, &tileC};
+    int selections[16];
+    for(int i = 0; i < 16; ++i)
+        selections[i] = rand() % 16;
+
 }

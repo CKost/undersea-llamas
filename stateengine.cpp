@@ -158,6 +158,7 @@ bool StateEngine::moveLlama(int llamaID, double x, double y)
         llama->setX(int(x));
         llama->setY(int(y));
     }
+    return true; //this might be wrong. :)
 }
 void StateEngine::youAreTheWeakestLinkLlama(int llamaID)
 {
@@ -181,7 +182,7 @@ void StateEngine::openEChest(int llamaID, double x, double y)
         punishLlama(llamaID,echest->damage);
     }
 }
-void StateEngine::openRChest(int llamaID, double x, double y)
+void StateEngine::openRChest(int /*llamaID*/, double x, double y)
 {
     RiddleChest* rchest = dynamic_cast<RiddleChest*>(World::instance()->getCell(x,y)->getChest());
     if (rchest == NULL || rchest->empty) { return; }
