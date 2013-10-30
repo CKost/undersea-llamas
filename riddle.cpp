@@ -7,7 +7,7 @@
 **   Login IDs: afisc855 bspar145 ckost598
 **
 **************************************************************************/
-
+#include "riddle.h"
 #include "chests.h"
 #include "llama.h"
 #include "riddle.h"
@@ -16,28 +16,26 @@
 #include "world.h"
 #include "worldgenerator.h"
 #include <cstdlib>
+#include <string>
+
 
 using namespace std;
 
 //This will hold all the contents of the riddle vector that is defined in the riddle.h header file
 
 
-//Add first riddle to vector. Anwser seperated from riddle with a comma
+//Add riddles to vector. Anwser seperated from riddle with a percent sign
+  void Riddle::add_riddlesToriddles()
+  { riddles.push_back(riddle1);
+    riddles.push_back(riddle2);
+    riddles.push_back(riddle3);
+  }
 
-string riddle_1= "It wanders far, sometimes high sometimes low, but always finishs OK%CpS111_Grade";
-add_riddlesToriddles(riddle_1);
 
-string riddle_2="What goes round the house and in the house but never touches the house%sun";
-add_riddlesToriddles(riddle_2);
-
-string riddle_3="The more you take, the more you leave behind. What are they?%footsteps";
-add_riddlesToriddles(riddle_3);
 
 string Riddle::get_riddle()
 {
     string ranRiddle;
-    int var=rand() % 3;
-    riddles[var]=ranRiddle;
+    riddles[rand() % 3]=ranRiddle;
     return ranRiddle;
-
 }

@@ -16,6 +16,7 @@
 #include "ui_ulmainwindow.h"
 
 #include <QMainWindow>
+#include <QKeyEvent>
 
 class ULMainWindow : public QMainWindow
 {
@@ -24,10 +25,10 @@ class ULMainWindow : public QMainWindow
 public:
     explicit ULMainWindow(QWidget *parent = 0);
     ~ULMainWindow();
-    
+    void SetPos(QPoint pnt,int x,int y);
 private slots:
     void on_buttonInstructions_clicked();
-    void on_cheatButton_clicked(); //Typed in, not auto-created by go to slot on UI screen :L
+    void on_cheatButton_clicked();
     void on_startButton_clicked();
 
 private:

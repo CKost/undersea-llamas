@@ -20,6 +20,11 @@
 #include <QLabel>
 #include <iostream>
 #include <QDebug>
+#include<QPoint>
+#include <QWidget>
+
+#include <QMouseEvent>
+#include <QMainWindow>
 
 
 ULMainWindow::ULMainWindow(QWidget *parent) :
@@ -55,4 +60,45 @@ void ULMainWindow::on_startButton_clicked()
          rand() % (ui->widgetGame->geometry().height() - 100),
          100, 20));
     llama->show();
+}
+
+
+//Logic behind how i think keypresses to move llama wll work
+void keyPressEvent(QKeyEvent *keyevent)
+{
+   // QPoint loc=pos();//return position of llama?
+    if (keyevent->key()==Qt::Key_W)
+        {
+            qDebug() << "W key pressed";
+          //  SetPos(loc,0,1);//Or some method call to move up
+        }
+    if (keyevent->key()==Qt::Key_A)
+        {
+            qDebug() << "A key pressed";
+           // SetPos(loc,0,-1);//Or some method call to move down
+        }
+    if (keyevent->key()==Qt::Key_A)
+        {
+            qDebug() << "A key pressed";
+           // SetPos(loc,-1,0);//Or some method call to move Left
+        }
+    if (keyevent->key()==Qt::Key_D)
+        {
+            qDebug() << "D key pressed";
+            //SetPos(loc,1,0);//Or some method call to move Right
+        }
+}
+
+//Need llama returned from clicked on start button so can access below
+void SetPos(QPoint pnt,int x,int y)
+{
+  //  llama->setX(pnt.x()+x);
+    //llama->setY(pnt.y()+y);
+    // this->move(mapToParent(pnt->pos() - this->llama));
+ }
+
+
+void ULMainWindow::on_cheatButton_clicked()
+{
+
 }
