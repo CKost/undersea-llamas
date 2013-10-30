@@ -10,29 +10,39 @@
 
 #ifndef ULMAINWINDOW_H
 #define ULMAINWINDOW_H
-
+#include <QLabel>
 #include "stateengine.h"
 #include "worldgenerator.h"
 #include "ui_ulmainwindow.h"
-
+#include <QWidget>
 #include <QMainWindow>
 #include <QKeyEvent>
+#include <QMouseEvent>
+#include <QMainWindow>
+
+
 
 class ULMainWindow : public QMainWindow
 {
     Q_OBJECT
-    
+
 public:
     explicit ULMainWindow(QWidget *parent = 0);
     ~ULMainWindow();
     void SetPos(QPoint pnt,int x,int y);
+    void keyPressEvent(QKeyEvent *keyevent);
 private slots:
     void on_buttonInstructions_clicked();
     void on_cheatButton_clicked();
     void on_startButton_clicked();
 
+
 private:
     Ui::ULMainWindow *ui;
+    QLabel *llama;
+    QLabel *chest;
 };
+
+
 
 #endif // ULMAINWINDOW_H

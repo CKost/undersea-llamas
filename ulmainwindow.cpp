@@ -42,8 +42,9 @@ ULMainWindow::~ULMainWindow()
 //Instructions for the game
 void ULMainWindow::on_buttonInstructions_clicked()
 {
-    QMessageBox::information(this, "How to Play", "Here are instructions on how to play the game.");
+    QMessageBox::information(this, "How to Play", "Wondering how to play this game? First, click Start Game; then, use the WASD keys on your keyboard to move your llama around the screen. Press O to open a chest.");
 }
+
 
 void ULMainWindow::on_startButton_clicked()
 {
@@ -51,51 +52,63 @@ void ULMainWindow::on_startButton_clicked()
  *all the clicking - drag llama around the screen
  *click to open chest
  *keyboard input from user*/
-
-    QLabel*llama = new QLabel(ui->widgetGame);
-    QPixmap * bob = new QPixmap("://lama.jpg");
-    llama->setPixmap(*bob);
+    //was QLabel
+   llama = new QLabel(ui->widgetGame);
+    QPixmap *image = new QPixmap(":/images/llama.jpg");
+    llama->setPixmap(*image);
     llama->setGeometry(QRect(
          rand() % (ui->widgetGame->geometry().width() - 100),
          rand() % (ui->widgetGame->geometry().height() - 100),
-         100, 20));
+         90, 150));
     llama->show();
+
+    //Display a cool chest
+     chest = new QLabel(ui->widgetGame);
+     QPixmap *chestImage = new QPixmap(":/images/download.jpg");
+     chest->setPixmap(*chestImage);
+     chest->setGeometry(QRect(100,100,80,80));
+     chest->show();
+
+    ui->startButton->setEnabled(false); //Disable so user cant spam click llamas LOL
+
+
 }
 
-
-//Logic behind how i think keypresses to move llama wll work
-void keyPressEvent(QKeyEvent *keyevent)
+//Logic behind how I think keypresses to move llama will work
+void ULMainWindow::keyPressEvent(QKeyEvent *keyevent)
 {
-   // QPoint loc=pos();//return position of llama?
+    qDebug() << "key pressed";
+
     if (keyevent->key()==Qt::Key_W)
         {
-            qDebug() << "W key pressed";
-          //  SetPos(loc,0,1);//Or some method call to move up
+        qDebug() << "W key pressed";
+          llama->move(llama->pos().x(),llama->pos().y()-10);
+
+        }
+    if (keyevent->key()==Qt::Key_S)
+        {
+            qDebug() << "S key pressed";
+            llama->move(llama->pos().x(),llama->pos().y()+10);
+
         }
     if (keyevent->key()==Qt::Key_A)
         {
             qDebug() << "A key pressed";
-           // SetPos(loc,0,-1);//Or some method call to move down
-        }
-    if (keyevent->key()==Qt::Key_A)
-        {
-            qDebug() << "A key pressed";
-           // SetPos(loc,-1,0);//Or some method call to move Left
+              llama->move(llama->pos().x()-10,llama->pos().y());
+
         }
     if (keyevent->key()==Qt::Key_D)
         {
             qDebug() << "D key pressed";
-            //SetPos(loc,1,0);//Or some method call to move Right
+              llama->move(llama->pos().x()+10,llama->pos().y());
+
+        }
+    if (keyevent->key()==Qt::Key_O)
+        {
+            qDebug() << "O key pressed";
+            //Open treasure chest
         }
 }
-
-//Need llama returned from clicked on start button so can access below
-void SetPos(QPoint pnt,int x,int y)
-{
-  //  llama->setX(pnt.x()+x);
-    //llama->setY(pnt.y()+y);
-    // this->move(mapToParent(pnt->pos() - this->llama));
- }
 
 
 void ULMainWindow::on_cheatButton_clicked()
