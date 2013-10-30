@@ -29,7 +29,7 @@ class StateEngine : public QObject
     Q_OBJECT
 
 public:
-    static StateEngine instance();
+    static StateEngine* instance();
     Llama* getLlama(int id);
     vector<QString> getRiddle();
     void saveToFile(QString filename);
@@ -38,6 +38,7 @@ public:
 
     void punishLlama(int llamaID, int livesToTake);
     void payLlama(int llamaID, int pesosToGive);
+    void youAreTheWeakestLinkLlama(int llamaID);
     bool moveLlama(int llamaID, double x, double y);
     void openChest(int llamaID, double x, double y);
 
@@ -46,6 +47,7 @@ public:
 
 private:
     StateEngine();
+    Riddle riddleEngine;
     vector<Llama*> llamas;
     QString currentRiddle, currentAnswer;
     static StateEngine inst;
@@ -55,6 +57,7 @@ private:
 
 signals:
     void tick(int numTicks);
+    void askRiddle(QString riddle, QString answer, int pesos);
 private slots:
     void on_timer_timeout();
 };

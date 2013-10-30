@@ -25,11 +25,12 @@ using namespace std;
 
 
 //Add riddles to vector. Anwser seperated from riddle with a percent sign
-  void Riddle::add_riddlesToriddles()
-  { riddles.push_back(riddle1);
+void Riddle::add_riddlesToriddles()
+{
+    riddles.push_back(riddle1);
     riddles.push_back(riddle2);
     riddles.push_back(riddle3);
-  }
+}
 
 
 

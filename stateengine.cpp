@@ -19,7 +19,13 @@ using namespace std;
 
 StateEngine StateEngine::inst;
 
-StateEngine StateEngine::instance() { return inst; }
+StateEngine* StateEngine::instance() { return &inst; }
+
+StateEngine::StateEngine() : clock(this)
+{
+    clock.setInterval(50);
+    connect(&clock,&QTimer::timeout, this, &StateEngine::on_timer_timeout);
+}
 
 vector<QString> StateEngine::getRiddle()
 {
@@ -29,7 +35,7 @@ vector<QString> StateEngine::getRiddle()
 
 void StateEngine::saveToFile(QString filename)
 {
-    ofstream rvr(filename.toWCharArray()); //change to filename.toWCharArray(wchar_t*));
+    ofstream rvr(filename.toStdString().c_str());
     rvr << "[ULState File v1.0]" << endl; //Important: this signature is used for validation.
     rvr << "beginllamas" << endl;
     for(int i = 0; i<llamas.size(); ++i)
@@ -38,7 +44,7 @@ void StateEngine::saveToFile(QString filename)
         //<id>:<x>,<y>:<health>:<pesos>:<dumblevel>:<facing>:<optional username>
         rvr << i << ":" << llama->getX() << "," << llama->getY() << ":" << llama->getPunish() <<
                ":" << llama->getPesos() << ":" << llama->getDumbLevel() << ":" << llama->getDir() <<
-               ":" << llama->getUsername() << endl;
+               ":" << llama->getUsername().toStdString() << endl;
     }
     rvr << "endllamas" << endl;
     rvr << currentWorldFile << endl;
@@ -57,7 +63,7 @@ void StateEngine::saveToFile(QString filename)
 
 void StateEngine::loadFromFile(QString filename)
 {
-    ifstream rvr(filename.toWCharArray()); //change to filename.toWCharArray(wchar_t*));
+    ifstream rvr(filename.toStdString().c_str());
     char *linechar = new char[100];
     bool processingLlamas = false,processingChests = false,isFirstLine = true;
     while(rvr.getline(linechar,100))
@@ -107,26 +113,22 @@ void StateEngine::loadFromFile(QString filename)
         }
     }
 }
-<<<<<<< HEAD
 Llama* StateEngine::getLlama(int id)
 {
     return llamas.at(id);
 }
 
-void StateEngine::addLlama(string username)
-=======
+
 void StateEngine::addLlama(QString username)
->>>>>>> 56b41cf91ac26ad693c5c241290cf944076b2b9d
 {
     Llama* llama = new Llama(0,0,0,3,0);
     llama->setUsername(username);
     llamas.push_back(llama);
 }
-<<<<<<< HEAD
 void StateEngine::punishLlama(int llamaID, int livesToTake)
 {
     Llama* llama = getLlama(llamaID);
-    llama->setPunish(llama->getPunish()-livestoTake);
+    llama->setPunish(llama->getPunish()-livesToTake);
 }
 void StateEngine::payLlama(int llamaID, int pesosToGive)
 {
@@ -146,12 +148,29 @@ bool StateEngine::moveLlama(int llamaID, double x, double y)
 void StateEngine::openChest(int llamaID, double x, double y)
 {
     Chest* chest = World::instance()->getCell(x,y)->getChest();
-    if(chest == NULL) return;
+    if(chest == NULL || chest->empty) return;
     else
     {
-=======
-//void
->>>>>>> 56b41cf91ac26ad693c5c241290cf944076b2b9d
-
+        TreasureChest* tchest = dynamic_cast<TreasureChest*>(chest);
+        if(tchest != NULL) payLlama(llamaID,tchest->pesos);
+        EnemyChest* echest = dynamic_cast<EnemyChest*>(chest);
+        if(echest != NULL) punishLlama(llamaID,echest->damage);
+        RiddleChest* rchest = dynamic_cast<RiddleChest*>(chest);
+        if(rchest != NULL)
+        {
+            QString riddleline = QString::fromStdString(riddleEngine.get_riddle());
+            QStringList riddle = riddleline.split("%");
+            currentRiddle = riddle.at(0);
+            currentAnswer = riddle.at(1);
+            emit askRiddle(currentRiddle,currentAnswer,rchest->pesos);
+        }
     }
+}
+void StateEngine::youAreTheWeakestLinkLlama(int llamaID)
+{
+    getLlama(llamaID)->setDumbLevel(getLlama(llamaID)->getDumbLevel() + 1);
+}
+void StateEngine::on_timer_timeout()
+{
+    emit tick(++numTicks);
 }

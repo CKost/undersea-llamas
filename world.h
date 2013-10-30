@@ -21,6 +21,8 @@ using namespace std;
 class Chest;
 class WorldCell;
 
+enum TerrainType{ROUGH,OPEN,OBSTACLE};
+
 class World
 {
 public:
@@ -28,7 +30,7 @@ public:
     WorldCell* getCell(int x, int y);
     static void loadFromFile(QString filename);
     ~World();
-    static World* instance();
+    static World* instance() {return inst;}
     int getSize() { return size; }
 private:
     vector<WorldCell*> cells;
@@ -40,15 +42,12 @@ private:
 class WorldCell
 {
 private:
-    int x,y;
-    int terraintype;
+    TerrainType terraintype;
     Chest* chest;
 
 public:
     //WorldCell constructor
-    WorldCell(int newX, int newY, int newTerrainType, Chest* newContents) {
-        x = newX;
-        y = newY;
+    WorldCell(int newTerrainType, Chest* newContents) {
         terraintype = newTerrainType;
         chest = newContents;
     }
@@ -59,8 +58,8 @@ public:
     void setContents(Chest* cnt) { chest = cnt; }
 
     //Property: terraintype.
-    int getTerrainType();
-    void setTerrainType(int type);
+    TerrainType getTerrainType() {return terraintype;}
+    void setTerrainType(TerrainType type) {terraintype = type;}
 
     //WorldCell destructor
     ~WorldCell() { delete chest; }

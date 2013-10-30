@@ -21,7 +21,6 @@ class Chest {
 public:
     bool empty;
 
-    virtual int openChest(Llama* llama) { return NULL; }
     virtual bool getChestStatus() { return this->empty; }
     virtual void setChestStatus(bool x) { empty = x; }
 };
@@ -29,25 +28,16 @@ public:
 class TreasureChest: public Chest {
 public:
     int pesos;
-    int openChest(Llama* llama) {
-        return pesos;
-    }
 };
 
 class EnemyChest: public Chest {
 public:
     int damage;
-    int openChest(Llama* llama) {
-        return (damage * -1);
-    }
 };
 
 class RiddleChest: public Chest {
 public:
-    int riddleNum;
-    int openChest(Llama* llama) {
-        return 0;
-    }
+    int pesos;
 };
 
 #endif // CHESTS_H

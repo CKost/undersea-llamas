@@ -8,7 +8,7 @@
 **
 **************************************************************************/
 
-#include "worldgenerator.hpp"
+#include "worldgenerator.h"
 
 WorldGenerator::WorldGenerator(QObject *parent) :
     QObject(parent)
