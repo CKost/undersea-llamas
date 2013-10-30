@@ -52,9 +52,9 @@ void ULMainWindow::on_startButton_clicked()
  *click to open chest
  *keyboard input from user*/
 
-    QLabel*llama = new QLabel(ui->widgetGame);
-    QPixmap * bob = new QPixmap("://lama.jpg");
-    llama->setPixmap(*bob);
+    QLabel *llama = new QLabel(ui->widgetGame);
+    QPixmap *image = new QPixmap(":/images/llama.jpg");
+    llama->setPixmap(*image);
     llama->setGeometry(QRect(
          rand() % (ui->widgetGame->geometry().width() - 100),
          rand() % (ui->widgetGame->geometry().height() - 100),
@@ -62,8 +62,7 @@ void ULMainWindow::on_startButton_clicked()
     llama->show();
 }
 
-
-//Logic behind how i think keypresses to move llama wll work
+//Logic behind how I think keypresses to move llama will work
 void keyPressEvent(QKeyEvent *keyevent)
 {
    // QPoint loc=pos();//return position of llama?
@@ -72,9 +71,9 @@ void keyPressEvent(QKeyEvent *keyevent)
             qDebug() << "W key pressed";
           //  SetPos(loc,0,1);//Or some method call to move up
         }
-    if (keyevent->key()==Qt::Key_A)
+    if (keyevent->key()==Qt::Key_S)
         {
-            qDebug() << "A key pressed";
+            qDebug() << "S key pressed";
            // SetPos(loc,0,-1);//Or some method call to move down
         }
     if (keyevent->key()==Qt::Key_A)
