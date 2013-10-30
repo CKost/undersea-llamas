@@ -22,6 +22,7 @@
 #include <vector>
 #include <QTimer>
 #include <QString>
+#include <string>
 
 class StateEngine : public QObject
 {
@@ -64,7 +65,9 @@ class Highscore {
 
     Highscore(QString initName, int initScore):score(initScore), name(initName) {}
     QString printAScore() {
-        return name + " " + to_string(store);
+        string output = to_string(name) + " " + to_string(score);
+        QString output2 = output;
+        return output2;
     }
 };
 
