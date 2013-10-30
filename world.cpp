@@ -4,6 +4,8 @@
 #include <string>
 #include <QString>
 #include <QFile>
+#include <QTextStream>
+#include <stdexcept>
 
 World* World::inst = new World(0);
 
@@ -25,28 +27,31 @@ WorldCell* World::getCell(int x, int y)
 }
 void World::loadFromFile(QString filename)
 {
-    ifstream rvr(filename.toStdString().c_str());
-    string line;
+    QFile file(filename);
+    if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) throw "thrown";
     bool isFirstLine = true; int size = -1; int currentline = 0;
-    while(getline(rvr,line))
+    QTextStream in (&file);
+    while(!in.atEnd())
     {
+        QString line = in.readLine();
         if(isFirstLine)
         {
             if(line != "[ULWorld File v1.0]") throw "Whoa dude, that's not a legit world file. Check it before you wreck it next time, please. Kthx.";
             else isFirstLine=false;
+            continue;
         }
         if(!isFirstLine && size == -1)
         {
             delete inst;
-            int size = stoi(line);
-            inst = new World(size);
+            inst = new World(line.toInt());
+            continue;
         }
         if(size != -1)
         {
             for(int i = 0; i < size; ++i)
             {
                 WorldCell* temp = new WorldCell(OPEN,NULL);
-                switch(line.at(i))
+                switch(line.at(i).toLatin1())
                 {
                 case 'O':
                     temp->setTerrainType(OPEN);

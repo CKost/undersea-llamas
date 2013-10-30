@@ -14,6 +14,8 @@
 #include <fstream>
 #include <QString>
 #include <QStringList>
+#include <QFile>
+#include <QTextStream>
 
 using namespace std;
 
@@ -63,20 +65,31 @@ void StateEngine::saveToFile(QString filename)
 
 void StateEngine::loadFromFile(QString filename)
 {
-    ifstream rvr(filename.toStdString().c_str());
-    char *linechar = new char[100];
-    bool processingLlamas = false,processingChests = false,isFirstLine = true;
-    while(rvr.getline(linechar,100))
+    QFile file (filename);
+    if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        throw "file load error";
+    QTextStream in(&file);
+
+    bool processingLlamas = false, isFirstLine = true, processingChests = false;
+
+    while(!in.atEnd())
     {
-        QString line (linechar);
+        QString line = in.readLine();
         if(isFirstLine)
         {
-            if(line != "[ULWorld File v1.0]")
-            throw "Whoa dude, that's not a legit world file. Check it before you wreck it next time please.";
-            else isFirstLine = false;
+            if(line != "[ULState File v1.0]")
+            throw "Whoa dude, that's not a legit state file. Check it before you wreck it next time please.";
+            else
+            {
+                isFirstLine = false;
+                continue;
+            }
         }
         if(!isFirstLine && line == "beginllamas")
+        {
             processingLlamas = true;
+            continue;
+        }
         if(processingLlamas)
         {
             if(line == "endllamas")
@@ -103,6 +116,7 @@ void StateEngine::loadFromFile(QString filename)
             currentWorldFile = line.toStdString();
             World::loadFromFile(line);
             processingChests = true;
+            continue;
         }
         if(processingChests)
         {
