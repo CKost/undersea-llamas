@@ -23,23 +23,10 @@
 
 class WorldGenerator
 {
-    vector<string> tile1 {"OOBB",
-                          "OOTB",
-                          "OBBB",
-                          "OOOO"};
-    vector<string> tile2 {"BBOO",
-                          "BTOO",
-                          "BBBO",
-                          "OOOO"};
-    vector<string> tile3 {"OOOO",
-                          "OOBO",
-                          "BTBO",
-                          "BBBO"};
-    vector<string> tile4 {"OOOO",
-                          "OBOO",
-                          "OBTB",
-                          "OBBB"};
-
+public:
+    vector<string> tile1, tile2, tile3, tile4, tile5, tile6, tile7, tile8, tile9, tileA, tileB, tileC;
+    WorldGenerator();
+    bool generate(string name);
 };
 
 #endif // WORLDGENERATOR_H
