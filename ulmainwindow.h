@@ -40,6 +40,7 @@ private slots:
 private:
     Ui::ULMainWindow *ui;
     QLabel *llama;
+    QLabel *chest;
 };
 
 

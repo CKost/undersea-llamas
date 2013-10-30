@@ -61,6 +61,14 @@ void ULMainWindow::on_startButton_clicked()
          rand() % (ui->widgetGame->geometry().height() - 100),
          90, 150));
     llama->show();
+
+    //Display a cool chest
+     chest = new QLabel(ui->widgetGame);
+     QPixmap *chestImage = new QPixmap(":/images/download.jpg");
+     chest->setPixmap(*chestImage);
+     chest->setGeometry(QRect(100,100,80,80));
+     chest->show();
+
     ui->startButton->setEnabled(false); //Disable so user cant spam click llamas LOL
 
 
