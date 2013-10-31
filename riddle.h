@@ -25,6 +25,7 @@ private:
    // string riddle1,riddle2,riddle3;
 static string riddle1,riddle2,riddle3;
 public:
+
 /*
     //Constructor W/Riddles Set
     Riddle(string __riddle1="It wanders far, sometimes high sometimes low, but always finishs OK%CpS111_Grade",
