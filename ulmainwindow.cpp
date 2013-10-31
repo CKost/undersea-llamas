@@ -227,16 +227,20 @@ void ULMainWindow::on_hardStartButton_clicked()
 void ULMainWindow::on_btnLoadState_clicked()
 {
     QString stuff = QFileDialog::getOpenFileName(this, tr("Open File"), ".", tr("UL State file (*.ulstate)"));
-    StateEngine::instance()->loadFromFile(stuff);
+    if(!stuff.isEmpty())
+        StateEngine::instance()->loadFromFile(stuff);
 }
 
 void ULMainWindow::on_btnSaveState_clicked()
 {
     QString stuff = QFileDialog::getSaveFileName(this, tr("Save File"), ".", tr("UL State file (*.ulstate)"));
-    StateEngine::instance()->saveToFile(stuff);
+    if(!stuff.isEmpty())
+        StateEngine::instance()->saveToFile(stuff);
 }
 
 void ULMainWindow::on_btnCreateWorld_clicked()
 {
-
+    QString stuff = QFileDialog::getSaveFileName(this, tr("Save file"), ".", tr("UL World File (*.ulworld)"));
+    if(!stuff.isEmpty())
+        WorldGenerator().generate(stuff);
 }

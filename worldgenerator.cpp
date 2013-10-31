@@ -74,7 +74,7 @@ bool WorldGenerator::generate(QString name)
     vector<vector<QString>> cells = {tile1, tile2, tile3, tile4, tile5, tile6, tile7, tile8, tile9, tileA, tileB, tileC};
     int selections[16];
     for(int i = 0; i < 16; ++i)
-        selections[i] = rand() % 16;
+        selections[i] = rand() % 12;
     QFile file (name + QString(".ulworld"));
     if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
         throw "file load error";
