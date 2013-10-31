@@ -66,4 +66,22 @@ public:
     ~WorldCell() { delete chest; }
 };
 
+
+class LlamaStats
+{
+private:
+    int lives;
+    int pesos;
+
+public:
+    //LlamaStats constructor
+    LlamaStats() {}
+
+    //getter and setter methods
+    int getLives() { return lives; }
+    int getPesos() { return pesos; }
+    void setLives(int _lives) { lives = _lives; }
+    void setPesos(int _pesos) { pesos = _pesos; }
+};
+
 #endif // WORLD_H

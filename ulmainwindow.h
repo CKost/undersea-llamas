@@ -16,6 +16,7 @@
 #include "ui_ulmainwindow.h"
 #include "llamalabel.h"
 #include "llama.h"
+#include "world.h"
 #include "chestlabel.h"
 #include "chests.h"
 #include <QWidget>
@@ -26,6 +27,7 @@
 
 class LlamaLabel;
 class ChestLabel;
+class LlamaStats;
 
 class ULMainWindow : public QMainWindow
 {
@@ -50,8 +52,11 @@ private slots:
 
     void on_btnSaveState_clicked();
 
+    void on_btnCreateWorld_clicked();
+
 private:
     Ui::ULMainWindow *ui;
+    LlamaStats *llamaStats;
     LlamaLabel *llamaLabel;
     ChestLabel *chestLabel;
     //QLabel *chest;
