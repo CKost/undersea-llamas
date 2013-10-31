@@ -46,6 +46,10 @@ private slots:
 
     //void on_easyStartButton_clicked();
 
+    void on_btnLoadState_clicked();
+
+    void on_btnSaveState_clicked();
+
 private:
     Ui::ULMainWindow *ui;
     LlamaLabel *llamaLabel;

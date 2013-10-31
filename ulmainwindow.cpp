@@ -23,6 +23,7 @@
 #include <QDebug>
 #include <QPoint>
 #include <QWidget>
+#include <QFileDialog>
 
 #include <QMouseEvent>
 #include <QMainWindow>
@@ -196,10 +197,22 @@ void ULMainWindow::keyReleaseEvent(QKeyEvent *keyevent)
 
 void ULMainWindow::on_cheatButton_clicked()
 {
-
+    QMessageBox::information(this,"Warning!","Cheat mode activated. Cheaters never prosper; you have been warned.");
 }
 
 void ULMainWindow::on_hardStartButton_clicked()
 {
 
+}
+
+void ULMainWindow::on_btnLoadState_clicked()
+{
+    QString stuff = QFileDialog::getOpenFileName(this, tr("Open File"), ".", tr("UL State file (*.ulstate)"));
+    StateEngine::instance()->loadFromFile(stuff);
+}
+
+void ULMainWindow::on_btnSaveState_clicked()
+{
+    QString stuff = QFileDialog::getSaveFileName(this, tr("Save File"), ".", tr("UL State file (*.ulstate)"));
+    StateEngine::instance()->saveToFile(stuff);
 }
