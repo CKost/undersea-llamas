@@ -2,5 +2,7 @@
     <qresource prefix="/">
         <file>images/llama.jpg</file>
         <file>images/download.jpg</file>
+        <file>text files/statefile.ulstate</file>
+        <file>text files/worldfile.ulworld</file>
     </qresource>
 </RCC>

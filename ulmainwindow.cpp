@@ -20,7 +20,7 @@
 #include <QLabel>
 #include <iostream>
 #include <QDebug>
-#include<QPoint>
+#include <QPoint>
 #include <QWidget>
 
 #include <QMouseEvent>

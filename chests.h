@@ -22,7 +22,7 @@ public:
     bool empty;
 
     virtual bool getChestStatus() { return this->empty; }
-    virtual void setChestStatus(bool x) { empty = x; }
+    virtual void setChestStatus(bool emptied) { empty = emptied; }
 };
 
 class TreasureChest: public Chest {

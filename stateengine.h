@@ -40,7 +40,9 @@ public:
     void payLlama(int llamaID, int pesosToGive);
     void youAreTheWeakestLinkLlama(int llamaID);
     bool moveLlama(int llamaID, double x, double y);
-    void openChest(int llamaID, double x, double y);
+    void openTChest(int llamaID, double x, double y);
+    void openEChest(int llamaID, double x, double y);
+    void openRChest(int llamaID, double x, double y);
 
     QString toStateString();
     void fromStateString(QString string);

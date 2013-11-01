@@ -18,7 +18,8 @@ SOURCES += main.cpp \
         stateengine.cpp \
         worldgenerator.cpp \
         world.cpp \
-    chests.cpp
+    chests.cpp \
+    llama.cpp
 
 HEADERS  += \
     world.h \

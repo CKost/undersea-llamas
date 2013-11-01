@@ -113,12 +113,12 @@ void StateEngine::loadFromFile(QString filename)
         }
     }
 }
+
+//llama methods
 Llama* StateEngine::getLlama(int id)
 {
     return llamas.at(id);
 }
-
-
 void StateEngine::addLlama(QString username)
 {
     Llama* llama = new Llama(0,0,0,3,0);
@@ -145,7 +145,41 @@ bool StateEngine::moveLlama(int llamaID, double x, double y)
         llama->setY(int(y));
     }
 }
-void StateEngine::openChest(int llamaID, double x, double y)
+void StateEngine::youAreTheWeakestLinkLlama(int llamaID)
+{
+    getLlama(llamaID)->setDumbLevel(getLlama(llamaID)->getDumbLevel() + 1);
+}
+
+//chest methods
+void StateEngine::openTChest(int llamaID, double x, double y)
+{
+    TreasureChest* tchest = dynamic_cast<TreasureChest*>(World::instance()->getCell(x,y)->getChest());
+    if (tchest == NULL || tchest->empty) { return; }
+    else {
+        payLlama(llamaID,tchest->pesos);
+    }
+}
+void StateEngine::openEChest(int llamaID, double x, double y)
+{
+    EnemyChest* echest = dynamic_cast<EnemyChest*>(World::instance()->getCell(x,y)->getChest());
+    if (echest == NULL || echest->empty) { return; }
+    else {
+        punishLlama(llamaID,echest->damage);
+    }
+}
+void StateEngine::openRChest(int llamaID, double x, double y)
+{
+    RiddleChest* rchest = dynamic_cast<RiddleChest*>(World::instance()->getCell(x,y)->getChest());
+    if (rchest == NULL || rchest->empty) { return; }
+    else {
+        QString riddleline = QString::fromStdString(riddleEngine.get_riddle());
+        QStringList riddle = riddleline.split("%");
+        currentRiddle = riddle.at(0);
+        currentAnswer = riddle.at(1);
+        emit askRiddle(currentRiddle,currentAnswer,rchest->pesos);
+    }
+}
+/*void StateEngine::openChest(int llamaID, double x, double y)
 {
     Chest* chest = World::instance()->getCell(x,y)->getChest();
     if(chest == NULL || chest->empty) return;
@@ -165,11 +199,8 @@ void StateEngine::openChest(int llamaID, double x, double y)
             emit askRiddle(currentRiddle,currentAnswer,rchest->pesos);
         }
     }
-}
-void StateEngine::youAreTheWeakestLinkLlama(int llamaID)
-{
-    getLlama(llamaID)->setDumbLevel(getLlama(llamaID)->getDumbLevel() + 1);
-}
+}*/
+
 void StateEngine::on_timer_timeout()
 {
     emit tick(++numTicks);
