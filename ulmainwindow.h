@@ -48,6 +48,12 @@ private slots:
 
     //void on_easyStartButton_clicked();
 
+    void on_btnLoadState_clicked();
+
+    void on_btnSaveState_clicked();
+
+    void on_btnCreateWorld_clicked();
+
 private:
     Ui::ULMainWindow *ui;
     LlamaStats *llamaStats;

@@ -11,11 +11,10 @@
 #include "worldgenerator.h"
 #include <vector>
 #include "world.h"
-#include <fstream>
-#include <string>
-#include <sstream>
-#include <iostream>
 #include <cstdlib>
+#include <QFile>
+#include <QTextStream>
+#include <QString>
 
 WorldGenerator::WorldGenerator()
 {
@@ -69,12 +68,35 @@ WorldGenerator::WorldGenerator()
                           "OBBB"};
 }
 
-bool WorldGenerator::generate(string name)
+bool WorldGenerator::generate(QString name)
 {
     vector<string> world;
-    vector<vector<string>*> cells = {&tile1, &tile2, &tile3, &tile4, &tile5, &tile6, &tile7, &tile8, &tile9, &tileA, &tileB, &tileC};
+    vector<vector<QString>> cells = {tile1, tile2, tile3, tile4, tile5, tile6, tile7, tile8, tile9, tileA, tileB, tileC};
     int selections[16];
     for(int i = 0; i < 16; ++i)
         selections[i] = rand() % 16;
-
+    QFile file (name + QString(".ulworld"));
+    if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
+        throw "file load error";
+    QTextStream out(&file);
+    out << "[ULWorld File v1.0]" << endl;
+    out << 18 << endl;
+    out << "BBBBBBBBBBBBBBBBBB" << endl;
+    for(int i = 0; i < 4; ++i)
+    {
+        out << "B" << (cells.at(selections[0])).at(i) << cells.at(selections[1]).at(i) << cells.at(selections[2]).at(i) << cells.at(selections[3]).at(i) << "B" << endl;
+    }
+    for(int i = 0; i < 4; ++i)
+    {
+        out << "B" << (cells.at(selections[4])).at(i) << cells.at(selections[5]).at(i) << cells.at(selections[6]).at(i) << cells.at(selections[7]).at(i) << "B" << endl;
+    }
+    for(int i = 0; i < 4; ++i)
+    {
+        out << "B" << (cells.at(selections[8])).at(i) << cells.at(selections[9]).at(i) << cells.at(selections[10]).at(i) << cells.at(selections[11]).at(i) << "B" << endl;
+    }
+    for(int i = 0; i < 4; ++i)
+    {
+        out << "B" << (cells.at(selections[12])).at(i) << cells.at(selections[13]).at(i) << cells.at(selections[14]).at(i) << cells.at(selections[15]).at(i) << "B" << endl;
+    }
+    out << "BBBBBBBBBBBBBBBBBB" << endl;
 }

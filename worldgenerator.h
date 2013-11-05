@@ -19,14 +19,14 @@
 #include "world.h"
 
 #include <QObject>
-#include <string>
+#include <QString>
 
 class WorldGenerator
 {
 public:
-    vector<string> tile1, tile2, tile3, tile4, tile5, tile6, tile7, tile8, tile9, tileA, tileB, tileC;
+    vector<QString> tile1, tile2, tile3, tile4, tile5, tile6, tile7, tile8, tile9, tileA, tileB, tileC;
     WorldGenerator();
-    bool generate(string name);
+    bool generate(QString name);
 };
 
 #endif // WORLDGENERATOR_H
