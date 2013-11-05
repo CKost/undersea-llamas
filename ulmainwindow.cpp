@@ -1,4 +1,4 @@
- /**************************************************************************
+/**************************************************************************
 **
 **   ulmainwindow.cpp
 **
@@ -56,7 +56,7 @@ void ULMainWindow::on_buttonInstructions_clicked()
 }
 
 
-void ULMainWindow::on_startButton_clicked()
+void ULMainWindow::on_easyStartButton_clicked()
 {
 /*
  *all the clicking - drag llama around the screen
@@ -75,13 +75,15 @@ void ULMainWindow::on_startButton_clicked()
     llamaLabel->show();
 
     //Display a chest
-    chest = new QLabel(ui->widgetGame);
+    TreasureChest *chest = new TreasureChest(false, 200);
+    chestLabel = new ChestLabel(ui->widgetGame, chest);
     QPixmap *chestImage = new QPixmap(":/images/download.jpg");
-    chest->setPixmap(*chestImage);
-    chest->setGeometry(QRect(100,100,90,150));
-    chest->show();
+    chestLabel->setPixmap(*chestImage);
+    chestLabel->setGeometry(QRect(100,100,90,150));
+    chestLabel->show();
 
-    ui->startButton->setEnabled(false); //Disable so user cant spam-click llamas
+    ui->easyStartButton->setEnabled(false); //Disable so user cant spam-click llamas
+    ui->hardStartButton->setEnabled(false);
 }
 
 
@@ -122,12 +124,17 @@ void ULMainWindow::keyPressEvent(QKeyEvent *keyevent)
     }
     if (keyevent->key()==Qt::Key_O) {
         qDebug() << "O key pressed";
-        if(chest->pos().x()==llamaLabel->pos().x()&&chest->pos().y()==llamaLabel->pos().y()) {
-            oKey=true;
-            //if (chest->getChestStatus != true) {
-                //open treasure chest
-                //apply pesos, lost lives, riddle
-            //}
+        if(chestLabel->pos().x()-llamaLabel->pos().x()<15 && chestLabel->pos().x()-llamaLabel->pos().x()>-15) {
+            if(chestLabel->pos().y()-llamaLabel->pos().y()<15 && chestLabel->pos().y()-llamaLabel->pos().y()>-15) {
+                oKey=true;
+                qDebug() << "O key success! It matched!";
+                if (chestLabel->chest->getEmpty() == false) {
+                    //open treasure chest
+                    int lives = dynamic_cast<TreasureChest*>(chestLabel->chest)->getPesos();
+                    qDebug() << "lives:                 " << lives;
+                    //apply pesos, lost lives, riddle
+                }
+            }
         }
     }
 }
@@ -188,6 +195,11 @@ void ULMainWindow::keyReleaseEvent(QKeyEvent *keyevent)
    }
 
 void ULMainWindow::on_cheatButton_clicked()
+{
+
+}
+
+void ULMainWindow::on_hardStartButton_clicked()
 {
 
 }

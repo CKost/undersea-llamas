@@ -1,6 +1,6 @@
 /**************************************************************************
 **
-**   llamalabel.h
+**   chestlabel.h
 **
 **   This file copyright 2013 Team Crackpot.
 **   Work done for CpS 111 at Bob Jones University.
@@ -8,8 +8,8 @@
 **
 **************************************************************************/
 
-#ifndef LLAMALABEL_H
-#define LLAMALABEL_H
+#ifndef CHESTLABEL_H
+#define CHESTLABEL_H
 
 #include "chests.h"
 #include "riddle.h"
@@ -22,21 +22,21 @@
 #include <QLabel>
 using namespace std;
 
-class Llama;
+class Chest;
 
-class LlamaLabel: public QLabel
+class ChestLabel: public QLabel
 {
-    Llama *llama;
-
 public:
+    Chest *chest;
+
     //constructor
-    LlamaLabel(QWidget *parent, Llama *_llama):QLabel(parent), llama(_llama) {}
+    ChestLabel(QWidget *parent, Chest *_chest):QLabel(parent), chest(_chest) {}
 
     //getter method
-    Llama* getLlama() { return llama; }
+    Chest* getChest() { return chest; }
 
     //setter method
-    void setLlama(Llama *_llama) { llama = _llama; }
+    void setChest(Chest *_chest) { chest = _chest; }
 };
 
-#endif // LLAMALABEL_H
+#endif // CHESTLABEL_H

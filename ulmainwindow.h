@@ -16,6 +16,8 @@
 #include "ui_ulmainwindow.h"
 #include "llamalabel.h"
 #include "llama.h"
+#include "chestlabel.h"
+#include "chests.h"
 #include <QWidget>
 #include <QMainWindow>
 #include <QKeyEvent>
@@ -23,6 +25,7 @@
 #include <QMainWindow>
 
 class LlamaLabel;
+class ChestLabel;
 
 class ULMainWindow : public QMainWindow
 {
@@ -37,13 +40,17 @@ public:
 private slots:
     void on_buttonInstructions_clicked();
     void on_cheatButton_clicked();
-    void on_startButton_clicked();
+    void on_easyStartButton_clicked();
+    void on_hardStartButton_clicked();
     void gameUpdate(int elapsedTicks);
+
+    //void on_easyStartButton_clicked();
 
 private:
     Ui::ULMainWindow *ui;
     LlamaLabel *llamaLabel;
-    QLabel *chest;
+    ChestLabel *chestLabel;
+    //QLabel *chest;
     bool aKey;
     bool sKey;
     bool wKey;

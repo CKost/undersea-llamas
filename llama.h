@@ -11,17 +11,15 @@
 #ifndef LLAMA_H
 #define LLAMA_H
 
-#include "chests.h"
 #include "riddle.h"
 #include "ulmainwindow.h"
 #include "world.h"
 #include "worldgenerator.h"
-#include <iostream>
-#include <cstring>
+//#include <iostream>
 #include <QString>
 #include <cstdlib>
-#include <cassert>
-#include <cmath>
+//#include <cassert>
+//#include <cmath>
 
 using namespace std;
 
