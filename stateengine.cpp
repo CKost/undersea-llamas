@@ -179,7 +179,7 @@ void StateEngine::openEChest(int llamaID, double x, double y)
     EnemyChest* echest = dynamic_cast<EnemyChest*>(World::instance()->getCell(x,y)->getChest());
     if (echest == NULL || echest->empty) { return; }
     else {
-        punishLlama(llamaID,echest->damage);
+        punishLlama(llamaID,echest->livesLost);
     }
 }
 void StateEngine::openRChest(int /*llamaID*/, double x, double y)

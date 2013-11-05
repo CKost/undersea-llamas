@@ -23,6 +23,7 @@
 #include <QDebug>
 #include <QPoint>
 #include <QWidget>
+#include <QString>
 
 #include <QMouseEvent>
 #include <QMainWindow>
@@ -63,6 +64,7 @@ void ULMainWindow::on_easyStartButton_clicked()
  *click to open chest
  *keyboard input from user*/
 
+    LlamaStats *llamaStats = new LlamaStats();
     Llama *llama = new Llama(0, 0, 0, 3, 100);
     llamaLabel = new LlamaLabel(ui->widgetGame, llama);
     QPixmap *image = new QPixmap(":/images/llama.jpg");
@@ -75,7 +77,7 @@ void ULMainWindow::on_easyStartButton_clicked()
     llamaLabel->show();
 
     //Display a chest
-    TreasureChest *chest = new TreasureChest(false, 200);
+    TreasureChest *chest = new TreasureChest(false, 't', 200);
     chestLabel = new ChestLabel(ui->widgetGame, chest);
     QPixmap *chestImage = new QPixmap(":/images/download.jpg");
     chestLabel->setPixmap(*chestImage);
@@ -130,10 +132,27 @@ void ULMainWindow::keyPressEvent(QKeyEvent *keyevent)
                 qDebug() << "O key success! It matched!";
                 if (chestLabel->chest->getEmpty() == false) {
                     //open treasure chest
-                    int lives = dynamic_cast<TreasureChest*>(chestLabel->chest)->getPesos();
-                    qDebug() << "lives:                 " << lives;
-                    //apply pesos, lost lives, riddle
+                    if (chestLabel->chest->getType() == 't') {
+                        int newPesos = dynamic_cast<TreasureChest*>(chestLabel->chest)->getPesos();
+                        qDebug() << "pesos:                 " << newPesos;
+                        //apply pesos
+                        llamaStats->setPesos(llamaStats->getPesos() + newPesos);
+                        ui->labelPesos->setText("Pesos: " + QString::number(llamaStats->getPesos()));
+                    } else if (chestLabel->chest->getType() == 'e') {
+                        int lostLives = dynamic_cast<EnemyChest*>(chestLabel->chest)->getLivesLost();
+                        qDebug() << "lost lives:                 " << lostLives;
+                        //apply lost lives
+                        llamaStats->setLives(llamaStats->getLives() + lostLives);
+                        ui->labelPesos->setText("Lives: " + QString::number(llamaStats->getLives()));
+                    } else if (chestLabel->chest->getType() == 'r') {
+                        //ask riddle
+                        //if riddle is correct,
+                        llamaStats->setPesos(llamaStats->getPesos() + 200);
+                        ui->labelPesos->setText("Pesos: " + QString::number(llamaStats->getPesos()));
+                    }
                 }
+                //set chest to empty
+                chestLabel->chest->setEmpty(true);
             }
         }
     }
