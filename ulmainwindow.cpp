@@ -10,6 +10,7 @@
 
 #include "chests.h"
 #include "llama.h"
+#include "llamalabel.h"
 #include "riddle.h"
 #include "stateengine.h"
 #include "ulmainwindow.h"
@@ -42,7 +43,15 @@ ULMainWindow::~ULMainWindow()
 //Instructions for the game
 void ULMainWindow::on_buttonInstructions_clicked()
 {
-    QMessageBox::information(this, "How to Play", "Wondering how to play this game? First, click Start Game; then, use the WASD keys on your keyboard to move your llama around the screen. Press O to open a chest.");
+    QMessageBox::information(this, "How to Play", "¡Hola!\n\
+        Necesita dinero. Tiene que pagar su crédito de universidad muy rapidamente, \
+        y explora el oceánico para recoger tesoro. Su objetivo es recoger pesos para pagar su crédito de universidad.\n\n\
+        Como jugar:\n\
+        Para comenzar un juego nuevo, haga clic en el botón «comenzar».\
+        Entonces, empuje la tecla «W» para mover arriba, «A» para mover a la izquierda, «S» para mover abajo, y «D» para mover al derecho.\
+        Empuje la tecla <<O>> para abrir un cofre. El cofre puede contener tesoro (con muchos pesos), un enemigo (que va a matarse),\
+        o un acertijo (que necesita contestar correctamente para ganar pesos).\
+        ¡Diviértase!");
 }
 
 
@@ -52,15 +61,16 @@ void ULMainWindow::on_startButton_clicked()
  *all the clicking - drag llama around the screen
  *click to open chest
  *keyboard input from user*/
-    //was QLabel
-   llama = new QLabel(ui->widgetGame);
+    Llama *llama = new Llama(0, 0, 0, 3, 100);
+    LlamaLabel *llamaLabel = new LlamaLabel(llama, ui->widgetGame);
     QPixmap *image = new QPixmap(":/images/llama.jpg");
-    llama->setPixmap(*image);
-    llama->setGeometry(QRect(
+    llamaLabel->setPixmap(*image);
+    llamaLabel->setGeometry(QRect(
          rand() % (ui->widgetGame->geometry().width() - 100),
          rand() % (ui->widgetGame->geometry().height() - 100),
          90, 150));
-    llama->show();
+    llamaLabel->show();
+
 
     //Display a cool chest
      chest = new QLabel(ui->widgetGame);
@@ -69,7 +79,7 @@ void ULMainWindow::on_startButton_clicked()
      chest->setGeometry(QRect(100,100,80,80));
      chest->show();
 
-    ui->startButton->setEnabled(false); //Disable so user cant spam click llamas LOL
+    ui->startButton->setEnabled(false); //Disable so user cant spam-click llamas
 
 
 }
@@ -82,31 +92,33 @@ void ULMainWindow::keyPressEvent(QKeyEvent *keyevent)
     if (keyevent->key()==Qt::Key_W)
         {
         qDebug() << "W key pressed";
-          llama->move(llama->pos().x(),llama->pos().y()-10);
+        llamaLabel->move(llamaLabel->pos().x(), llamaLabel->pos().y()-10);
+        //llama->move(llama->pos().x(),llama->pos().y()-10);
 
         }
     if (keyevent->key()==Qt::Key_S)
         {
             qDebug() << "S key pressed";
-            llama->move(llama->pos().x(),llama->pos().y()+10);
+            llamaLabel->move(llamaLabel->pos().x(), llamaLabel->pos().y()+10);
 
         }
     if (keyevent->key()==Qt::Key_A)
         {
             qDebug() << "A key pressed";
-              llama->move(llama->pos().x()-10,llama->pos().y());
+              llamaLabel->move(llamaLabel->pos().x()-10,llamaLabel->pos().y());
 
         }
     if (keyevent->key()==Qt::Key_D)
         {
             qDebug() << "D key pressed";
-              llama->move(llama->pos().x()+10,llama->pos().y());
+              llamaLabel->move(llamaLabel->pos().x()+10,llamaLabel->pos().y());
 
         }
     if (keyevent->key()==Qt::Key_O)
         {
             qDebug() << "O key pressed";
             //Open treasure chest
+            //if (llama->)
         }
 }
 

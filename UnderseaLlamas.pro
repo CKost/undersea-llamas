@@ -19,7 +19,8 @@ SOURCES += main.cpp \
         worldgenerator.cpp \
         world.cpp \
     chests.cpp \
-    llama.cpp
+    llama.cpp \
+    llamalabel.cpp
 
 HEADERS  += \
     world.h \
@@ -28,7 +29,8 @@ HEADERS  += \
     stateengine.h \
     chests.h \
     riddle.h \
-    ulmainwindow.h
+    ulmainwindow.h \
+    llamalabel.h
 
 FORMS    += ulmainwindow.ui
 

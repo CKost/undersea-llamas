@@ -14,6 +14,8 @@
 #include "stateengine.h"
 #include "worldgenerator.h"
 #include "ui_ulmainwindow.h"
+#include "llamalabel.h"
+#include "llama.h"
 #include <QWidget>
 #include <QMainWindow>
 #include <QKeyEvent>
@@ -31,18 +33,17 @@ public:
     ~ULMainWindow();
     void SetPos(QPoint pnt,int x,int y);
     void keyPressEvent(QKeyEvent *keyevent);
+
 private slots:
     void on_buttonInstructions_clicked();
     void on_cheatButton_clicked();
     void on_startButton_clicked();
 
-
 private:
     Ui::ULMainWindow *ui;
-    QLabel *llama;
+    //Llama *llama;
+    LlamaLabel *llamaLabel;
     QLabel *chest;
 };
-
-
 
 #endif // ULMAINWINDOW_H
