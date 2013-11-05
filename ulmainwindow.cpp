@@ -57,17 +57,15 @@ void ULMainWindow::on_startButton_clicked()
    llama = new QLabel(ui->widgetGame);
     QPixmap *image = new QPixmap(":/images/llama.png");
     llama->setPixmap(*image);
-    llama->setGeometry(QRect(
-         rand() % (ui->widgetGame->geometry().width() - 100),
-         rand() % (ui->widgetGame->geometry().height() - 100),
-         90, 150));
+    llama->setGeometry(QRect(200,100,90,150));
+
     llama->show();
 
     //Display a cool chest
      chest = new QLabel(ui->widgetGame);
      QPixmap *chestImage = new QPixmap(":/images/download.jpg");
      chest->setPixmap(*chestImage);
-     chest->setGeometry(QRect(100,100,80,80));
+     chest->setGeometry(QRect(100,100,90,150));
      chest->show();
 
     ui->startButton->setEnabled(false); //Disable so user cant spam click llamas LOL
@@ -115,7 +113,6 @@ void ULMainWindow::on_startButton_clicked()
 //Logic behind how I think keypresses to move llama will work
 void ULMainWindow::keyPressEvent(QKeyEvent *keyevent)
 {
-    qDebug() << "key pressed";
 
     if (keyevent->key()==Qt::Key_W)
         {
@@ -167,6 +164,8 @@ void ULMainWindow::keyPressEvent(QKeyEvent *keyevent)
             oKey=true;
             //Open treasure chest
         }
+    if(chest->pos().x()==llama->pos().x()&&chest->pos().y()==llama->pos().y())
+        qDebug()<<"SWAGGGGGGGGGGGGGGGGGGGGGGGGGGG OPEN THE CHEST???????????";
 }
 
 void ULMainWindow::gameUpdate(int elapsedTicks)
@@ -190,14 +189,38 @@ void ULMainWindow::gameUpdate(int elapsedTicks)
 
 void ULMainWindow::keyReleaseEvent(QKeyEvent *keyevent)
 {
-    qDebug()<<"keyReleaseEvent";
 
-    aKey=false;
-    sKey=false;
-    wKey=false;
-    dKey=false;
-    oKey=false;
-}
+    if (keyevent->key()==Qt::Key_A)
+        {
+            qDebug()<<"keyReleaseEvent";
+            aKey=false;
+         }
+
+    if (keyevent->key()==Qt::Key_S)
+        {
+           qDebug()<<"keyReleaseEvent";
+            sKey=false;
+         }
+
+    if (keyevent->key()==Qt::Key_W)
+        {
+            qDebug()<<"keyReleaseEvent";
+            wKey=false;
+         }
+
+    if (keyevent->key()==Qt::Key_D)
+        {
+            qDebug()<<"keyReleaseEvent";
+            dKey=false;
+         }
+
+    if (keyevent->key()==Qt::Key_O)
+        {
+            qDebug()<<"keyReleaseEvent";
+            oKey=false;
+         }
+
+   }
 
 void ULMainWindow::on_cheatButton_clicked()
 {
