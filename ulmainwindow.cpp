@@ -74,6 +74,43 @@ void ULMainWindow::on_startButton_clicked()
 
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //Logic behind how I think keypresses to move llama will work
 void ULMainWindow::keyPressEvent(QKeyEvent *keyevent)
 {
@@ -82,34 +119,65 @@ void ULMainWindow::keyPressEvent(QKeyEvent *keyevent)
     if (keyevent->key()==Qt::Key_W)
         {
         qDebug() << "W key pressed";
-          llama->move(llama->pos().x(),llama->pos().y()-10);
 
+        if(llama->pos().y()>0)
+        {
+            wKey=true;
+             llama->move(llama->pos().x(),llama->pos().y()-10);
+            llama ->updateGeometry();
+        }
         }
     if (keyevent->key()==Qt::Key_S)
         {
             qDebug() << "S key pressed";
+            if(llama->pos().y()<265)
+            {
+            sKey=true;
             llama->move(llama->pos().x(),llama->pos().y()+10);
+            llama ->updateGeometry();
+            }
 
         }
     if (keyevent->key()==Qt::Key_A)
         {
             qDebug() << "A key pressed";
+            if(llama->pos().x()>10)
+            {
+              aKey=true;
               llama->move(llama->pos().x()-10,llama->pos().y());
+              llama ->updateGeometry();
+            }
 
         }
     if (keyevent->key()==Qt::Key_D)
         {
             qDebug() << "D key pressed";
+            if(llama->pos().x()<345)
+            {
+              dKey=true;
               llama->move(llama->pos().x()+10,llama->pos().y());
+              llama ->updateGeometry();
+            }
 
         }
     if (keyevent->key()==Qt::Key_O)
         {
             qDebug() << "O key pressed";
+            oKey=true;
             //Open treasure chest
         }
 }
 
+
+void ULMainWindow::keyReleaseEvent(QKeyEvent *keyevent)
+{
+    qDebug()<<"keyReleaseEvent";
+    aKey=false;
+    sKey=false;
+    wKey=false;
+    dKey=false;
+    oKey=false;
+}
 
 void ULMainWindow::on_cheatButton_clicked()
 {

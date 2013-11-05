@@ -31,6 +31,7 @@ public:
     ~ULMainWindow();
     void SetPos(QPoint pnt,int x,int y);
     void keyPressEvent(QKeyEvent *keyevent);
+    void keyReleaseEvent(QKeyEvent *keyevent);
 private slots:
     void on_buttonInstructions_clicked();
     void on_cheatButton_clicked();
@@ -41,6 +42,12 @@ private:
     Ui::ULMainWindow *ui;
     QLabel *llama;
     QLabel *chest;
+    bool aKey;
+    bool sKey;
+    bool wKey;
+    bool dKey;
+    bool oKey;
+
 };
 
 
