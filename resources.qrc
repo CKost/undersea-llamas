@@ -4,5 +4,7 @@
         <file>images/download.jpg</file>
         <file>textfiles/worldfile.ulworld</file>
         <file>textfiles/statefile.ulstate</file>
+        <file>images/llama.png</file>
+        <file>images/ocean_floor.jpg</file>
     </qresource>
 </RCC>

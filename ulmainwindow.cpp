@@ -1,4 +1,4 @@
-/**************************************************************************
+ /**************************************************************************
 **
 **   ulmainwindow.cpp
 **
@@ -32,6 +32,7 @@ ULMainWindow::ULMainWindow(QWidget *parent) :
     ui(new Ui::ULMainWindow)
 {
     ui->setupUi(this);
+    connect(StateEngine::instance(), &StateEngine::tick, this, &ULMainWindow::gameUpdate);
 }
 
 ULMainWindow::~ULMainWindow()
@@ -54,7 +55,7 @@ void ULMainWindow::on_startButton_clicked()
  *keyboard input from user*/
     //was QLabel
    llama = new QLabel(ui->widgetGame);
-    QPixmap *image = new QPixmap(":/images/llama.jpg");
+    QPixmap *image = new QPixmap(":/images/llama.png");
     llama->setPixmap(*image);
     llama->setGeometry(QRect(
          rand() % (ui->widgetGame->geometry().width() - 100),
@@ -166,6 +167,11 @@ void ULMainWindow::keyPressEvent(QKeyEvent *keyevent)
             oKey=true;
             //Open treasure chest
         }
+}
+
+void ULMainWindow::gameUpdate(int elapsedTicks)
+{
+    qDebug() << "Tick! " << elapsedTicks << " ticks elapsed.";
 }
 
 

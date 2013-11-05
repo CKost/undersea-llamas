@@ -27,7 +27,8 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(0, 0, 184);</string>
+     <string notr="true">border-image: url(:/images/ocean_floor.jpg);
+</string>
     </property>
    </widget>
    <widget class="QPushButton" name="buttonInstructions">

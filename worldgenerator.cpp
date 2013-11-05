@@ -9,9 +9,15 @@
 **************************************************************************/
 
 #include "worldgenerator.h"
+#include <vector>
+#include "world.h"
+#include <fstream>
+#include <string>
+#include <sstream>
+#include <iostream>
 
-WorldGenerator::WorldGenerator(QObject *parent) :
-    QObject(parent)
+bool WorldGenerator::generate(string name)
 {
-
+    World* world = World::instance();
+    world = World(18);
 }
