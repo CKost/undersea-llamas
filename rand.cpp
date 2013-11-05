@@ -12,18 +12,13 @@
 #define LLAMALABEL_H
 
 #include "chests.h"
-
+#include "llama.h"
 #include "riddle.h"
 #include "stateengine.h"
 #include "ulmainwindow.h"
 #include "ui_ulmainwindow.h"
 #include "world.h"
 #include "worldgenerator.h"
-#include "llama.h"
-#include <QLabel>
-using namespace std;
-
-class Llama;
 
 class LlamaLabel: public QLabel
 {
@@ -31,7 +26,7 @@ class LlamaLabel: public QLabel
 
 public:
     //constructor
-    LlamaLabel(QWidget *parent, Llama *_llama):QLabel(parent), llama(_llama) {}
+    LlamaLabel(Llama *_llama, QWidget *parent):llama(_llama), QLabel(parent) {}
 
     //getter method
     Llama* getLlama() { return llama; }

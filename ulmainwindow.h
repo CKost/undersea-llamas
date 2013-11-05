@@ -22,7 +22,7 @@
 #include <QMouseEvent>
 #include <QMainWindow>
 
-
+class LlamaLabel;
 
 class ULMainWindow : public QMainWindow
 {

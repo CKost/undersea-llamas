@@ -20,7 +20,8 @@ SOURCES += main.cpp \
         world.cpp \
     chests.cpp \
     llama.cpp \
-    llamalabel.cpp
+    llamalabel.cpp \
+    rand.cpp
 
 HEADERS  += \
     world.h \

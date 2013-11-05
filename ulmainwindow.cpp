@@ -62,7 +62,7 @@ void ULMainWindow::on_startButton_clicked()
  *click to open chest
  *keyboard input from user*/
     Llama *llama = new Llama(0, 0, 0, 3, 100);
-    LlamaLabel *llamaLabel = new LlamaLabel(llama, ui->widgetGame);
+    llamaLabel = new LlamaLabel(ui->widgetGame, llama);
     QPixmap *image = new QPixmap(":/images/llama.jpg");
     llamaLabel->setPixmap(*image);
     llamaLabel->setGeometry(QRect(

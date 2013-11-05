@@ -69,7 +69,7 @@ class Highscore {
     QString name;
     int score;
 
-    Highscore(QString initName, int initScore):score(initScore), name(initName) {}
+    Highscore(QString initName, int initScore):name(initName), score(initScore) {}
     QString printAScore() {
         return QString::fromStdString(name.toStdString() + string(" ") + to_string(score));
     }
@@ -86,7 +86,7 @@ public:
     }
 
     //adds a highscore to the list of highscores
-    void addHighscore(string name, int score) {
+    void addHighscore(string /*name*/, int /*score*/) {
 
     }
     void sort();
