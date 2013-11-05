@@ -33,17 +33,23 @@ public:
     ~ULMainWindow();
     void SetPos(QPoint pnt,int x,int y);
     void keyPressEvent(QKeyEvent *keyevent);
-
+    void keyReleaseEvent(QKeyEvent *keyevent);
 private slots:
     void on_buttonInstructions_clicked();
     void on_cheatButton_clicked();
     void on_startButton_clicked();
+    void gameUpdate(int elapsedTicks);
 
 private:
     Ui::ULMainWindow *ui;
-    //Llama *llama;
     LlamaLabel *llamaLabel;
     QLabel *chest;
+    bool aKey;
+    bool sKey;
+    bool wKey;
+    bool dKey;
+    bool oKey;
+
 };
 
 #endif // ULMAINWINDOW_H

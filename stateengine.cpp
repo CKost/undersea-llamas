@@ -16,6 +16,8 @@
 #include <QStringList>
 #include <QFile>
 #include <QTextStream>
+#include <QThread>
+#include <QTimer>
 
 using namespace std;
 
@@ -26,13 +28,11 @@ StateEngine* StateEngine::instance() { return &inst; }
 StateEngine::StateEngine() : clock(this)
 {
     clock.setInterval(50);
+    QThread* thread = new QThread();
+    clock.moveToThread(thread);
+    connect(thread, SIGNAL(started()), &clock, SLOT(start()));
     connect(&clock,&QTimer::timeout, this, &StateEngine::on_timer_timeout);
-}
-
-vector<QString> StateEngine::getRiddle()
-{
-    throw "Dude, totally not implemented.";
-    //TODO: GET CURT TO IMPLEMENT RIDDLE RETRIEVAL
+    thread->start();
 }
 
 void StateEngine::saveToFile(QString filename)
