@@ -124,7 +124,7 @@ void ULMainWindow::keyPressEvent(QKeyEvent *keyevent)
         if(llama->pos().y()>0)
         {
             wKey=true;
-             llama->move(llama->pos().x(),llama->pos().y()-10);
+            llama->move(llama->pos().x(),llama->pos().y()-10);
             llama ->updateGeometry();
         }
         }
@@ -172,12 +172,26 @@ void ULMainWindow::keyPressEvent(QKeyEvent *keyevent)
 void ULMainWindow::gameUpdate(int elapsedTicks)
 {
     qDebug() << "Tick! " << elapsedTicks << " ticks elapsed.";
+  /*
+    StateEngine *mov;
+    mov=StateEngine::instance();
+    double curX;
+    double curY;
+    int ID=0;
+    if(aKey)
+    {
+    curX =mov->getLlama(0)->getX();
+    curY=mov->getLlama(0)->getY()-10;
+    }
+     mov->moveLlama(ID,curX,curY);
+    */
 }
 
 
 void ULMainWindow::keyReleaseEvent(QKeyEvent *keyevent)
 {
     qDebug()<<"keyReleaseEvent";
+
     aKey=false;
     sKey=false;
     wKey=false;

@@ -15,9 +15,10 @@
 #include <string>
 #include <sstream>
 #include <iostream>
-
+/*
 bool WorldGenerator::generate(string name)
 {
     World* world = World::instance();
     world = World(18);
 }
+*/

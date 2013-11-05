@@ -23,7 +23,7 @@
 
 class WorldGenerator
 {
-    vector<string> tile1 {"OOBB",
+  /*  vector<string> tile1 {"OOBB",
                           "OOTB",
                           "OBBB",
                           "OOOO"};
@@ -39,7 +39,7 @@ class WorldGenerator
                           "OBOO",
                           "OBTB",
                           "OBBB"};
-
+*/
 };
 
 #endif // WORLDGENERATOR_H
