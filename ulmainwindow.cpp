@@ -84,8 +84,11 @@ void ULMainWindow::on_easyStartButton_clicked()
     chestLabel->setGeometry(QRect(100,100,90,150));
     chestLabel->show();
 
-    ui->easyStartButton->setEnabled(false); //Disable so user cant spam-click llamas
+    //Disable so user cant spam-click llamas
+    ui->easyStartButton->setEnabled(false);
+    ui->easyStartButton->setStyleSheet("color: rgb(150, 150, 150);");
     ui->hardStartButton->setEnabled(false);
+    ui->hardStartButton->setStyleSheet("color: rgb(150, 150, 150);");
 }
 
 
