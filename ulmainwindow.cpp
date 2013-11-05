@@ -1,5 +1,5 @@
-+ /**************************************************************************
-**
+/**************************************************************************
+
 **   ulmainwindow.cpp
 **
 **   This file copyright 2013 Team Crackpot.
@@ -23,6 +23,8 @@
 #include <QDebug>
 #include <QPoint>
 #include <QWidget>
+#include <QFileDialog>
+#include <QString>
 
 #include <QMouseEvent>
 #include <QMainWindow>
@@ -56,13 +58,14 @@ void ULMainWindow::on_buttonInstructions_clicked()
 }
 
 
-void ULMainWindow::on_startButton_clicked()
+void ULMainWindow::on_easyStartButton_clicked()
 {
 /*
  *all the clicking - drag llama around the screen
  *click to open chest
  *keyboard input from user*/
 
+    LlamaStats *llamaStats = new LlamaStats();
     Llama *llama = new Llama(0, 0, 0, 3, 100);
     llamaLabel = new LlamaLabel(ui->widgetGame, llama);
     QPixmap *image = new QPixmap(":/images/llama.jpg");
@@ -75,13 +78,15 @@ void ULMainWindow::on_startButton_clicked()
     llamaLabel->show();
 
     //Display a chest
-    chest = new QLabel(ui->widgetGame);
+    TreasureChest *chest = new TreasureChest(false, 't', 200);
+    chestLabel = new ChestLabel(ui->widgetGame, chest);
     QPixmap *chestImage = new QPixmap(":/images/download.jpg");
-    chest->setPixmap(*chestImage);
-    chest->setGeometry(QRect(100,100,90,150));
-    chest->show();
+    chestLabel->setPixmap(*chestImage);
+    chestLabel->setGeometry(QRect(100,100,90,150));
+    chestLabel->show();
 
-    ui->startButton->setEnabled(false); //Disable so user cant spam-click llamas
+    ui->easyStartButton->setEnabled(false); //Disable so user cant spam-click llamas
+    ui->hardStartButton->setEnabled(false);
 }
 
 
@@ -122,12 +127,34 @@ void ULMainWindow::keyPressEvent(QKeyEvent *keyevent)
     }
     if (keyevent->key()==Qt::Key_O) {
         qDebug() << "O key pressed";
-        if(chest->pos().x()==llamaLabel->pos().x()&&chest->pos().y()==llamaLabel->pos().y()) {
-            oKey=true;
-            //if (chest->getChestStatus != true) {
-                //open treasure chest
-                //apply pesos, lost lives, riddle
-            //}
+        if(chestLabel->pos().x()-llamaLabel->pos().x()<15 && chestLabel->pos().x()-llamaLabel->pos().x()>-15) {
+            if(chestLabel->pos().y()-llamaLabel->pos().y()<15 && chestLabel->pos().y()-llamaLabel->pos().y()>-15) {
+                oKey=true;
+                qDebug() << "O key success! It matched!";
+                if (chestLabel->chest->getEmpty() == false) {
+                    //open treasure chest
+                    if (chestLabel->chest->getType() == 't') {
+                        int newPesos = dynamic_cast<TreasureChest*>(chestLabel->chest)->getPesos();
+                        qDebug() << "pesos:                 " << newPesos;
+                        //apply pesos
+                        llamaStats->setPesos(llamaStats->getPesos() + newPesos);
+                        ui->labelPesos->setText("Pesos: " + QString::number(llamaStats->getPesos()));
+                    } else if (chestLabel->chest->getType() == 'e') {
+                        int lostLives = dynamic_cast<EnemyChest*>(chestLabel->chest)->getLivesLost();
+                        qDebug() << "lost lives:                 " << lostLives;
+                        //apply lost lives
+                        llamaStats->setLives(llamaStats->getLives() + lostLives);
+                        ui->labelPesos->setText("Lives: " + QString::number(llamaStats->getLives()));
+                    } else if (chestLabel->chest->getType() == 'r') {
+                        //ask riddle
+                        //if riddle is correct,
+                        llamaStats->setPesos(llamaStats->getPesos() + 200);
+                        ui->labelPesos->setText("Pesos: " + QString::number(llamaStats->getPesos()));
+                    }
+                }
+                //set chest to empty
+                chestLabel->chest->setEmpty(true);
+            }
         }
     }
 }
@@ -188,6 +215,28 @@ void ULMainWindow::keyReleaseEvent(QKeyEvent *keyevent)
    }
 
 void ULMainWindow::on_cheatButton_clicked()
+{
+    QMessageBox::information(this,"Warning!","Cheat mode activated. Cheaters never prosper; you have been warned.");
+}
+
+void ULMainWindow::on_hardStartButton_clicked()
+{
+
+}
+
+void ULMainWindow::on_btnLoadState_clicked()
+{
+    QString stuff = QFileDialog::getOpenFileName(this, tr("Open File"), ".", tr("UL State file (*.ulstate)"));
+    StateEngine::instance()->loadFromFile(stuff);
+}
+
+void ULMainWindow::on_btnSaveState_clicked()
+{
+    QString stuff = QFileDialog::getSaveFileName(this, tr("Save File"), ".", tr("UL State file (*.ulstate)"));
+    StateEngine::instance()->saveToFile(stuff);
+}
+
+void ULMainWindow::on_btnCreateWorld_clicked()
 {
 
 }

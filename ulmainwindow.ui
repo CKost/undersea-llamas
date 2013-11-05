@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>822</width>
+    <width>827</width>
     <height>478</height>
    </rect>
   </property>
@@ -14,7 +14,8 @@
    <string>ULMainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(52, 104, 156);</string>
+   <string notr="true">background-color: rgb(52, 104, 156);
+color: rgb(255, 255, 255);</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QWidget" name="widgetGame" native="true">
@@ -41,7 +42,7 @@
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true"/>
+     <string notr="true">color: rgb(255, 255, 255);</string>
     </property>
     <property name="text">
      <string>How to Play</string>
@@ -68,7 +69,7 @@
      <rect>
       <x>10</x>
       <y>60</y>
-      <width>66</width>
+      <width>111</width>
       <height>17</height>
      </rect>
     </property>
@@ -88,22 +89,124 @@
       <height>27</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);</string>
+    </property>
     <property name="text">
      <string>Cheat Mode</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="startButton">
+   <widget class="QPushButton" name="easyStartButton">
     <property name="geometry">
      <rect>
-      <x>670</x>
+      <x>630</x>
       <y>310</y>
-      <width>98</width>
+      <width>81</width>
       <height>27</height>
      </rect>
     </property>
-    <property name="text">
-     <string>Start Game</string>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);</string>
     </property>
+    <property name="text">
+     <string>Easy</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="hardStartButton">
+    <property name="geometry">
+     <rect>
+      <x>720</x>
+      <y>310</y>
+      <width>81</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>Hard</string>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="gbxWorldBtns">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>140</y>
+      <width>120</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="title">
+     <string>World (Level)</string>
+    </property>
+    <widget class="QPushButton" name="btnCreateWorld">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>30</y>
+       <width>98</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>Create World</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="gbxStateBtns">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>220</y>
+      <width>111</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="title">
+     <string>State (Game)</string>
+    </property>
+    <widget class="QPushButton" name="btnLoadState">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>30</y>
+       <width>98</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>Load...</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="btnSaveState">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>70</y>
+       <width>98</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>Save...</string>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -111,18 +214,10 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>822</width>
+     <width>827</width>
      <height>25</height>
     </rect>
    </property>
-  </widget>
-  <widget class="QToolBar" name="mainToolBar">
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
