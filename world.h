@@ -75,7 +75,7 @@ private:
 
 public:
     //LlamaStats constructor
-    LlamaStats() {}
+    LlamaStats(int _lives, int _pesos):lives(_lives), pesos(_pesos) {}
 
     //getter and setter methods
     int getLives() { return lives; }

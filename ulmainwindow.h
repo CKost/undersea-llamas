@@ -59,6 +59,8 @@ private:
     LlamaStats *llamaStats;
     LlamaLabel *llamaLabel;
     ChestLabel *chestLabel;
+    ChestLabel *chestLabel2;
+    ChestLabel *chestLabel3;
     //QLabel *chest;
     bool aKey;
     bool sKey;
