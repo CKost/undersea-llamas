@@ -7,5 +7,8 @@
         <file>images/chest.png</file>
         <file>images/enemychest.png</file>
         <file>images/riddlechest.png</file>
+        <file>textfiles/hardstate.ulstate</file>
+        <file>textfiles/hardworld.ulworld</file>
+        <file>images/rock.png</file>
     </qresource>
 </RCC>

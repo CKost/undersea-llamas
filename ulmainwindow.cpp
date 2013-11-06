@@ -39,6 +39,7 @@ ULMainWindow::ULMainWindow(QWidget *parent) :
     currentUser = "LazDude";
     playerID = -1;
     gameStarted = false;
+    aKey = false; wKey = false; sKey = false; dKey = false;
 }
 
 ULMainWindow::~ULMainWindow()
@@ -72,6 +73,7 @@ Have fun!");
 
 void ULMainWindow::on_easyStartButton_clicked()
 {
+    StateEngine::instance()->loadFromFile(":/textfiles/statefile.ulstate");
     gameStarted = true;
     //Disable so user cant spam-click llamas
     ui->easyStartButton->setEnabled(false);
@@ -80,6 +82,16 @@ void ULMainWindow::on_easyStartButton_clicked()
     ui->hardStartButton->setStyleSheet("color: rgb(150, 150, 150);");
 }
 
+void ULMainWindow::on_hardStartButton_clicked()
+{
+    StateEngine::instance()->loadFromFile(":/textfiles/hardstate.ulstate");
+    gameStarted = true;
+    //Disable so user cant spam-click llamas
+    ui->easyStartButton->setEnabled(false);
+    ui->easyStartButton->setStyleSheet("color: rgb(150, 150, 150);");
+    ui->hardStartButton->setEnabled(false);
+    ui->hardStartButton->setStyleSheet("color: rgb(150, 150, 150);");
+}
 
 void ULMainWindow::keyPressEvent(QKeyEvent *keyevent)
 {
@@ -152,6 +164,24 @@ void ULMainWindow::gameUpdate(int elapsedTicks)
         for(int y = 0; y < world->getSize(); ++y)
         {
             WorldCell* cell = world->getCell(x,y);
+            if(cell->getTerrainType() == OBSTACLE)
+            {
+                bool hasLabel = false;
+                for(QObject* qo : ui->widgetGame->children())
+                {
+                    QLabel* ql = dynamic_cast<QLabel*>(qo);
+                    if(ql->pos().x() == x * cellWidth && ql->pos().y() == y * cellHeight && dynamic_cast<ChestLabel*>(ql) == NULL) hasLabel = true;
+                }
+                if(!hasLabel)
+                {
+                    QLabel* ql = new QLabel(ui->widgetGame);
+                    ql->setGeometry(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
+                    ql->setPixmap(QPixmap(":/images/rock.png"));
+                    ql->setScaledContents(true);
+                    ql->updateGeometry();
+                    ql->show();
+                }
+            }
             Chest* chest = cell->getChest();
             bool hasLabel = false;
             for(QObject* qo : ui->widgetGame->children())
@@ -159,6 +189,26 @@ void ULMainWindow::gameUpdate(int elapsedTicks)
                 ChestLabel *label = dynamic_cast<ChestLabel*>(qo);
                 if(label == NULL) continue;
                 if(label->chest == chest) hasLabel = true;
+                TreasureChest* tchest = dynamic_cast<TreasureChest*>(label->chest);
+                if(tchest != NULL)
+                {
+                    if(se->isCheatMode()) label->setPixmap(QPixmap(":/images/chest.png"));
+                    else label->setPixmap(QPixmap(":/images/chest.png"));
+                }
+                RiddleChest* rchest = dynamic_cast<RiddleChest*>(label->chest);
+                if(rchest != NULL)
+                {
+                    if(se->isCheatMode()) label->setPixmap(QPixmap(":/images/riddlechest.png"));
+                    else label->setPixmap(QPixmap(":/images/chest.png"));
+                }
+                EnemyChest* echest = dynamic_cast<EnemyChest*>(label->chest);
+                if(echest != NULL)
+                {
+                    if(se->isCheatMode()) label->setPixmap(QPixmap(":/images/enemychest.png"));
+                    else label->setPixmap(QPixmap(":/images/chest.png"));
+                }
+                label->updateGeometry();
+                label->show();
             }
             if(chest != NULL && !hasLabel)
             {
@@ -258,11 +308,9 @@ void ULMainWindow::keyReleaseEvent(QKeyEvent *keyevent)
 void ULMainWindow::on_cheatButton_clicked()
 {
     QMessageBox::information(this,"Warning!","Cheat mode activated. Cheaters never prosper; you have been warned.");
-}
-
-void ULMainWindow::on_hardStartButton_clicked()
-{
-
+    if(StateEngine::instance()->isCheatMode())
+        StateEngine::instance()->setCheatMode(false);
+    else StateEngine::instance()->setCheatMode(true);
 }
 
 void ULMainWindow::on_btnLoadState_clicked()

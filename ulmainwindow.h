@@ -18,7 +18,7 @@
 #include "llama.h"
 #include "world.h"
 #include "chestlabel.h"
-#include "chests.h"
+#include "chests.h"isCheatMode = false;
 #include <QWidget>
 #include <QMainWindow>
 #include <QKeyEvent>

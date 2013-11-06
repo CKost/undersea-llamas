@@ -33,6 +33,7 @@ StateEngine::StateEngine() : clock(this)
     connect(thread, SIGNAL(started()), &clock, SLOT(start()));
     connect(&clock,&QTimer::timeout, this, &StateEngine::on_timer_timeout);
     thread->start();
+    inCheatMode = false;
 }
 
 void StateEngine::saveToFile(QString filename)
