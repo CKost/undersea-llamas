@@ -1,10 +1,11 @@
 <RCC>
     <qresource prefix="/">
-        <file>images/llama.jpg</file>
-        <file>images/download.jpg</file>
         <file>textfiles/worldfile.ulworld</file>
         <file>textfiles/statefile.ulstate</file>
         <file>images/llama.png</file>
         <file>images/ocean_floor.jpg</file>
+        <file>images/chest.png</file>
+        <file>images/enemychest.png</file>
+        <file>images/riddlechest.png</file>
     </qresource>
 </RCC>

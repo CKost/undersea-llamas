@@ -61,12 +61,15 @@ private:
     ChestLabel *chestLabel;
     ChestLabel *chestLabel2;
     ChestLabel *chestLabel3;
+    QString currentUser;
+    int playerID;
     //QLabel *chest;
     bool aKey;
     bool sKey;
     bool wKey;
     bool dKey;
     bool oKey;
+    bool gameStarted;
 
 };
 

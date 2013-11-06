@@ -21,9 +21,9 @@
 
 using namespace std;
 
-StateEngine StateEngine::inst;
+StateEngine* StateEngine::inst = new StateEngine();
 
-StateEngine* StateEngine::instance() { return &inst; }
+StateEngine* StateEngine::instance() { return inst; }
 
 StateEngine::StateEngine() : clock(this)
 {
@@ -105,7 +105,7 @@ void StateEngine::loadFromFile(QString filename)
             int pesos = splitline[3].toInt();
             int dumbLevel = splitline[4].toInt();
             int facing = splitline[5].toInt();
-            QString username = QString(splitline[6]);   //formerly splitline[6].toInt();
+            QString username = splitline[6];   //formerly splitline[6].toInt();
             Llama* llama = new Llama(x,y,facing,health,pesos);
             llama->setDumbLevel(dumbLevel);
             llama->setUsername(username);
@@ -142,7 +142,7 @@ void StateEngine::addLlama(QString username)
 void StateEngine::punishLlama(int llamaID, int livesToTake)
 {
     Llama* llama = getLlama(llamaID);
-    llama->setPunish(llama->getPunish()-livesToTake);
+    llama->setLives(llama->getLives()-livesToTake);
 }
 void StateEngine::payLlama(int llamaID, int pesosToGive)
 {
@@ -151,7 +151,7 @@ void StateEngine::payLlama(int llamaID, int pesosToGive)
 }
 bool StateEngine::moveLlama(int llamaID, double x, double y)
 {
-    if(World::instance()->getCell((int)x,(int)y)->getTerrainType() != 0) return false;
+    if(World::instance()->getCell((int)x,(int)y)->getTerrainType() != OPEN) return false;
     else
     {
         Llama* llama = getLlama(llamaID);
@@ -172,6 +172,7 @@ void StateEngine::openTChest(int llamaID, double x, double y)
     if (tchest == NULL || tchest->empty) { return; }
     else {
         payLlama(llamaID,tchest->pesos);
+        tchest->setEmpty(true);
     }
 }
 void StateEngine::openEChest(int llamaID, double x, double y)
@@ -180,6 +181,7 @@ void StateEngine::openEChest(int llamaID, double x, double y)
     if (echest == NULL || echest->empty) { return; }
     else {
         punishLlama(llamaID,echest->livesLost);
+        echest->setEmpty(true);
     }
 }
 void StateEngine::openRChest(int /*llamaID*/, double x, double y)
@@ -192,6 +194,7 @@ void StateEngine::openRChest(int /*llamaID*/, double x, double y)
         currentRiddle = riddle.at(0);
         currentAnswer = riddle.at(1);
         emit askRiddle(currentRiddle,currentAnswer,rchest->pesos);
+        rchest->setEmpty(true);
     }
 }
 /*void StateEngine::openChest(int llamaID, double x, double y)
@@ -219,4 +222,10 @@ void StateEngine::openRChest(int /*llamaID*/, double x, double y)
 void StateEngine::on_timer_timeout()
 {
     emit tick(++numTicks);
+}
+
+void StateEngine::reset()
+{
+    delete inst;
+    inst = new StateEngine();
 }

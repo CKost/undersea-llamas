@@ -1,7 +1,7 @@
 [ULState File v1.0]
 beginllamas
-0:4,1:3:400:0:left:LazDude
-1:2,5:1:200:0:right:SpazDude
+0:4,1:3:400:0:0:LazDude
+1:2,5:1:200:0:2:SpazDude
 endllamas
 :/textfiles/worldfile.ulworld
 2 2

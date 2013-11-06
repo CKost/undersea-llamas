@@ -36,6 +36,9 @@ ULMainWindow::ULMainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     connect(StateEngine::instance(), &StateEngine::tick, this, &ULMainWindow::gameUpdate);
+    currentUser = "LazDude";
+    playerID = -1;
+    gameStarted = false;
 }
 
 ULMainWindow::~ULMainWindow()
@@ -69,49 +72,7 @@ Have fun!");
 
 void ULMainWindow::on_easyStartButton_clicked()
 {
-/*
- *all the clicking - drag llama around the screen
- *click to open chest
- *keyboard input from user*/
-
-    llamaStats = new LlamaStats(3, 0);
-    ui->labelLife->setText("Lives: " + QString::number(llamaStats->getLives()));
-    ui->labelPesos->setText("Pesos: 0");
-    Llama *llama = new Llama(0, 0, 0, 3, 100);
-    llamaLabel = new LlamaLabel(ui->widgetGame, llama);
-    QPixmap *image = new QPixmap(":/images/llama.jpg");
-    llamaLabel->setPixmap(*image);
-    //llamaLabel->setGeometry(QRect(200,100,90,150));
-    llamaLabel->setGeometry(QRect(
-         rand() % (ui->widgetGame->geometry().width() - 100),
-         rand() % (ui->widgetGame->geometry().height() - 100),
-         90, 150));
-    llamaLabel->show();
-
-    //Display a chest
-    TreasureChest *chest = new TreasureChest(false, 't', 200);
-    chestLabel = new ChestLabel(ui->widgetGame, chest);
-    QPixmap *chestImage = new QPixmap(":/images/download.jpg");
-    chestLabel->setPixmap(*chestImage);
-    chestLabel->setGeometry(QRect(0,0,90,150));
-    chestLabel->show();
-
-    //Display a chest
-    TreasureChest *chest2 = new TreasureChest(false, 't', 500);
-    chestLabel2 = new ChestLabel(ui->widgetGame, chest2);
-    QPixmap *chestImage2 = new QPixmap(":/images/download.jpg");
-    chestLabel2->setPixmap(*chestImage2);
-    chestLabel2->setGeometry(QRect(100,100,90,150));
-    chestLabel2->show();
-
-    //Display a chest
-    EnemyChest *chest3 = new EnemyChest(false, 'e', 1);
-    chestLabel3 = new ChestLabel(ui->widgetGame, chest3);
-    QPixmap *chestImage3 = new QPixmap(":/images/download.jpg");
-    chestLabel3->setPixmap(*chestImage3);
-    chestLabel3->setGeometry(QRect(200,200,90,150));
-    chestLabel3->show();
-
+    gameStarted = true;
     //Disable so user cant spam-click llamas
     ui->easyStartButton->setEnabled(false);
     ui->easyStartButton->setStyleSheet("color: rgb(150, 150, 150);");
@@ -123,190 +84,172 @@ void ULMainWindow::on_easyStartButton_clicked()
 void ULMainWindow::keyPressEvent(QKeyEvent *keyevent)
 {
 
-    if (keyevent->key()==Qt::Key_W) {
-        qDebug() << "W key pressed";
-        if(llamaLabel->pos().y()>10) {
-            wKey=true;
-            llamaLabel->move(llamaLabel->pos().x(), llamaLabel->pos().y()-10);
-            llamaLabel->updateGeometry();
-        }
+    if(keyevent->key() == Qt::Key_W)
+    {
+        wKey = true;
+        qDebug() << "W key pressed.";
     }
-    if (keyevent->key()==Qt::Key_S) {
-        qDebug() << "S key pressed";
-        if(llamaLabel->pos().y()<(ui->widgetGame->height()-llamaLabel->height()-10)) {
-            sKey=true;
-            llamaLabel->move(llamaLabel->pos().x(), llamaLabel->pos().y()+10);
-            llamaLabel->updateGeometry();
-        }
-    }
-    if (keyevent->key()==Qt::Key_A) {
-        qDebug() << "A key pressed";
-        if(llamaLabel->pos().x()>10) {
-            aKey=true;
-            llamaLabel->move(llamaLabel->pos().x()-10, llamaLabel->pos().y());
-            llamaLabel->updateGeometry();
-        }
-    }
-    if (keyevent->key()==Qt::Key_D) {
-        qDebug() << "D key pressed";
-        if(llamaLabel->pos().x()<(ui->widgetGame->width()-llamaLabel->width()-10)) {
-            dKey=true;
-            llamaLabel->move(llamaLabel->pos().x()+10, llamaLabel->pos().y());
-            llamaLabel->updateGeometry();
-        }
-    }
-    if (keyevent->key()==Qt::Key_O) {
-        qDebug() << "O key pressed";
-        char trash;
-        if(chestLabel->pos().x()-llamaLabel->pos().x()<15 && chestLabel->pos().x()-llamaLabel->pos().x()>-15) {
-            if(chestLabel->pos().y()-llamaLabel->pos().y()<15 && chestLabel->pos().y()-llamaLabel->pos().y()>-15) {
-                oKey=true;
-                qDebug() << "O key success! It matched!";
-                trash = '1';
-            }
-        }
-        if(chestLabel2->pos().x()-llamaLabel->pos().x()<15 && chestLabel2->pos().x()-llamaLabel->pos().x()>-15) {
-            if(chestLabel2->pos().y()-llamaLabel->pos().y()<15 && chestLabel2->pos().y()-llamaLabel->pos().y()>-15) {
-                oKey=true;
-                qDebug() << "O key success! It matched!";
-                trash = '2';
-            }
-        }
-        if(chestLabel3->pos().x()-llamaLabel->pos().x()<15 && chestLabel3->pos().x()-llamaLabel->pos().x()>-15) {
-            if(chestLabel3->pos().y()-llamaLabel->pos().y()<15 && chestLabel3->pos().y()-llamaLabel->pos().y()>-15) {
-                oKey=true;
-                qDebug() << "O key success! It matched!";
-                trash = '3';
-            }
-        }
-        if (oKey == true) {
-            if (trash == '1') {
-                if (chestLabel->chest->getEmpty() == false) {
-                    //open treasure chest
-                    if (chestLabel->chest->getType() == 't') {
-                        int newPesos = dynamic_cast<TreasureChest*>(chestLabel->chest)->getPesos();
-                        qDebug() << "pesos:                 " << newPesos;
-                        //apply pesos
-                        llamaStats->setPesos(llamaStats->getPesos() + newPesos);
-                        ui->labelPesos->setText("Pesos: " + QString::number(llamaStats->getPesos()));
-                    } else if (chestLabel->chest->getType() == 'e') {
-                        int lostLives = dynamic_cast<EnemyChest*>(chestLabel->chest)->getLivesLost();
-                        qDebug() << "lost lives:                 " << lostLives;
-                        //apply lost lives
-                        llamaStats->setLives(llamaStats->getLives() - lostLives);
-                        ui->labelLife->setText("Lives: " + QString::number(llamaStats->getLives()));
-                    } else if (chestLabel->chest->getType() == 'r') {
-                        //ask riddle
-                        //if riddle is correct,
-                        llamaStats->setPesos(llamaStats->getPesos() + 200);
-                        ui->labelPesos->setText("Pesos: " + QString::number(llamaStats->getPesos()));
-                    }
-                    //set chest to empty
-                    chestLabel->chest->setEmpty(true);
-                }
-            } else if (trash == '2') {
-                if (chestLabel2->chest->getEmpty() == false) {
-                    //open treasure chest
-                    if (chestLabel2->chest->getType() == 't') {
-                        int newPesos = dynamic_cast<TreasureChest*>(chestLabel2->chest)->getPesos();
-                        qDebug() << "pesos:                 " << newPesos;
-                        //apply pesos
-                        llamaStats->setPesos(llamaStats->getPesos() + newPesos);
-                        ui->labelPesos->setText("Pesos: " + QString::number(llamaStats->getPesos()));
-                    } else if (chestLabel2->chest->getType() == 'e') {
-                        int lostLives = dynamic_cast<EnemyChest*>(chestLabel2->chest)->getLivesLost();
-                        qDebug() << "lost lives:                 " << lostLives;
-                        //apply lost lives
-                        llamaStats->setLives(llamaStats->getLives() - lostLives);
-                        ui->labelLife->setText("Lives: " + QString::number(llamaStats->getLives()));
-                    } else if (chestLabel2->chest->getType() == 'r') {
-                        //ask riddle
-                        //if riddle is correct,
-                        llamaStats->setPesos(llamaStats->getPesos() + 200);
-                        ui->labelPesos->setText("Pesos: " + QString::number(llamaStats->getPesos()));
-                    }
-                    //set chest to empty
-                    chestLabel2->chest->setEmpty(true);
-                }
-            } else if (trash == '3') {
-                if (chestLabel3->chest->getEmpty() == false) {
-                    //open treasure chest
-                    if (chestLabel3->chest->getType() == 't') {
-                        int newPesos = dynamic_cast<TreasureChest*>(chestLabel3->chest)->getPesos();
-                        qDebug() << "pesos:                 " << newPesos;
-                        //apply pesos
-                        llamaStats->setPesos(llamaStats->getPesos() + newPesos);
-                        ui->labelPesos->setText("Pesos: " + QString::number(llamaStats->getPesos()));
-                    } else if (chestLabel3->chest->getType() == 'e') {
-                        int lostLives = dynamic_cast<EnemyChest*>(chestLabel3->chest)->getLivesLost();
-                        qDebug() << "lost lives:                 " << lostLives;
-                        //apply lost lives
-                        llamaStats->setLives(llamaStats->getLives() - lostLives);
-                        ui->labelLife->setText("Lives: " + QString::number(llamaStats->getLives()));
-                    } else if (chestLabel3->chest->getType() == 'r') {
-                        //ask riddle
-                        //if riddle is correct,
-                        llamaStats->setPesos(llamaStats->getPesos() + 200);
-                        ui->labelPesos->setText("Pesos: " + QString::number(llamaStats->getPesos()));
-                    }
-                    //set chest to empty
-                    chestLabel3->chest->setEmpty(true);
-                }
-            }
-        }
-    }
+    if(keyevent->key() == Qt::Key_A)
+        aKey = true;
+    if(keyevent->key() == Qt::Key_S)
+        sKey = true;
+    if(keyevent->key() == Qt::Key_D)
+        dKey = true;
+    if(keyevent->key() == Qt::Key_O)
+        oKey = true;
 }
 
 
 void ULMainWindow::gameUpdate(int elapsedTicks)
 {
+    if(!gameStarted) return;
+    if(elapsedTicks % 100 == 0)
     qDebug() << "Tick! " << elapsedTicks << " ticks elapsed.";
-  /*
-    StateEngine *mov;
-    mov=StateEngine::instance();
-    double curX;
-    double curY;
-    int ID=0;
-    if(aKey)
+    //This is going to be slightly messy, and for that I apologise, Mr Schaub.
+    StateEngine *se = StateEngine::instance();
+    World *world = World::instance();
+    //Get the player's llama from the state engine, and make it our very own.
+    if(playerID == -1)
     {
-    curX =mov->getLlama(0)->getX();
-    curY=mov->getLlama(0)->getY()-10;
+        for(int i = 0; i < se->getLlamaCount(); ++i)
+        {
+            if(se->getLlama(i)->getUsername() == currentUser)
+                playerID = i;
+        }
     }
-     mov->moveLlama(ID,curX,curY);
-    */
+
+    Llama* llama = se->getLlama(playerID);
+
+    //Move llama if necessary.
+    if(aKey && llama->getX() > -1)               se->moveLlama(playerID, llama->getX() - 1, llama->getY());
+    if(dKey && llama->getX() < world->getSize()) se->moveLlama(playerID, llama->getX() + 1, llama->getY());
+    if(wKey && llama->getY() > -1)               se->moveLlama(playerID, llama->getX(), llama->getY() - 1);
+    if(sKey && llama->getY() < world->getSize()) se->moveLlama(playerID, llama->getX(), llama->getY() + 1);
+
+    if(oKey && world->getCell(llama->getX(),llama->getY())->getChest() != NULL)
+    {
+        qDebug() << "Treasure opening!";
+        Chest* chest = world->getCell(llama->getX(),llama->getY())->getChest();
+        TreasureChest* tchest = dynamic_cast<TreasureChest*>(chest);
+        EnemyChest* echest = dynamic_cast<EnemyChest*>(chest);
+        RiddleChest* rchest = dynamic_cast<RiddleChest*>(chest);
+        if(tchest != NULL) se->openTChest(playerID,llama->getX(),llama->getY());
+        if(echest != NULL) se->openEChest(playerID,llama->getX(),llama->getY());
+        if(rchest != NULL) se->openRChest(playerID,llama->getX(),llama->getY());
+    }
+
+    ui->labelLife->setText("Lives: " + QString::fromStdString(to_string(llama->getLives())));
+    ui->labelPesos->setText("Pesos: " + QString::fromStdString(to_string(llama->getPesos())));
+
+    int worldWidth, worldHeight,cellWidth,cellHeight;
+    worldWidth = ui->widgetGame->width();
+    worldHeight = ui->widgetGame->height();
+    cellWidth = worldWidth / world->getSize();
+    cellHeight = worldHeight / world->getSize();
+
+    for(int x = 0; x < world->getSize(); ++x)
+    {
+        for(int y = 0; y < world->getSize(); ++y)
+        {
+            WorldCell* cell = world->getCell(x,y);
+            Chest* chest = cell->getChest();
+            bool hasLabel = false;
+            for(QObject* qo : ui->widgetGame->children())
+            {
+                ChestLabel *label = dynamic_cast<ChestLabel*>(qo);
+                if(label == NULL) continue;
+                if(label->chest == chest) hasLabel = true;
+            }
+            if(chest != NULL && !hasLabel)
+            {
+                ChestLabel *label= new ChestLabel(ui->widgetGame, chest);
+                label->setGeometry(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
+                label->setScaledContents(true);
+                TreasureChest* tchest = dynamic_cast<TreasureChest*>(chest);
+                if(tchest != NULL)
+                {
+                    if(se->isCheatMode()) label->setPixmap(QPixmap(":/images/chest.png"));
+                    else label->setPixmap(QPixmap(":/images/chest.png"));
+                }
+                RiddleChest* rchest = dynamic_cast<RiddleChest*>(chest);
+                if(rchest != NULL)
+                {
+                    if(se->isCheatMode()) label->setPixmap(QPixmap(":/images/riddlechest.png"));
+                    else label->setPixmap(QPixmap(":/images/chest.png"));
+                }
+                EnemyChest* echest = dynamic_cast<EnemyChest*>(chest);
+                if(echest != NULL)
+                {
+                    if(se->isCheatMode()) label->setPixmap(QPixmap(":/images/enemychest.png"));
+                    else label->setPixmap(QPixmap(":/images/chest.png"));
+                }
+                label->updateGeometry();
+                label->show();
+            }
+        }
+    }
+    // BEGIN LLAMA CONNECTOR
+    for(int i = 0; i < se->getLlamaCount(); ++i)
+    {
+        //qDebug() << "In llama connector loop.";
+        Llama* llama = se->getLlama(i);
+        //qDebug() << "Llama " << i <<" has address " << llama << " and username " << llama->getUsername();
+        bool hasLabel = false;
+        for(QObject* qo : ui->widgetGame->children())
+        {
+            LlamaLabel* ll = dynamic_cast<LlamaLabel*>(qo);
+            if(ll == NULL) continue;
+            if(ll->getLlama() == llama)
+            {
+                ll->setGeometry(llama->getX()*cellWidth, llama->getY()*cellHeight,cellWidth,cellHeight);
+                ll->updateGeometry();
+                hasLabel = true;
+               // qDebug() << "Already has label at " << llama->getX() << ", " << llama->getY();
+            }
+        }
+        if(!hasLabel)
+        {
+            LlamaLabel* ll = new LlamaLabel(ui->widgetGame, llama);
+            ll->setGeometry(llama->getX()*cellWidth, llama->getY()*cellHeight,cellWidth,cellHeight);
+            ll->setPixmap(QPixmap(":/images/llama.png"));
+            ll->setScaledContents(true);
+            ll->updateGeometry();
+            ll->show();
+           // qDebug() << "Created label! Llama at " << llama->getX() << ", " << llama->getY() <<".";
+        }
+    }
 }
 
 
 void ULMainWindow::keyReleaseEvent(QKeyEvent *keyevent)
 {
-
     if (keyevent->key()==Qt::Key_A)
         {
-            qDebug()<<"keyReleaseEvent";
+            //qDebug()<<"keyReleaseEvent";
             aKey=false;
          }
 
     if (keyevent->key()==Qt::Key_S)
         {
-           qDebug()<<"keyReleaseEvent";
+           //qDebug()<<"keyReleaseEvent";
             sKey=false;
          }
 
     if (keyevent->key()==Qt::Key_W)
         {
-            qDebug()<<"keyReleaseEvent";
+            //qDebug()<<"keyReleaseEvent";
             wKey=false;
          }
 
     if (keyevent->key()==Qt::Key_D)
         {
-            qDebug()<<"keyReleaseEvent";
+            //qDebug()<<"keyReleaseEvent";
             dKey=false;
          }
 
     if (keyevent->key()==Qt::Key_O)
         {
-            qDebug()<<"keyReleaseEvent";
+            //qDebug()<<"keyReleaseEvent";
             oKey=false;
          }
 
@@ -327,6 +270,7 @@ void ULMainWindow::on_btnLoadState_clicked()
     QString stuff = QFileDialog::getOpenFileName(this, tr("Open File"), ".", tr("UL State file (*.ulstate)"));
     if(!stuff.isEmpty())
         StateEngine::instance()->loadFromFile(stuff);
+    gameStarted = true;
 }
 
 void ULMainWindow::on_btnSaveState_clicked()
