@@ -15,15 +15,16 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <QString>
 
 using namespace std;
 
 class Riddle
 {
 private:
-   static std::vector<string> riddles;
+   static std::vector<QString> riddles;
    // string riddle1,riddle2,riddle3;
-static string riddle1,riddle2,riddle3;
+static QString riddle1,riddle2,riddle3;
 public:
 
 /*
@@ -40,7 +41,7 @@ public:
 
        static void add_riddlesToriddles();
        //Get riddle method, generate random # and return that vector
-       string get_riddle();
+       QString get_riddle();
 };
 
 #endif // RIDDLE_H

@@ -190,7 +190,7 @@ void StateEngine::openRChest(int /*llamaID*/, double x, double y)
     RiddleChest* rchest = dynamic_cast<RiddleChest*>(World::instance()->getCell(x,y)->getChest());
     if (rchest == NULL || rchest->empty) { return; }
     else {
-        QString riddleline = QString::fromStdString(riddleEngine.get_riddle());
+        QString riddleline = riddleEngine.get_riddle();
         QStringList riddle = riddleline.split("%");
         currentRiddle = riddle.at(0);
         currentAnswer = riddle.at(1);
