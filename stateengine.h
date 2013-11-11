@@ -134,7 +134,8 @@ private slots:
 class Highscore {
     QString name;
     int score;
-
+public:
+    //constructor
     Highscore(QString initName, int initScore):name(initName), score(initScore) {}
     QString printAScore() {
         return QString::fromStdString(name.toStdString() + string(" ") + to_string(score));
@@ -142,19 +143,20 @@ class Highscore {
 };
 
 class HighscoreList {
-    vector<Highscore> list;
+    vector<Highscore> highScores;
 
 public:
-    HighscoreList();
+    //constructor
+    HighscoreList() {}
 
+    //returns highScores vector
     vector<Highscore> getList() {
-        return list;
+        return highScores;
     }
 
     //adds a highscore to the list of highscores
-    void addHighscore(string /*name*/, int /*score*/) {
+    void addHighscore(Highscore h) {highScores.push_back(h);}
 
-    }
     void sort();
 
 };

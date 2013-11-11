@@ -10,5 +10,6 @@
         <file>textfiles/hardstate.ulstate</file>
         <file>textfiles/hardworld.ulworld</file>
         <file>images/rock.png</file>
+        <file>images/logo_blue.png</file>
     </qresource>
 </RCC>

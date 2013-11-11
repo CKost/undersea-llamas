@@ -27,7 +27,7 @@ StateEngine* StateEngine::instance() { return inst; }
 
 StateEngine::StateEngine() : clock(this)
 {
-    clock.setInterval(50);
+    clock.setInterval(70);
     QThread* thread = new QThread();
     clock.moveToThread(thread);
     connect(thread, SIGNAL(started()), &clock, SLOT(start()));
@@ -41,7 +41,7 @@ void StateEngine::saveToFile(QString filename)
     ofstream rvr(filename.toStdString().c_str());
     rvr << "[ULState File v1.0]" << endl; //Important: this signature is used for validation.
     rvr << "beginllamas" << endl;
-    for(int i = 0; i<llamas.size(); ++i)
+    for(unsigned int i = 0; i<llamas.size(); ++i)
     {
         Llama* llama = llamas.at(i);
         //<id>:<x>,<y>:<health>:<pesos>:<dumblevel>:<facing>:<optional username>
@@ -144,11 +144,27 @@ void StateEngine::punishLlama(int llamaID, int livesToTake)
 {
     Llama* llama = getLlama(llamaID);
     llama->setLives(llama->getLives()-livesToTake);
+    if (llama->getLives() == 0) {
+        //end game
+        //reenable "start new game" buttons
+        //save username and score
+        Highscore *highscore = new Highscore(llama->getUsername(), llama->getPesos());
+        //HighscoreList *highScoreList = new HighscoreList();
+        //highScoreList->addHighscore(highscore);
+    }
 }
 void StateEngine::payLlama(int llamaID, int pesosToGive)
 {
     Llama* llama = getLlama(llamaID);
     llama->setPesos(llama->getPesos()+pesosToGive);
+    if (llama->getPesos() >= 3000) {
+        //end game
+        //reenable "start new game" buttons
+        //save username and score
+        Highscore *highscore = new Highscore(llama->getUsername(), llama->getPesos());
+        //HighscoreList *highScoreList = new HighscoreList();
+        //highScoreList->addHighscore(highscore);
+    }
 }
 bool StateEngine::moveLlama(int llamaID, double x, double y)
 {

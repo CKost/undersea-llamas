@@ -18,7 +18,7 @@
 #include "llama.h"
 #include "world.h"
 #include "chestlabel.h"
-#include "chests.h"isCheatMode = false;
+#include "chests.h"
 #include <QWidget>
 #include <QMainWindow>
 #include <QKeyEvent>
@@ -70,6 +70,7 @@ private:
     bool dKey;
     bool oKey;
     bool gameStarted;
+    bool gameOver;
 
 };
 

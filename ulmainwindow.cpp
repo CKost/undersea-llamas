@@ -25,6 +25,7 @@
 #include <QWidget>
 #include <QFileDialog>
 #include <QString>
+#include <QtGui>
 
 #include <QMouseEvent>
 #include <QMainWindow>
@@ -39,6 +40,7 @@ ULMainWindow::ULMainWindow(QWidget *parent) :
     currentUser = "LazDude";
     playerID = -1;
     gameStarted = false;
+    gameOver = true;
     aKey = false; wKey = false; sKey = false; dKey = false;
 }
 
@@ -73,8 +75,10 @@ Have fun!");
 
 void ULMainWindow::on_easyStartButton_clicked()
 {
+    if (ui->labelLogo) {ui->labelLogo->deleteLater();}
     StateEngine::instance()->loadFromFile(":/textfiles/statefile.ulstate");
     gameStarted = true;
+    gameOver = false;
     //Disable so user cant spam-click llamas
     ui->easyStartButton->setEnabled(false);
     ui->easyStartButton->setStyleSheet("color: rgb(150, 150, 150);");
@@ -84,8 +88,10 @@ void ULMainWindow::on_easyStartButton_clicked()
 
 void ULMainWindow::on_hardStartButton_clicked()
 {
+    if (ui->labelLogo) {ui->labelLogo->deleteLater();}
     StateEngine::instance()->loadFromFile(":/textfiles/hardstate.ulstate");
     gameStarted = true;
+    gameOver = false;
     //Disable so user cant spam-click llamas
     ui->easyStartButton->setEnabled(false);
     ui->easyStartButton->setStyleSheet("color: rgb(150, 150, 150);");
@@ -96,19 +102,26 @@ void ULMainWindow::on_hardStartButton_clicked()
 void ULMainWindow::keyPressEvent(QKeyEvent *keyevent)
 {
 
-    if(keyevent->key() == Qt::Key_W)
-    {
+    if(keyevent->key() == Qt::Key_W) {
         wKey = true;
         qDebug() << "W key pressed.";
     }
-    if(keyevent->key() == Qt::Key_A)
+    if(keyevent->key() == Qt::Key_A) {
         aKey = true;
-    if(keyevent->key() == Qt::Key_S)
+        qDebug() << "A key pressed.";
+    }
+    if(keyevent->key() == Qt::Key_S) {
         sKey = true;
-    if(keyevent->key() == Qt::Key_D)
+        qDebug() << "S key pressed.";
+    }
+    if(keyevent->key() == Qt::Key_D) {
         dKey = true;
-    if(keyevent->key() == Qt::Key_O)
+        qDebug() << "D key pressed.";
+    }
+    if(keyevent->key() == Qt::Key_O) {
         oKey = true;
+        qDebug() << "O key pressed.";
+    }
 }
 
 
@@ -117,7 +130,7 @@ void ULMainWindow::gameUpdate(int elapsedTicks)
     if(!gameStarted) return;
     if(elapsedTicks % 100 == 0)
     qDebug() << "Tick! " << elapsedTicks << " ticks elapsed.";
-    //This is going to be slightly messy, and for that I apologise, Mr Schaub.
+    //This is going to be slightly messy, and for that I apologise.
     StateEngine *se = StateEngine::instance();
     World *world = World::instance();
     //Get the player's llama from the state engine, and make it our very own.
@@ -151,7 +164,16 @@ void ULMainWindow::gameUpdate(int elapsedTicks)
     }
 
     ui->labelLife->setText("Lives: " + QString::fromStdString(to_string(llama->getLives())));
+    if (llama->getLives() == 0 && gameOver == false) {
+        QMessageBox::critical(this, "Game over.", "Sorry, you opened one too many enemy chests! Maybe if you try again, you can get the pesos you need. ¡Buena suerte!");
+        gameOver = true;
+    }
     ui->labelPesos->setText("Pesos: " + QString::fromStdString(to_string(llama->getPesos())));
+    if (llama->getPesos() >= 3000 && gameOver == false) {
+        QMessageBox::warning(this, "You won!", "¡Felicidades! Congratulations on collecting your treasure! Now get back to the surface and pay off your debt, or enjoy another dive!");
+        //display high scores
+        gameOver = true;
+    }
 
     int worldWidth, worldHeight,cellWidth,cellHeight;
     worldWidth = ui->widgetGame->width();
@@ -315,10 +337,14 @@ void ULMainWindow::on_cheatButton_clicked()
 
 void ULMainWindow::on_btnLoadState_clicked()
 {
-    QString stuff = QFileDialog::getOpenFileName(this, tr("Open File"), ".", tr("UL State file (*.ulstate)"));
-    if(!stuff.isEmpty())
-        StateEngine::instance()->loadFromFile(stuff);
-    gameStarted = true;
+    //if (gameStarted == false) {
+        if (ui->labelLogo) {ui->labelLogo->deleteLater();}
+        QString stuff = QFileDialog::getOpenFileName(this, tr("Open File"), ".", tr("UL State file (*.ulstate)"));
+        if(!stuff.isEmpty())
+            StateEngine::instance()->loadFromFile(stuff);
+        gameStarted = true;
+        gameOver = false;
+    //}
 }
 
 void ULMainWindow::on_btnSaveState_clicked()

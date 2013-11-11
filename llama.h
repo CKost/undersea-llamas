@@ -15,11 +15,8 @@
 #include "ulmainwindow.h"
 #include "world.h"
 #include "worldgenerator.h"
-//#include <iostream>
 #include <QString>
 #include <cstdlib>
-//#include <cassert>
-//#include <cmath>
 
 using namespace std;
 
