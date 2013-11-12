@@ -67,7 +67,7 @@ public:
 };
 
 
-class LlamaStats
+/*class LlamaStats
 {
 private:
     int lives;
@@ -82,6 +82,6 @@ public:
     int getPesos() { return pesos; }
     void setLives(int _lives) { lives = _lives; }
     void setPesos(int _pesos) { pesos = _pesos; }
-};
+};*/
 
 #endif // WORLD_H

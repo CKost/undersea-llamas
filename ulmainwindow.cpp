@@ -75,7 +75,7 @@ Have fun!");
 
 void ULMainWindow::on_easyStartButton_clicked()
 {
-    if (ui->labelLogo) {ui->labelLogo->deleteLater();}
+    if (ui->labelLogo->isVisible()) {ui->labelLogo->setVisible(false);}
     StateEngine::instance()->loadFromFile(":/textfiles/statefile.ulstate");
     gameStarted = true;
     gameOver = false;
@@ -88,11 +88,11 @@ void ULMainWindow::on_easyStartButton_clicked()
 
 void ULMainWindow::on_hardStartButton_clicked()
 {
-    if (ui->labelLogo) {ui->labelLogo->deleteLater();}
+    if (ui->labelLogo->isVisible()) {ui->labelLogo->setVisible(false);}
     StateEngine::instance()->loadFromFile(":/textfiles/hardstate.ulstate");
     gameStarted = true;
     gameOver = false;
-    //Disable so user cant spam-click llamas
+    //Disable keys so user cant spam-click llamas
     ui->easyStartButton->setEnabled(false);
     ui->easyStartButton->setStyleSheet("color: rgb(150, 150, 150);");
     ui->hardStartButton->setEnabled(false);
@@ -165,14 +165,39 @@ void ULMainWindow::gameUpdate(int elapsedTicks)
 
     ui->labelLife->setText("Lives: " + QString::fromStdString(to_string(llama->getLives())));
     if (llama->getLives() == 0 && gameOver == false) {
-        QMessageBox::critical(this, "Game over.", "Sorry, you opened one too many enemy chests! Maybe if you try again, you can get the pesos you need. ¡Buena suerte!");
+        //display homescreen and win message
+        ui->labelLogo->setVisible(true);
+        ui->easyStartButton->setEnabled(true);
+        ui->easyStartButton->setStyleSheet("color: rgb(250, 250, 250);");
+        ui->hardStartButton->setEnabled(true);
+        ui->hardStartButton->setStyleSheet("");
+        QMessageBox::warning(this, "Game over.", "Sorry, you opened one too many enemy chests! Maybe if you try again, you can get the pesos you need. ¡Buena suerte!");
+        //display high scores
+        /////////////////////
+        //reset game
+        StateEngine::instance()->loseLlama(this->playerID);
         gameOver = true;
+        for (int i = 0; i < ui->widgetGame->children().size() - 1; i++) {
+            delete ui->widgetGame->children().at(i);
+        }
     }
     ui->labelPesos->setText("Pesos: " + QString::fromStdString(to_string(llama->getPesos())));
     if (llama->getPesos() >= 3000 && gameOver == false) {
+        //display homescreen and win message
+        ui->labelLogo->setVisible(true);
+        ui->easyStartButton->setEnabled(true);
+        ui->easyStartButton->setStyleSheet("color: rgb(250, 250, 250);");
+        ui->hardStartButton->setEnabled(true);
+        ui->hardStartButton->setStyleSheet("");
         QMessageBox::warning(this, "You won!", "¡Felicidades! Congratulations on collecting your treasure! Now get back to the surface and pay off your debt, or enjoy another dive!");
         //display high scores
+        /////////////////////
+        //reset game
+        StateEngine::instance()->winLlama(this->playerID);
         gameOver = true;
+        for (int i = 0; i < ui->widgetGame->children().size() - 1; i++) {
+            delete ui->widgetGame->children().at(i);
+        }
     }
 
     int worldWidth, worldHeight,cellWidth,cellHeight;
@@ -189,7 +214,7 @@ void ULMainWindow::gameUpdate(int elapsedTicks)
             if(cell->getTerrainType() == OBSTACLE)
             {
                 bool hasLabel = false;
-                for(QObject* qo : ui->widgetGame->children())
+                for(QObject* qo : ui->widgetGame->children()) //this line crashes the debugger if you step through, otherwise another line will crash the program.
                 {
                     QLabel* ql = dynamic_cast<QLabel*>(qo);
                     if(ql->pos().x() == x * cellWidth && ql->pos().y() == y * cellHeight && dynamic_cast<ChestLabel*>(ql) == NULL) hasLabel = true;
