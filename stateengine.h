@@ -76,6 +76,18 @@ public:
      */
     void payLlama(int llamaID, int pesosToGive);
 
+    /** Makes Llama lose the game
+     *@param int llamaID which refers to user
+     *@return void
+     */
+    void loseLlama(int llamaID);
+
+    /** Makes Llama win the game
+     *@param int llamaID which refers to user
+     *@return void
+     */
+    void winLlama(int llamaID);
+
     /** Called when a riddle is anwsered incorrectly
      *@param takes the int llamaID which reflects which llama user is
      *@return void
@@ -143,19 +155,19 @@ public:
 };
 
 class HighscoreList {
-    vector<Highscore> highScores;
+    vector<Highscore*> highScores;
 
 public:
     //constructor
     HighscoreList() {}
 
     //returns highScores vector
-    vector<Highscore> getList() {
+    vector<Highscore*> getList() {
         return highScores;
     }
 
     //adds a highscore to the list of highscores
-    void addHighscore(Highscore h) {highScores.push_back(h);}
+    void addHighscore(Highscore *h) {highScores.push_back(h);}
 
     void sort();
 

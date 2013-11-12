@@ -79,7 +79,7 @@ void StateEngine::loadFromFile(QString filename)
         if(isFirstLine)
         {
             if(line != "[ULState File v1.0]")
-            throw "Whoa dude, that's not a legit state file. Check it before you wreck it next time please.";
+            throw "Whoa, that's not a legit state file. Check it before you wreck it next time please.";
             else
             {
                 isFirstLine = false;
@@ -144,28 +144,38 @@ void StateEngine::punishLlama(int llamaID, int livesToTake)
 {
     Llama* llama = getLlama(llamaID);
     llama->setLives(llama->getLives()-livesToTake);
-    if (llama->getLives() == 0) {
-        //end game
-        //reenable "start new game" buttons
-        //save username and score
-        Highscore *highscore = new Highscore(llama->getUsername(), llama->getPesos());
-        //HighscoreList *highScoreList = new HighscoreList();
-        //highScoreList->addHighscore(highscore);
-    }
 }
 void StateEngine::payLlama(int llamaID, int pesosToGive)
 {
     Llama* llama = getLlama(llamaID);
     llama->setPesos(llama->getPesos()+pesosToGive);
-    if (llama->getPesos() >= 3000) {
-        //end game
-        //reenable "start new game" buttons
-        //save username and score
-        Highscore *highscore = new Highscore(llama->getUsername(), llama->getPesos());
-        //HighscoreList *highScoreList = new HighscoreList();
-        //highScoreList->addHighscore(highscore);
-    }
 }
+
+void StateEngine::loseLlama(int llamaID)
+{
+    Llama* llama = getLlama(llamaID);
+    //save username and score
+    Highscore *highscore = new Highscore(llama->getUsername(), llama->getPesos());
+    HighscoreList *highScoreList = new HighscoreList(); //incorrect! this should be stored on the server for all games played!
+    highScoreList->addHighscore(highscore);
+    //end game:
+    this->reset();
+    //delete world.children
+    //reenable "start new game" buttons
+}
+void StateEngine::winLlama(int llamaID)
+{
+    Llama* llama = getLlama(llamaID);
+    //save username and score
+    Highscore *highscore = new Highscore(llama->getUsername(), llama->getPesos());
+    HighscoreList *highScoreList = new HighscoreList(); //incorrect! this should be stored on the server for all games played!
+    highScoreList->addHighscore(highscore);
+    //end game:
+    this->reset();
+    //delete world.children
+    //reenable "start new game" buttons
+}
+
 bool StateEngine::moveLlama(int llamaID, double x, double y)
 {
     if(World::instance()->getCell((int)x,(int)y)->getTerrainType() != OPEN) return false;
