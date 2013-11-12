@@ -26,9 +26,10 @@
 #include <QFileDialog>
 #include <QString>
 #include <QtGui>
-
+#include <QLineEdit>
 #include <QMouseEvent>
 #include <QMainWindow>
+#include <QInputDialog>
 
 
 ULMainWindow::ULMainWindow(QWidget *parent) :
@@ -37,6 +38,7 @@ ULMainWindow::ULMainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     connect(StateEngine::instance(), &StateEngine::tick, this, &ULMainWindow::gameUpdate);
+    connect(StateEngine::instance(), &StateEngine::askRiddle,this, &ULMainWindow::disRiddle); //Constructor for riddle showing, added 11/12
     currentUser = "LazDude";
     playerID = -1;
     gameStarted = false;
@@ -123,7 +125,21 @@ void ULMainWindow::keyPressEvent(QKeyEvent *keyevent)
         qDebug() << "O key pressed.";
     }
 }
-
+void ULMainWindow::disRiddle(QString riddle, QString anwser, int pesos)
+{
+    bool ok;
+    QString text = QInputDialog::getText(this, tr("Riddle"),
+                                             (riddle), QLineEdit::Normal,
+                                             tr("Type in Answer :)"), &ok);
+    if(ok && text==anwser)
+    {
+        StateEngine::instance()->payLlama(playerID,pesos);
+    }
+    else
+    {
+        QMessageBox::information(this,"Incorrect Anwser","You anwsered it incorrectly");
+    }
+}
 
 void ULMainWindow::gameUpdate(int elapsedTicks)
 {
