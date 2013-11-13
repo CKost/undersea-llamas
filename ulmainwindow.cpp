@@ -214,10 +214,7 @@ void ULMainWindow::gameUpdate(int elapsedTicks)
         /////////////////////
         //reset game
         StateEngine::instance()->loseLlama(this->playerID);
-        gameOver = true;
-        for (int i = 0; i < ui->widgetGame->children().size() - 1; i++) {
-            delete ui->widgetGame->children().at(i);
-        }
+        resetGame();
     }
     ui->labelPesos->setText("Pesos: " + QString::fromStdString(to_string(llama->getPesos())));
     if (llama->getPesos() >= 3000 && gameOver == false) {
@@ -232,10 +229,7 @@ void ULMainWindow::gameUpdate(int elapsedTicks)
         /////////////////////
         //reset game
         StateEngine::instance()->winLlama(this->playerID);
-        gameOver = true;
-        for (int i = 0; i < ui->widgetGame->children().size() - 1; i++) {
-            delete ui->widgetGame->children().at(i);
-        }
+        resetGame();
     }
 
     int worldWidth, worldHeight,cellWidth,cellHeight;
@@ -430,4 +424,14 @@ void ULMainWindow::on_btnMP_clicked()
     NetworkEngine::instance()->joinGame(0,user);
     currentUser = user;
 
+}
+
+void ULMainWindow::resetGame()
+{
+    gameOver = true;
+    gameStarted = false;
+    for(QObject* ptr : ui->widgetGame->children())
+        delete ptr;
+    playerID = -1;
+    currentUser = "LazDude";
 }

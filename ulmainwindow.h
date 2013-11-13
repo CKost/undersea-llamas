@@ -69,6 +69,7 @@ private:
     bool oKey;
     bool gameStarted;
     bool gameOver;
+    void resetGame();
 
 };
 

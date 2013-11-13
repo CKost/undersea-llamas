@@ -25,7 +25,7 @@ StateEngine* StateEngine::inst = new StateEngine();
 
 StateEngine* StateEngine::instance() { return inst; }
 
-StateEngine::StateEngine() : clock(this)
+StateEngine::StateEngine() : clock(this), numTicks(0), inCheatMode(false)
 {
     clock.setInterval(70);
     QThread* thread = new QThread();
@@ -57,7 +57,7 @@ void StateEngine::saveToFile(QString filename)
         for(int y = 0; y < wrld->getSize(); ++y)
         {
             WorldCell* cell = wrld->getCell(x,y);
-            if(cell->getChest()->empty)
+            if(cell->getChest() != NULL && cell->getChest()->empty)
                 rvr << x << " " << y << endl;
         }
     }
@@ -255,6 +255,7 @@ void StateEngine::reset()
 {
     delete inst;
     inst = new StateEngine();
+
 }
 
 void StateEngine::fromStateString(QString string)
