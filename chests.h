@@ -59,7 +59,7 @@ public:
     int pesos;
 
     //constructors
-    RiddleChest(bool _empty = false, int _pesos = 5000):Chest(_empty), pesos(_pesos){}
+    RiddleChest(bool _empty = false, int _pesos = 50):Chest(_empty), pesos(_pesos){}
 
     //getter methods
     int getPesos() { return this->pesos; }

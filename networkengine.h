@@ -22,7 +22,8 @@ public:
 
     vector<QString> gamelist;
     NEState mode;
-
+    QString statefile,worldfile;
+    QTextStream state,world;
     //CLIENT INITIATED CALLS
     void getGamesFromServer();
     void joinGame(int gameid, QString username);

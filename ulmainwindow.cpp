@@ -7,13 +7,14 @@
 **   Login IDs: afisc855 bspar145 ckost598
 **
 **************************************************************************/
-
+#include "moviedisplay.h"
 #include "chests.h"
 #include "llama.h"
 #include "llamalabel.h"
 #include "riddle.h"
 #include "stateengine.h"
 #include "ulmainwindow.h"
+#include "networkengine.h"
 #include "ui_ulmainwindow.h"
 #include "world.h"
 #include "worldgenerator.h"
@@ -26,10 +27,11 @@
 #include <QFileDialog>
 #include <QString>
 #include <QtGui>
-
+#include <QLineEdit>
 #include <QMouseEvent>
 #include <QMainWindow>
-
+#include <QInputDialog>
+#include <QPixmap>
 
 ULMainWindow::ULMainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -37,6 +39,7 @@ ULMainWindow::ULMainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     connect(StateEngine::instance(), &StateEngine::tick, this, &ULMainWindow::gameUpdate);
+    connect(StateEngine::instance(), &StateEngine::askRiddle,this, &ULMainWindow::disRiddle); //Constructor for riddle showing, added 11/12
     currentUser = "LazDude";
     playerID = -1;
     gameStarted = false;
@@ -75,7 +78,7 @@ Have fun!");
 
 void ULMainWindow::on_easyStartButton_clicked()
 {
-    if (ui->labelLogo) {ui->labelLogo->deleteLater();}
+    if (ui->labelLogo->isVisible()) {ui->labelLogo->setVisible(false);}
     StateEngine::instance()->loadFromFile(":/textfiles/statefile.ulstate");
     gameStarted = true;
     gameOver = false;
@@ -88,15 +91,16 @@ void ULMainWindow::on_easyStartButton_clicked()
 
 void ULMainWindow::on_hardStartButton_clicked()
 {
-    if (ui->labelLogo) {ui->labelLogo->deleteLater();}
+    if (ui->labelLogo->isVisible()) {ui->labelLogo->setVisible(false);}
     StateEngine::instance()->loadFromFile(":/textfiles/hardstate.ulstate");
     gameStarted = true;
     gameOver = false;
-    //Disable so user cant spam-click llamas
+    //Disable keys so user cant spam-click llamas
     ui->easyStartButton->setEnabled(false);
     ui->easyStartButton->setStyleSheet("color: rgb(150, 150, 150);");
     ui->hardStartButton->setEnabled(false);
     ui->hardStartButton->setStyleSheet("color: rgb(150, 150, 150);");
+
 }
 
 void ULMainWindow::keyPressEvent(QKeyEvent *keyevent)
@@ -123,7 +127,41 @@ void ULMainWindow::keyPressEvent(QKeyEvent *keyevent)
         qDebug() << "O key pressed.";
     }
 }
+void ULMainWindow::disRiddle(QString riddle, QString anwser, int pesos)
+{
+    oKey = false;
+    wKey = false;
+    aKey = false;
+    sKey = false;
+    dKey = false;
+    bool ok;
+    QString text = QInputDialog::getText(this, tr("Riddle"),
+                                             (riddle), QLineEdit::Normal,
+                                             tr("Type in Answer :)"), &ok);
+    if(ok && text==anwser)
+    {
 
+        MovieDisplay dlg;
+        dlg.setGeometry(QRect(this->x()+this->width()/2-100,this->y()+this->height()/2-65,200,160));
+        dlg.exec();
+
+        StateEngine::instance()->payLlama(playerID,pesos);
+    }
+    else
+    {
+        //QMessageBox msgBox;
+       // msgBox.information(this,"Incorrect Anwser","You anwsered it incorrectly"); //If just want basic messagebox, no image
+            QMessageBox about;
+
+            about.setInformativeText("Riddle solution was incorrect.");
+            about.setStandardButtons(QMessageBox::Ok);
+            about.setIconPixmap(QPixmap("://images/llamaMAD.png"));
+            about.setDefaultButton(QMessageBox::Ok);
+            about.setGeometry(QRect(this->x()+this->width()/4.5,this->y()+this->height()/4.5,90,140));
+            about.show();
+            about.exec();
+    }
+}
 
 void ULMainWindow::gameUpdate(int elapsedTicks)
 {
@@ -165,14 +203,39 @@ void ULMainWindow::gameUpdate(int elapsedTicks)
 
     ui->labelLife->setText("Lives: " + QString::fromStdString(to_string(llama->getLives())));
     if (llama->getLives() == 0 && gameOver == false) {
-        QMessageBox::critical(this, "Game over.", "Sorry, you opened one too many enemy chests! Maybe if you try again, you can get the pesos you need. ¡Buena suerte!");
+        //display homescreen and win message
+        ui->labelLogo->setVisible(true);
+        ui->easyStartButton->setEnabled(true);
+        ui->easyStartButton->setStyleSheet("color: rgb(250, 250, 250);");
+        ui->hardStartButton->setEnabled(true);
+        ui->hardStartButton->setStyleSheet("");
+        QMessageBox::warning(this, "Game over.", "Sorry, you opened one too many enemy chests! Maybe if you try again, you can get the pesos you need. ¡Buena suerte!");
+        //display high scores
+        /////////////////////
+        //reset game
+        StateEngine::instance()->loseLlama(this->playerID);
         gameOver = true;
+        for (int i = 0; i < ui->widgetGame->children().size() - 1; i++) {
+            delete ui->widgetGame->children().at(i);
+        }
     }
     ui->labelPesos->setText("Pesos: " + QString::fromStdString(to_string(llama->getPesos())));
     if (llama->getPesos() >= 3000 && gameOver == false) {
+        //display homescreen and win message
+        ui->labelLogo->setVisible(true);
+        ui->easyStartButton->setEnabled(true);
+        ui->easyStartButton->setStyleSheet("color: rgb(250, 250, 250);");
+        ui->hardStartButton->setEnabled(true);
+        ui->hardStartButton->setStyleSheet("");
         QMessageBox::warning(this, "You won!", "¡Felicidades! Congratulations on collecting your treasure! Now get back to the surface and pay off your debt, or enjoy another dive!");
         //display high scores
+        /////////////////////
+        //reset game
+        StateEngine::instance()->winLlama(this->playerID);
         gameOver = true;
+        for (int i = 0; i < ui->widgetGame->children().size() - 1; i++) {
+            delete ui->widgetGame->children().at(i);
+        }
     }
 
     int worldWidth, worldHeight,cellWidth,cellHeight;
@@ -189,7 +252,7 @@ void ULMainWindow::gameUpdate(int elapsedTicks)
             if(cell->getTerrainType() == OBSTACLE)
             {
                 bool hasLabel = false;
-                for(QObject* qo : ui->widgetGame->children())
+                for(QObject* qo : ui->widgetGame->children()) //this line crashes the debugger if you step through, otherwise another line will crash the program.
                 {
                     QLabel* ql = dynamic_cast<QLabel*>(qo);
                     if(ql->pos().x() == x * cellWidth && ql->pos().y() == y * cellHeight && dynamic_cast<ChestLabel*>(ql) == NULL) hasLabel = true;
@@ -359,4 +422,12 @@ void ULMainWindow::on_btnCreateWorld_clicked()
     QString stuff = QFileDialog::getSaveFileName(this, tr("Save file"), ".", tr("UL World File (*.ulworld)"));
     if(!stuff.isEmpty())
         WorldGenerator().generate(stuff);
+}
+
+void ULMainWindow::on_btnMP_clicked()
+{
+    QString user = QInputDialog::getText(this,"Username Entry","Please enter a username:");
+    NetworkEngine::instance()->joinGame(0,user);
+    currentUser = user;
+
 }

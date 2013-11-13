@@ -12,5 +12,3 @@
 
 
 using namespace std;
-
-//int Llama::pesos=0;

@@ -4,12 +4,12 @@
 #include <sstream>
 
 NetworkEngine::NetworkEngine(QObject *parent) :
-    QObject(parent)
+    QObject(parent), state(&statefile), world(&worldfile)
 {
     sock = new QTcpSocket(this);
     connect(sock,&QTcpSocket::readyRead,this,&NetworkEngine::onDataReceived);
     connect(sock,&QTcpSocket::disconnected,this,&NetworkEngine::onServerHangup);
-    sock->connectToHost("shredder.resnet.bju",42000);
+    sock->connectToHost("localhost",42000);
 }
 
 NetworkEngine* NetworkEngine::inst = new NetworkEngine();
@@ -67,12 +67,20 @@ void NetworkEngine::onDataReceived()
             gamelist.push_back(splitline[1]);
         else if(splitline[0] == "ULENDLIST")
             mode = Idle;
-        else if(splitline[0] == "ULSTATEFILE")
+        else if(splitline[0] == "ULSTATEBEGIN")
             mode = StateFile;
-        else if(splitline[0] == "ULENDSTATE")
+        else if(splitline[0] == "ULSTATEEND")
+        {
             mode = Idle;
-        else if(splitline[0] == "ULWORLDFILE")
+            StateEngine::instance()->fromStateString(statefile);
+        }
+        else if(splitline[0] == "ULWORLDBEGIN")
             mode = WorldFile;
+        else if(splitline[0] == "ULWORLDEND")
+        {
+            mode = Idle;
+            World::loadFromQString(worldfile);
+        }
         else if(splitline[0] == "ULSCORELIST")
             mode = ScoreList;
         else if(splitline[0] == "ULSCORE")
@@ -81,7 +89,20 @@ void NetworkEngine::onDataReceived()
             mode = Idle;
         if(mode == StateFile)
         {
-
+            state << line << endl;
+        }
+        if(mode == WorldFile)
+        {
+            world << line << endl;
+        }
+        if(splitline[0] == "ULMOVE")
+        {
+            QStringList args = splitline[1].split(":");
+            StateEngine::instance()->moveLlama(args[0].toInt(),args[1].toInt(), args[2].toInt());
+        }
+        if(splitline[0] == "ULTICK")
+        {
+            StateEngine::instance()->syncTicks(splitline[1].toInt());
         }
     }
 }

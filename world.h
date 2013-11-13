@@ -30,6 +30,7 @@ public:
     WorldCell* getCell(int x, int y);
     void setCell(int x, int y, WorldCell* cell);
     static void loadFromFile(QString filename);
+    static void loadFromQString(QString string);
     ~World();
     static World* instance() {return inst;}
     int getSize() { return size; }
@@ -67,7 +68,7 @@ public:
 };
 
 
-class LlamaStats
+/*class LlamaStats
 {
 private:
     int lives;
@@ -82,6 +83,6 @@ public:
     int getPesos() { return pesos; }
     void setLives(int _lives) { lives = _lives; }
     void setPesos(int _pesos) { pesos = _pesos; }
-};
+};*/
 
 #endif // WORLD_H

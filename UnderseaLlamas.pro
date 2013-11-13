@@ -18,10 +18,12 @@ SOURCES += main.cpp \
         stateengine.cpp \
         worldgenerator.cpp \
         world.cpp \
-    chests.cpp \
-    llama.cpp \
-    llamalabel.cpp \
-    networkengine.cpp
+        chests.cpp \
+        llama.cpp \
+        llamalabel.cpp \
+        networkengine.cpp \
+        moviedisplay.cpp
+
 
 HEADERS  += \
     world.h \
@@ -33,9 +35,11 @@ HEADERS  += \
     ulmainwindow.h \
     llamalabel.h \
     chestlabel.h \
-    networkengine.h
+    networkengine.h \
+    moviedisplay.h
 
-FORMS    += ulmainwindow.ui
+FORMS    += ulmainwindow.ui \
+    moviedisplay.ui
 
 QMAKE_CXXFLAGS += -std=c++0x
 

@@ -45,6 +45,7 @@ private slots:
     void on_easyStartButton_clicked();
     void on_hardStartButton_clicked();
     void gameUpdate(int elapsedTicks);
+    void disRiddle(QString riddle, QString anwser, int peso); //added in 11/12 for riddle method lol
 
     //void on_easyStartButton_clicked();
 
@@ -54,13 +55,10 @@ private slots:
 
     void on_btnCreateWorld_clicked();
 
+    void on_btnMP_clicked();
+
 private:
     Ui::ULMainWindow *ui;
-    LlamaStats *llamaStats;
-    LlamaLabel *llamaLabel;
-    ChestLabel *chestLabel;
-    ChestLabel *chestLabel2;
-    ChestLabel *chestLabel3;
     QString currentUser;
     int playerID;
     //QLabel *chest;
@@ -75,3 +73,4 @@ private:
 };
 
 #endif // ULMAINWINDOW_H
+

@@ -17,6 +17,7 @@
 #include "worldgenerator.h"
 #include <cstdlib>
 #include <string>
+#include <QLabel>
 
 
 using namespace std;
@@ -29,6 +30,7 @@ vector<QString> Riddle::riddles;
 QString Riddle::riddle1="It wanders far, sometimes high sometimes low, but always finishs OK%CpS111_Grade";
 QString Riddle::riddle2=" What goes round the house and in the house but never touches the house%sun";
 QString Riddle::riddle3="The more you take, the more you leave behind. What are they?%footsteps";
+
 
 /*Add riddles to vector. Anwser seperated from riddle with a percent sign
  *@param void method
@@ -50,5 +52,5 @@ QString Riddle::get_riddle()
 {
     QString ranRiddle;
     ranRiddle=riddles[rand() % 3];
-    return ranRiddle;
+     return ranRiddle;
 }

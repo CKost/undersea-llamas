@@ -42,6 +42,8 @@ public:
        static void add_riddlesToriddles();
        //Get riddle method, generate random # and return that vector
        QString get_riddle();
+
+
 };
 
 #endif // RIDDLE_H
