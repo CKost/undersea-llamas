@@ -246,3 +246,94 @@ void StateEngine::reset()
     delete inst;
     inst = new StateEngine();
 }
+
+void StateEngine::fromStateString(QString string)
+{
+    QTextStream in(&string);
+
+    bool processingLlamas = false, isFirstLine = true, processingChests = false;
+
+    while(!in.atEnd())
+    {
+        QString line = in.readLine();
+        if(isFirstLine)
+        {
+            if(line != "[ULState File v1.0]")
+            throw "Whoa dude, that's not a legit state file. Check it before you wreck it next time please.";
+            else
+            {
+                isFirstLine = false;
+                continue;
+            }
+        }
+        if(!isFirstLine && line == "beginllamas")
+        {
+            processingLlamas = true;
+            continue;
+        }
+        if(processingLlamas)
+        {
+            if(line == "endllamas")
+            {
+                processingLlamas = false;
+                continue;
+            }
+            QStringList splitline = line.split(":");
+            int id = splitline[0].toInt();
+            int x = splitline[1].split(",")[0].toInt();
+            int y = splitline[1].split(",")[1].toInt();
+            int health = splitline[2].toInt();
+            int pesos = splitline[3].toInt();
+            int dumbLevel = splitline[4].toInt();
+            int facing = splitline[5].toInt();
+            QString username = splitline[6];   //formerly splitline[6].toInt();
+            Llama* llama = new Llama(x,y,facing,health,pesos);
+            llama->setDumbLevel(dumbLevel);
+            llama->setUsername(username);
+            llamas.push_back(llama);
+        }
+        if(!isFirstLine && !processingLlamas && !processingChests && line != "beginllamas")
+        {
+            currentWorldFile = line.toStdString();
+            World::loadFromFile(line);
+            processingChests = true;
+            continue;
+        }
+        if(processingChests)
+        {
+            QStringList splitline = line.split(" ");
+            int x = splitline[0].toInt();
+            int y = splitline[1].toInt();
+            World::instance()->getCell(x,y)->getChest()->empty = true;
+        }
+    }
+}
+
+QString StateEngine::toStateString()
+{
+    QString result;
+    QTextStream rvr(&result);
+    rvr << "[ULState File v1.0]" << endl; //Important: this signature is used for validation.
+    rvr << "beginllamas" << endl;
+    for(unsigned int i = 0; i<llamas.size(); ++i)
+    {
+        Llama* llama = llamas.at(i);
+        //<id>:<x>,<y>:<health>:<pesos>:<dumblevel>:<facing>:<optional username>
+        rvr << i << ":" << llama->getX() << "," << llama->getY() << ":" << llama->getPunish() <<
+               ":" << llama->getPesos() << ":" << llama->getDumbLevel() << ":" << llama->getDir() <<
+               ":" << llama->getUsername() << endl;
+    }
+    rvr << "endllamas" << endl;
+    rvr << QString::fromStdString(currentWorldFile) << endl;
+    World* wrld = World::instance();
+    for(int x = 0; x < wrld->getSize(); ++x)
+    {
+        for(int y = 0; y < wrld->getSize(); ++y)
+        {
+            WorldCell* cell = wrld->getCell(x,y);
+            if(cell->getChest()->empty)
+                rvr << x << " " << y << endl;
+        }
+    }
+    rvr.flush();
+}

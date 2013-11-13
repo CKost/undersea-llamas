@@ -20,7 +20,8 @@ SOURCES += main.cpp \
         world.cpp \
     chests.cpp \
     llama.cpp \
-    llamalabel.cpp
+    llamalabel.cpp \
+    networkengine.cpp
 
 HEADERS  += \
     world.h \
@@ -31,7 +32,8 @@ HEADERS  += \
     riddle.h \
     ulmainwindow.h \
     llamalabel.h \
-    chestlabel.h
+    chestlabel.h \
+    networkengine.h
 
 FORMS    += ulmainwindow.ui
 
