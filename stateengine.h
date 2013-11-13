@@ -123,6 +123,7 @@ public:
 
     QString toStateString();
     void fromStateString(QString string);
+    void syncTicks(int num) {numTicks = num;}
 
 private:
     StateEngine();

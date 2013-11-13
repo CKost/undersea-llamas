@@ -18,10 +18,12 @@ SOURCES += main.cpp \
         stateengine.cpp \
         worldgenerator.cpp \
         world.cpp \
-    chests.cpp \
-    llama.cpp \
-    llamalabel.cpp \
-    moviedisplay.cpp
+        chests.cpp \
+        llama.cpp \
+        llamalabel.cpp \
+        networkengine.cpp \
+        moviedisplay.cpp
+
 
 HEADERS  += \
     world.h \
@@ -33,6 +35,7 @@ HEADERS  += \
     ulmainwindow.h \
     llamalabel.h \
     chestlabel.h \
+    networkengine.h \
     moviedisplay.h
 
 FORMS    += ulmainwindow.ui \

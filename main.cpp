@@ -18,7 +18,7 @@
 #include <cassert>
 #include <QApplication>
 
-bool unitTest();
+void unitTest();
 
 int main(int argc, char *argv[])
 {
@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
     return a.exec();
 }
 
-bool unitTest()
+void unitTest()
 {
     StateEngine* se = StateEngine::instance();
     World* world = World::instance();
@@ -45,5 +45,4 @@ bool unitTest()
     Riddle::add_riddlesToriddles();
     assert(Riddle::get_SizeRiddles()==3);
     StateEngine::reset();
-    return true; //might be wrong! :)
 }

@@ -55,13 +55,10 @@ private slots:
 
     void on_btnCreateWorld_clicked();
 
+    void on_btnMP_clicked();
+
 private:
     Ui::ULMainWindow *ui;
-    LlamaStats *llamaStats;
-    LlamaLabel *llamaLabel;
-    ChestLabel *chestLabel;
-    ChestLabel *chestLabel2;
-    ChestLabel *chestLabel3;
     QString currentUser;
     int playerID;
     //QLabel *chest;
@@ -72,7 +69,9 @@ private:
     bool oKey;
     bool gameStarted;
     bool gameOver;
+    void resetGame();
 
 };
 
 #endif // ULMAINWINDOW_H
+

@@ -30,9 +30,11 @@ public:
     WorldCell* getCell(int x, int y);
     void setCell(int x, int y, WorldCell* cell);
     static void loadFromFile(QString filename);
+    static void loadFromQString(QString string);
     ~World();
     static World* instance() {return inst;}
     int getSize() { return size; }
+    static void reset() { delete inst; inst = new World(4); }
 private:
     vector<WorldCell*> cells;
     static World* inst;

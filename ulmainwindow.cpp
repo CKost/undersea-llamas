@@ -14,6 +14,7 @@
 #include "riddle.h"
 #include "stateengine.h"
 #include "ulmainwindow.h"
+#include "networkengine.h"
 #include "ui_ulmainwindow.h"
 #include "world.h"
 #include "worldgenerator.h"
@@ -128,6 +129,11 @@ void ULMainWindow::keyPressEvent(QKeyEvent *keyevent)
 }
 void ULMainWindow::disRiddle(QString riddle, QString anwser, int pesos)
 {
+    oKey = false;
+    wKey = false;
+    aKey = false;
+    sKey = false;
+    dKey = false;
     bool ok;
     QString text = QInputDialog::getText(this, tr("Riddle"),
                                              (riddle), QLineEdit::Normal,
@@ -211,10 +217,7 @@ void ULMainWindow::gameUpdate(int elapsedTicks)
         /////////////////////
         //reset game
         StateEngine::instance()->loseLlama(this->playerID);
-        gameOver = true;
-        for (int i = 0; i < ui->widgetGame->children().size() - 1; i++) {
-            delete ui->widgetGame->children().at(i);
-        }
+        resetGame();
     }
 
     if (llama->getPesos() >= 3000 && gameOver == false) {
@@ -229,10 +232,7 @@ void ULMainWindow::gameUpdate(int elapsedTicks)
         /////////////////////
         //reset game
         StateEngine::instance()->winLlama(this->playerID);
-        gameOver = true;
-        for (int i = 0; i < ui->widgetGame->children().size() - 1; i++) {
-            delete ui->widgetGame->children().at(i);
-        }
+        resetGame();
     }
 
     if (gameOver == false) {
@@ -421,4 +421,22 @@ void ULMainWindow::on_btnCreateWorld_clicked()
     QString stuff = QFileDialog::getSaveFileName(this, tr("Save file"), ".", tr("UL World File (*.ulworld)"));
     if(!stuff.isEmpty())
         WorldGenerator().generate(stuff);
+}
+
+void ULMainWindow::on_btnMP_clicked()
+{
+    QString user = QInputDialog::getText(this,"Username Entry","Please enter a username:");
+    NetworkEngine::instance()->joinGame(0,user);
+    currentUser = user;
+
+}
+
+void ULMainWindow::resetGame()
+{
+    gameOver = true;
+    gameStarted = false;
+    for(QObject* ptr : ui->widgetGame->children())
+        delete ptr;
+    playerID = -1;
+    currentUser = "LazDude";
 }
