@@ -143,7 +143,17 @@ void ULMainWindow::disRiddle(QString riddle, QString anwser, int pesos)
     }
     else
     {
-        QMessageBox::information(this,"Incorrect Anwser","You anwsered it incorrectly");
+        //QMessageBox msgBox;
+       // msgBox.information(this,"Incorrect Anwser","You anwsered it incorrectly"); //If just want basic messagebox, no image
+            QMessageBox about;
+
+            about.setInformativeText("Riddle solution was incorrect.");
+            about.setStandardButtons(QMessageBox::Ok);
+            about.setIconPixmap(QPixmap("://images/llamaMAD.png"));
+            about.setDefaultButton(QMessageBox::Ok);
+            about.setGeometry(QRect(this->x()+this->width()/4.5,this->y()+this->height()/4.5,90,140));
+            about.show();
+            about.exec();
     }
 }
 
