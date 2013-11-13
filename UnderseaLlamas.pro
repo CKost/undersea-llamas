@@ -20,7 +20,8 @@ SOURCES += main.cpp \
         world.cpp \
     chests.cpp \
     llama.cpp \
-    llamalabel.cpp
+    llamalabel.cpp \
+    moviedisplay.cpp
 
 HEADERS  += \
     world.h \
@@ -31,9 +32,11 @@ HEADERS  += \
     riddle.h \
     ulmainwindow.h \
     llamalabel.h \
-    chestlabel.h
+    chestlabel.h \
+    moviedisplay.h
 
-FORMS    += ulmainwindow.ui
+FORMS    += ulmainwindow.ui \
+    moviedisplay.ui
 
 QMAKE_CXXFLAGS += -std=c++0x
 

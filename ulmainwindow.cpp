@@ -7,7 +7,7 @@
 **   Login IDs: afisc855 bspar145 ckost598
 **
 **************************************************************************/
-
+#include "moviedisplay.h"
 #include "chests.h"
 #include "llama.h"
 #include "llamalabel.h"
@@ -30,7 +30,7 @@
 #include <QMouseEvent>
 #include <QMainWindow>
 #include <QInputDialog>
-
+#include <QPixmap>
 
 ULMainWindow::ULMainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -99,6 +99,7 @@ void ULMainWindow::on_hardStartButton_clicked()
     ui->easyStartButton->setStyleSheet("color: rgb(150, 150, 150);");
     ui->hardStartButton->setEnabled(false);
     ui->hardStartButton->setStyleSheet("color: rgb(150, 150, 150);");
+
 }
 
 void ULMainWindow::keyPressEvent(QKeyEvent *keyevent)
@@ -133,6 +134,11 @@ void ULMainWindow::disRiddle(QString riddle, QString anwser, int pesos)
                                              tr("Type in Answer :)"), &ok);
     if(ok && text==anwser)
     {
+
+        MovieDisplay dlg;
+        dlg.setGeometry(QRect(this->x()+this->width()/2-100,this->y()+this->height()/2-65,200,160));
+        dlg.exec();
+
         StateEngine::instance()->payLlama(playerID,pesos);
     }
     else
