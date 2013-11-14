@@ -9,7 +9,7 @@ NetworkEngine::NetworkEngine(QObject *parent) :
     sock = new QTcpSocket(this);
     connect(sock,&QTcpSocket::readyRead,this,&NetworkEngine::onDataReceived);
     connect(sock,&QTcpSocket::disconnected,this,&NetworkEngine::onServerHangup);
-    sock->connectToHost("localhost",42000);
+    sock->connectToHost("shredder.bju.edu",42000);
 }
 
 NetworkEngine* NetworkEngine::inst = new NetworkEngine();

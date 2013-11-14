@@ -202,6 +202,9 @@ void ULMainWindow::gameUpdate(int elapsedTicks)
     }
 
     ui->labelLife->setText("Lives: " + QString::fromStdString(to_string(llama->getLives())));
+
+    ui->labelPesos->setText("Pesos: " + QString::fromStdString(to_string(llama->getPesos())));
+
     if (llama->getLives() == 0 && gameOver == false) {
         //display homescreen and win message
         ui->labelLogo->setVisible(true);
@@ -214,12 +217,9 @@ void ULMainWindow::gameUpdate(int elapsedTicks)
         /////////////////////
         //reset game
         StateEngine::instance()->loseLlama(this->playerID);
-        gameOver = true;
-        for (int i = 0; i < ui->widgetGame->children().size() - 1; i++) {
-            delete ui->widgetGame->children().at(i);
-        }
+        resetGame();
     }
-    ui->labelPesos->setText("Pesos: " + QString::fromStdString(to_string(llama->getPesos())));
+
     if (llama->getPesos() >= 3000 && gameOver == false) {
         //display homescreen and win message
         ui->labelLogo->setVisible(true);
@@ -232,125 +232,124 @@ void ULMainWindow::gameUpdate(int elapsedTicks)
         /////////////////////
         //reset game
         StateEngine::instance()->winLlama(this->playerID);
-        gameOver = true;
-        for (int i = 0; i < ui->widgetGame->children().size() - 1; i++) {
-            delete ui->widgetGame->children().at(i);
-        }
+        resetGame();
     }
 
-    int worldWidth, worldHeight,cellWidth,cellHeight;
-    worldWidth = ui->widgetGame->width();
-    worldHeight = ui->widgetGame->height();
-    cellWidth = worldWidth / world->getSize();
-    cellHeight = worldHeight / world->getSize();
+    if (gameOver == false) {
+        int worldWidth, worldHeight,cellWidth,cellHeight;
+        worldWidth = ui->widgetGame->width();
+        worldHeight = ui->widgetGame->height();
+        cellWidth = worldWidth / world->getSize();
+        cellHeight = worldHeight / world->getSize();
 
-    for(int x = 0; x < world->getSize(); ++x)
-    {
-        for(int y = 0; y < world->getSize(); ++y)
+        for(int x = 0; x < world->getSize(); ++x)
         {
-            WorldCell* cell = world->getCell(x,y);
-            if(cell->getTerrainType() == OBSTACLE)
+            for(int y = 0; y < world->getSize(); ++y)
             {
-                bool hasLabel = false;
-                for(QObject* qo : ui->widgetGame->children()) //this line crashes the debugger if you step through, otherwise another line will crash the program.
+                WorldCell* cell = world->getCell(x,y);
+                if(cell->getTerrainType() == OBSTACLE)
                 {
-                    QLabel* ql = dynamic_cast<QLabel*>(qo);
-                    if(ql->pos().x() == x * cellWidth && ql->pos().y() == y * cellHeight && dynamic_cast<ChestLabel*>(ql) == NULL) hasLabel = true;
+                    bool hasLabel = false;
+                    for(QObject* qo : ui->widgetGame->children()) //this line crashes the debugger if you step through, otherwise another line will crash the program.
+                    {
+                        QLabel* ql = dynamic_cast<QLabel*>(qo);
+                        if(ql->pos().x() == x * cellWidth && ql->pos().y() == y * cellHeight && dynamic_cast<ChestLabel*>(ql) == NULL) hasLabel = true;
+                    }
+                    if(!hasLabel)
+                    {
+                        QLabel* ql = new QLabel(ui->widgetGame);
+                        ql->setGeometry(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
+                        ql->setPixmap(QPixmap(":/images/rock.png"));
+                        ql->setScaledContents(true);
+                        ql->updateGeometry();
+                        ql->show();
+                    }
                 }
-                if(!hasLabel)
+                Chest* chest = cell->getChest();
+                bool hasLabel = false;
+                for(QObject* qo : ui->widgetGame->children())
                 {
-                    QLabel* ql = new QLabel(ui->widgetGame);
-                    ql->setGeometry(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
-                    ql->setPixmap(QPixmap(":/images/rock.png"));
-                    ql->setScaledContents(true);
-                    ql->updateGeometry();
-                    ql->show();
+                    ChestLabel *label = dynamic_cast<ChestLabel*>(qo);
+                    if(label == NULL) continue;
+                    if(label->chest == chest) hasLabel = true;
+                    TreasureChest* tchest = dynamic_cast<TreasureChest*>(label->chest);
+                    if(tchest != NULL)
+                    {
+                        if(se->isCheatMode()) label->setPixmap(QPixmap(":/images/chest.png"));
+                        else label->setPixmap(QPixmap(":/images/chest.png"));
+                    }
+                    RiddleChest* rchest = dynamic_cast<RiddleChest*>(label->chest);
+                    if(rchest != NULL)
+                    {
+                        if(se->isCheatMode()) label->setPixmap(QPixmap(":/images/riddlechest.png"));
+                        else label->setPixmap(QPixmap(":/images/chest.png"));
+                    }
+                    EnemyChest* echest = dynamic_cast<EnemyChest*>(label->chest);
+                    if(echest != NULL)
+                    {
+                        if(se->isCheatMode()) label->setPixmap(QPixmap(":/images/enemychest.png"));
+                        else label->setPixmap(QPixmap(":/images/chest.png"));
+                    }
+                    label->updateGeometry();
+                    label->show();
+                }
+                if(chest != NULL && !hasLabel)
+                {
+                    ChestLabel *label= new ChestLabel(ui->widgetGame, chest);
+                    label->setGeometry(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
+                    label->setScaledContents(true);
+                    TreasureChest* tchest = dynamic_cast<TreasureChest*>(chest);
+                    if(tchest != NULL)
+                    {
+                        if(se->isCheatMode()) label->setPixmap(QPixmap(":/images/chest.png"));
+                        else label->setPixmap(QPixmap(":/images/chest.png"));
+                    }
+                    RiddleChest* rchest = dynamic_cast<RiddleChest*>(chest);
+                    if(rchest != NULL)
+                    {
+                        if(se->isCheatMode()) label->setPixmap(QPixmap(":/images/riddlechest.png"));
+                        else label->setPixmap(QPixmap(":/images/chest.png"));
+                    }
+                    EnemyChest* echest = dynamic_cast<EnemyChest*>(chest);
+                    if(echest != NULL)
+                    {
+                        if(se->isCheatMode()) label->setPixmap(QPixmap(":/images/enemychest.png"));
+                        else label->setPixmap(QPixmap(":/images/chest.png"));
+                    }
+                    label->updateGeometry();
+                    label->show();
                 }
             }
-            Chest* chest = cell->getChest();
+        }
+        // BEGIN LLAMA CONNECTOR
+        for(int i = 0; i < se->getLlamaCount(); ++i)
+        {
+            //qDebug() << "In llama connector loop.";
+            Llama* llama = se->getLlama(i);
+            //qDebug() << "Llama " << i <<" has address " << llama << " and username " << llama->getUsername();
             bool hasLabel = false;
             for(QObject* qo : ui->widgetGame->children())
             {
-                ChestLabel *label = dynamic_cast<ChestLabel*>(qo);
-                if(label == NULL) continue;
-                if(label->chest == chest) hasLabel = true;
-                TreasureChest* tchest = dynamic_cast<TreasureChest*>(label->chest);
-                if(tchest != NULL)
+                LlamaLabel* ll = dynamic_cast<LlamaLabel*>(qo);
+                if(ll == NULL) continue;
+                if(ll->getLlama() == llama)
                 {
-                    if(se->isCheatMode()) label->setPixmap(QPixmap(":/images/chest.png"));
-                    else label->setPixmap(QPixmap(":/images/chest.png"));
+                    ll->setGeometry(llama->getX()*cellWidth, llama->getY()*cellHeight,cellWidth,cellHeight);
+                    ll->updateGeometry();
+                    hasLabel = true;
+                   // qDebug() << "Already has label at " << llama->getX() << ", " << llama->getY();
                 }
-                RiddleChest* rchest = dynamic_cast<RiddleChest*>(label->chest);
-                if(rchest != NULL)
-                {
-                    if(se->isCheatMode()) label->setPixmap(QPixmap(":/images/riddlechest.png"));
-                    else label->setPixmap(QPixmap(":/images/chest.png"));
-                }
-                EnemyChest* echest = dynamic_cast<EnemyChest*>(label->chest);
-                if(echest != NULL)
-                {
-                    if(se->isCheatMode()) label->setPixmap(QPixmap(":/images/enemychest.png"));
-                    else label->setPixmap(QPixmap(":/images/chest.png"));
-                }
-                label->updateGeometry();
-                label->show();
             }
-            if(chest != NULL && !hasLabel)
+            if(!hasLabel)
             {
-                ChestLabel *label= new ChestLabel(ui->widgetGame, chest);
-                label->setGeometry(x * cellWidth, y * cellHeight, cellWidth, cellHeight);
-                label->setScaledContents(true);
-                TreasureChest* tchest = dynamic_cast<TreasureChest*>(chest);
-                if(tchest != NULL)
-                {
-                    if(se->isCheatMode()) label->setPixmap(QPixmap(":/images/chest.png"));
-                    else label->setPixmap(QPixmap(":/images/chest.png"));
-                }
-                RiddleChest* rchest = dynamic_cast<RiddleChest*>(chest);
-                if(rchest != NULL)
-                {
-                    if(se->isCheatMode()) label->setPixmap(QPixmap(":/images/riddlechest.png"));
-                    else label->setPixmap(QPixmap(":/images/chest.png"));
-                }
-                EnemyChest* echest = dynamic_cast<EnemyChest*>(chest);
-                if(echest != NULL)
-                {
-                    if(se->isCheatMode()) label->setPixmap(QPixmap(":/images/enemychest.png"));
-                    else label->setPixmap(QPixmap(":/images/chest.png"));
-                }
-                label->updateGeometry();
-                label->show();
-            }
-        }
-    }
-    // BEGIN LLAMA CONNECTOR
-    for(int i = 0; i < se->getLlamaCount(); ++i)
-    {
-        //qDebug() << "In llama connector loop.";
-        Llama* llama = se->getLlama(i);
-        //qDebug() << "Llama " << i <<" has address " << llama << " and username " << llama->getUsername();
-        bool hasLabel = false;
-        for(QObject* qo : ui->widgetGame->children())
-        {
-            LlamaLabel* ll = dynamic_cast<LlamaLabel*>(qo);
-            if(ll == NULL) continue;
-            if(ll->getLlama() == llama)
-            {
+                LlamaLabel* ll = new LlamaLabel(ui->widgetGame, llama);
                 ll->setGeometry(llama->getX()*cellWidth, llama->getY()*cellHeight,cellWidth,cellHeight);
+                ll->setPixmap(QPixmap(":/images/llama.png"));
+                ll->setScaledContents(true);
                 ll->updateGeometry();
-                hasLabel = true;
-               // qDebug() << "Already has label at " << llama->getX() << ", " << llama->getY();
+                ll->show();
+               // qDebug() << "Created label! Llama at " << llama->getX() << ", " << llama->getY() <<".";
             }
-        }
-        if(!hasLabel)
-        {
-            LlamaLabel* ll = new LlamaLabel(ui->widgetGame, llama);
-            ll->setGeometry(llama->getX()*cellWidth, llama->getY()*cellHeight,cellWidth,cellHeight);
-            ll->setPixmap(QPixmap(":/images/llama.png"));
-            ll->setScaledContents(true);
-            ll->updateGeometry();
-            ll->show();
-           // qDebug() << "Created label! Llama at " << llama->getX() << ", " << llama->getY() <<".";
         }
     }
 }
@@ -430,4 +429,14 @@ void ULMainWindow::on_btnMP_clicked()
     NetworkEngine::instance()->joinGame(0,user);
     currentUser = user;
 
+}
+
+void ULMainWindow::resetGame()
+{
+    gameOver = true;
+    gameStarted = false;
+    for(QObject* ptr : ui->widgetGame->children())
+        delete ptr;
+    playerID = -1;
+    currentUser = "LazDude";
 }
