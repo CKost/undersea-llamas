@@ -441,3 +441,8 @@ void ULMainWindow::resetGame()
     playerID = -1;
     currentUser = "LazDude";
 }
+
+void ULMainWindow::on_hiscoreBtn_clicked()
+{
+
+}
