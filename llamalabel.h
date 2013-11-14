@@ -16,7 +16,7 @@
 #include "stateengine.h"
 #include "ulmainwindow.h"
 #include "ui_ulmainwindow.h"
-#include "world.h
+#include "world.h"
 #include "worldgenerator.h"
 #include "llama.h"
 #include <QLabel>
