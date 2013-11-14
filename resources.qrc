@@ -15,5 +15,11 @@
         <file>images/llama__u_mad__by_givepoints_getfaves-d4dyih8.png</file>
         <file>images/tumblr_lg0rkuoZJf1qdqqiao1_500.gif</file>
         <file>images/llamaMAD.png</file>
+        <file>images/649341_SOUNDDOGS__an.mp3</file>
+        <file>images/516941_SOUNDDOGS__do.mp4</file>
+        <file>images/516941_SOUNDDOGS__do.wav</file>
+    </qresource>
+    <qresource prefix="/music">
+        <file>images/516941_SOUNDDOGS__do.mp3</file>
     </qresource>
 </RCC>

@@ -106,7 +106,7 @@ void StateEngine::loadFromFile(QString filename)
             int pesos = splitline[3].toInt();
             int dumbLevel = splitline[4].toInt();
             int facing = splitline[5].toInt();
-            QString username = splitline[6];   //formerly splitline[6].toInt();
+            QString username = splitline[6];
             Llama* llama = new Llama(x,y,facing,health,pesos);
             llama->setDumbLevel(dumbLevel);
             llama->setUsername(username);

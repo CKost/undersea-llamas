@@ -2,6 +2,7 @@
 #include "ui_moviedisplay.h"
 #include <QMovie>
 #include <QLabel>
+#include <QtMultimedia/QMediaPlayer>
 
 MovieDisplay::MovieDisplay(QWidget *parent) :
     QDialog(parent),
@@ -14,9 +15,17 @@ MovieDisplay::MovieDisplay(QWidget *parent) :
     processLabel->setGeometry(QRect(0,-75,300,300));
     processLabel->setMovie(movie);
     movie->start();
-    processLabel->show();
-}
 
+
+      QMediaPlayer *player = new QMediaPlayer(this);
+      player->setVolume(50);
+        //player->setMedia(QUrl::fromLocalFile("://images/516941_SOUNDDOGS__do.wav")); FROM RESOURCE FILE???????????
+       player->setMedia(QUrl::fromLocalFile("/home/user/Desktop/p-undersea-llamas/images/649341_SOUNDDOGS__an.mp3"));
+       player->play();
+
+
+
+}
 MovieDisplay::~MovieDisplay()
 {
     delete ui;
