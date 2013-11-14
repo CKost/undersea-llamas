@@ -115,6 +115,9 @@ color: rgb(255, 255, 255);</string>
     </property>
    </widget>
    <widget class="QPushButton" name="easyStartButton">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>750</x>
@@ -264,6 +267,9 @@ color: rgb(255, 255, 255);</string>
     </property>
    </widget>
    <widget class="QPushButton" name="btnMP">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -277,6 +283,9 @@ color: rgb(255, 255, 255);</string>
     </property>
    </widget>
    <widget class="QPushButton" name="hiscoreBtn">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>20</x>
