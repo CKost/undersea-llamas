@@ -57,6 +57,8 @@ private slots:
 
     void on_btnMP_clicked();
 
+    void on_hiscoreBtn_clicked();
+
 private:
     Ui::ULMainWindow *ui;
     QString currentUser;

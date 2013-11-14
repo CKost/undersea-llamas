@@ -444,5 +444,6 @@ void ULMainWindow::resetGame()
 
 void ULMainWindow::on_hiscoreBtn_clicked()
 {
+    NetworkEngine::instance()->getHiscoresFromServer();
 
 }

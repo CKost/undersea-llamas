@@ -276,6 +276,19 @@ color: rgb(255, 255, 255);</string>
      <string>MultiPlayer</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="hiscoreBtn">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>350</y>
+      <width>98</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Hiscores</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
