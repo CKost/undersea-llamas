@@ -45,7 +45,7 @@ private slots:
     void on_easyStartButton_clicked();
     void on_hardStartButton_clicked();
     void gameUpdate(int elapsedTicks);
-    void disRiddle(QString riddle, QString anwser, int peso); //added in 11/12 for riddle method lol
+    void riddler(QString riddle, QString anwser, int peso); //added in 11/12 for riddle method lol
 
     //void on_easyStartButton_clicked();
 

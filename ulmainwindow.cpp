@@ -39,7 +39,7 @@ ULMainWindow::ULMainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     connect(StateEngine::instance(), &StateEngine::tick, this, &ULMainWindow::gameUpdate);
-    connect(StateEngine::instance(), &StateEngine::askRiddle,this, &ULMainWindow::disRiddle); //Constructor for riddle showing, added 11/12
+    connect(StateEngine::instance(), &StateEngine::askRiddle,this, &ULMainWindow::riddler); //Constructor for riddle showing, added 11/12
     currentUser = "LazDude";
     playerID = -1;
     gameStarted = false;
@@ -127,7 +127,8 @@ void ULMainWindow::keyPressEvent(QKeyEvent *keyevent)
         qDebug() << "O key pressed.";
     }
 }
-void ULMainWindow::disRiddle(QString riddle, QString anwser, int pesos)
+
+void ULMainWindow::riddler(QString riddle, QString anwser, int pesos)
 {
     oKey = false;
     wKey = false;
@@ -146,9 +147,7 @@ void ULMainWindow::disRiddle(QString riddle, QString anwser, int pesos)
         dlg.exec();
 
         StateEngine::instance()->payLlama(playerID,pesos);
-    }
-    else
-    {
+    } else {
         //QMessageBox msgBox;
        // msgBox.information(this,"Incorrect Anwser","You anwsered it incorrectly"); //If just want basic messagebox, no image
             QMessageBox about;
@@ -205,6 +204,7 @@ void ULMainWindow::gameUpdate(int elapsedTicks)
 
     ui->labelPesos->setText("Pesos: " + QString::fromStdString(to_string(llama->getPesos())));
 
+    //lose the game
     if (llama->getLives() == 0 && gameOver == false) {
         //display homescreen and win message
         ui->labelLogo->setVisible(true);
@@ -220,6 +220,7 @@ void ULMainWindow::gameUpdate(int elapsedTicks)
         resetGame();
     }
 
+    //win the game
     if (llama->getPesos() >= 3000 && gameOver == false) {
         //display homescreen and win message
         ui->labelLogo->setVisible(true);
