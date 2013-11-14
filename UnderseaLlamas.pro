@@ -5,6 +5,9 @@
 #-------------------------------------------------
 
 QT       += core gui network
+QT       += core gui multimedia
+
+
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -42,6 +45,7 @@ FORMS    += ulmainwindow.ui \
     moviedisplay.ui
 
 QMAKE_CXXFLAGS += -std=c++0x
+
 
 RESOURCES += \
     resources.qrc
