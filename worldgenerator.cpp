@@ -75,7 +75,7 @@ bool WorldGenerator::generate(QString name)
     int selections[16];
     for(int i = 0; i < 16; ++i)
         selections[i] = rand() % 12;
-    QFile file (name + QString(".ulworld"));
+    QFile file (name);
     if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
         throw "file load error";
     QTextStream out(&file);
@@ -99,4 +99,7 @@ bool WorldGenerator::generate(QString name)
         out << "B" << (cells.at(selections[12])).at(i) << cells.at(selections[13]).at(i) << cells.at(selections[14]).at(i) << cells.at(selections[15]).at(i) << "B" << endl;
     }
     out << "BBBBBBBBBBBBBBBBBB" << endl;
+    out.flush();
+    file.close();
+    return true;
 }

@@ -290,7 +290,6 @@ void StateEngine::fromStateString(QString string)
                 continue;
             }
             QStringList splitline = line.split(":");
-            int id = splitline[0].toInt();
             int x = splitline[1].split(",")[0].toInt();
             int y = splitline[1].split(",")[1].toInt();
             int health = splitline[2].toInt();
@@ -305,6 +304,7 @@ void StateEngine::fromStateString(QString string)
         }
         if(!isFirstLine && !processingLlamas && !processingChests && line != "beginllamas")
         {
+            if(line != "---") World::loadFromFile(line);
             currentWorldFile = line.toStdString();
             processingChests = true;
             continue;
@@ -346,4 +346,5 @@ QString StateEngine::toStateString()
         }
     }
     rvr.flush();
+    return result;
 }

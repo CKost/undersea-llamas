@@ -28,8 +28,8 @@ public:
     //getter and setter methods
     bool getEmpty() { return this->empty; }
     void setEmpty(bool emptied) { empty = emptied; }
-    virtual int getPesos() { return NULL; }
-    virtual int getLivesLost() { return NULL; }
+    virtual int getPesos() { return 0; }
+    virtual int getLivesLost() { return 0; }
 };
 
 class TreasureChest: public Chest {
@@ -37,7 +37,7 @@ public:
     int pesos;
 
     //constructors
-    TreasureChest(bool _empty = false, int _pesos = 3000):Chest(_empty), pesos(_pesos){}
+    TreasureChest(bool _empty = false, int _pesos = 500):Chest(_empty), pesos(_pesos){}
 
     //getter methods
     int getPesos() { return this->pesos; }
@@ -59,7 +59,7 @@ public:
     int pesos;
 
     //constructors
-    RiddleChest(bool _empty = false, int _pesos = 50):Chest(_empty), pesos(_pesos){}
+    RiddleChest(bool _empty = false, int _pesos = 600):Chest(_empty), pesos(_pesos){}
 
     //getter methods
     int getPesos() { return this->pesos; }

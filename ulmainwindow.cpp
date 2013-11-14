@@ -32,6 +32,10 @@
 #include <QMainWindow>
 #include <QInputDialog>
 #include <QPixmap>
+#include <sstream>
+#include <QtAlgorithms>
+
+using namespace std;
 
 ULMainWindow::ULMainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -167,7 +171,12 @@ void ULMainWindow::gameUpdate(int elapsedTicks)
 {
     if(!gameStarted) return;
     if(elapsedTicks % 100 == 0)
-    qDebug() << "Tick! " << elapsedTicks << " ticks elapsed.";
+    {
+        qDebug() << "Tick! " << elapsedTicks << " ticks elapsed.";
+        if(!StateEngine::instance()->isCheatMode() && playerID != -1)
+            StateEngine::instance()->payLlama(playerID,-100);
+    }
+
     //This is going to be slightly messy, and for that I apologise.
     StateEngine *se = StateEngine::instance();
     World *world = World::instance();
@@ -220,7 +229,23 @@ void ULMainWindow::gameUpdate(int elapsedTicks)
         resetGame();
     }
 
-    if (llama->getPesos() >= 3000 && gameOver == false) {
+    if (llama->getPesos() == 0 && gameOver == false) {
+        //display homescreen and win message
+        ui->labelLogo->setVisible(true);
+        ui->easyStartButton->setEnabled(true);
+        ui->easyStartButton->setStyleSheet("color: rgb(250, 250, 250);");
+        ui->hardStartButton->setEnabled(true);
+        ui->hardStartButton->setStyleSheet("");
+        QMessageBox::warning(this, "Game over.", "Sorry, you got bankrupted by interest! Maybe if you try again, you can get the pesos you need. ¡Buena suerte!");
+        //display high scores
+        /////////////////////
+        //reset game
+        StateEngine::instance()->loseLlama(this->playerID);
+        resetGame();
+    }
+
+    if ((StateEngine::instance()->isCheatMode() && llama->getPesos() >= 1000) ||
+            llama->getPesos() >= 3000 && gameOver == false) {
         //display homescreen and win message
         ui->labelLogo->setVisible(true);
         ui->easyStartButton->setEnabled(true);
@@ -418,9 +443,24 @@ void ULMainWindow::on_btnSaveState_clicked()
 
 void ULMainWindow::on_btnCreateWorld_clicked()
 {
-    QString stuff = QFileDialog::getSaveFileName(this, tr("Save file"), ".", tr("UL World File (*.ulworld)"));
-    if(!stuff.isEmpty())
-        WorldGenerator().generate(stuff);
+    QFile::remove("temp.ulworld");
+    WorldGenerator().generate("temp.ulworld");
+    stringstream ss;
+    ss << "[ULState File v1.0]" << endl;
+    ss << "beginllamas" << endl;
+    ss << "0:2,2:3:400:0:0:LazDude" << endl;
+    ss << "endllamas" << endl;
+    ss << "temp.ulworld" << endl;
+    StateEngine::instance()->fromStateString(QString::fromStdString(ss.str()));
+    if (ui->labelLogo->isVisible()) {ui->labelLogo->setVisible(false);}
+    gameStarted = true;
+    gameOver = false;
+    //Disable keys so user cant spam-click llamas
+    ui->easyStartButton->setEnabled(false);
+    ui->easyStartButton->setStyleSheet("color: rgb(150, 150, 150);");
+    ui->hardStartButton->setEnabled(false);
+    ui->hardStartButton->setStyleSheet("color: rgb(150, 150, 150);");
+
 }
 
 void ULMainWindow::on_btnMP_clicked()
@@ -435,8 +475,12 @@ void ULMainWindow::resetGame()
 {
     gameOver = true;
     gameStarted = false;
-    for(QObject* ptr : ui->widgetGame->children())
-        delete ptr;
+    qDeleteAll(ui->widgetGame->children());
+    //QByteArray geom = ui->widgetGame->saveGeometry();
+    //delete ui->widgetGame;
+    //ui->widgetGame = new QWidget(this);
+    //ui->widgetGame->setStyleSheet("border-image: url(:/images/ocean_floor.jpg);");
+    //ui->widgetGame->show();
     playerID = -1;
     currentUser = "LazDude";
 }

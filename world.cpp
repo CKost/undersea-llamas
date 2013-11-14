@@ -33,6 +33,7 @@ void World::setCell(int x, int y, WorldCell* cell)
 void World::loadFromFile(QString filename)
 {
     QFile file(filename);
+    if(file.isOpen()) file.close();
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) throw "thrown";
     bool isFirstLine = true; int size = -1; int currentline = 0;
     QTextStream in (&file);
