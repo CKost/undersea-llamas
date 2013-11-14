@@ -28,6 +28,7 @@ public:
     void getGamesFromServer();
     void joinGame(int gameid, QString username);
     void hangUp(int llama);
+    void tryConnect();
 
     void moveLlama(int llama, int x, int y);
     void openChest(int llama, int x, int y, int pesos, int damage);

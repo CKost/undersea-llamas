@@ -49,6 +49,8 @@ ULMainWindow::ULMainWindow(QWidget *parent) :
     gameStarted = false;
     gameOver = true;
     aKey = false; wKey = false; sKey = false; dKey = false;
+    NetworkEngine::instance()->tryConnect();
+    NetworkEngine::instance()->getHiscoresFromServer();
 }
 
 ULMainWindow::~ULMainWindow()
@@ -228,8 +230,6 @@ void ULMainWindow::gameUpdate(int elapsedTicks)
         StateEngine::instance()->loseLlama(this->playerID);
         resetGame();
     }
-
-<<<<<<< HEAD
     if (llama->getPesos() == 0 && gameOver == false) {
         //display homescreen and win message
         ui->labelLogo->setVisible(true);
@@ -489,5 +489,10 @@ void ULMainWindow::resetGame()
 void ULMainWindow::on_hiscoreBtn_clicked()
 {
     NetworkEngine::instance()->getHiscoresFromServer();
-
+    stringstream ss;
+    for(Highscore* ptr : StateEngine::instance()->scores)
+    {
+        ss << ptr->printAScore().toStdString();
+    }
+    QMessageBox::information(this,"Hi-scores",QString::fromStdString(ss.str()));
 }

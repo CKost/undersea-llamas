@@ -23,7 +23,19 @@
 #include <QString>
 #include <string>
 
+class Highscore {
+    QString name;
+    int score;
+public:
+    //constructor
+    Highscore(QString initName, int initScore):name(initName), score(initScore) {}
+    QString printAScore() {
+        return QString::fromStdString(name.toStdString() + string(" ") + to_string(score));
+    }
+};
+
 class Llama;
+
 class StateEngine : public QObject
 {
     Q_OBJECT
@@ -124,7 +136,7 @@ public:
     QString toStateString();
     void fromStateString(QString string);
     void syncTicks(int num) {numTicks = num;}
-
+    vector<Highscore*> scores;
 private:
     StateEngine();
     Riddle riddleEngine;
@@ -133,6 +145,7 @@ private:
     static StateEngine* inst;
     QTimer clock;
     bool inCheatMode;
+
     int numTicks;            //numTicks perhaps requires some explanation. It's the variable storing the number
                             //of elapsed ticks since the start of the game. (In other words, the timer.)
     string currentWorldFile;
@@ -144,34 +157,6 @@ private slots:
     void on_timer_timeout();
 };
 
-class Highscore {
-    QString name;
-    int score;
-public:
-    //constructor
-    Highscore(QString initName, int initScore):name(initName), score(initScore) {}
-    QString printAScore() {
-        return QString::fromStdString(name.toStdString() + string(" ") + to_string(score));
-    }
-};
 
-class HighscoreList {
-    vector<Highscore*> highScores;
-
-public:
-    //constructor
-    HighscoreList() {}
-
-    //returns highScores vector
-    vector<Highscore*> getList() {
-        return highScores;
-    }
-
-    //adds a highscore to the list of highscores
-    void addHighscore(Highscore *h) {highScores.push_back(h);}
-
-    void sort();
-
-};
 
 #endif // STATEENGINE_H

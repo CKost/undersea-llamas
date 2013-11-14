@@ -9,7 +9,6 @@ NetworkEngine::NetworkEngine(QObject *parent) :
     sock = new QTcpSocket(this);
     connect(sock,&QTcpSocket::readyRead,this,&NetworkEngine::onDataReceived);
     connect(sock,&QTcpSocket::disconnected,this,&NetworkEngine::onServerHangup);
-    sock->connectToHost("shredder.bju.edu",42000);
 }
 
 NetworkEngine* NetworkEngine::inst = new NetworkEngine();
@@ -19,6 +18,11 @@ NetworkEngine* NetworkEngine::inst = new NetworkEngine();
 void NetworkEngine::getGamesFromServer()
 {
     sock->write("ULGETLIST");
+}
+
+void NetworkEngine::tryConnect()
+{
+    sock->connectToHost("localhost",5000);
 }
 
 void NetworkEngine::joinGame(int gameid, QString username)
@@ -84,7 +88,9 @@ void NetworkEngine::onDataReceived()
         else if(splitline[0] == "ULSCORELIST")
             mode = ScoreList;
         else if(splitline[0] == "ULSCORE")
-            ;//TODO: IMPLEMENT SCORING FUNCTIONALITY
+        {
+            StateEngine::instance()->scores.push_back(new Highscore(splitline[0],splitline[1].toInt()));
+        }
         else if(splitline[0] == "ULENDSCORES")
             mode = Idle;
         if(mode == StateFile)

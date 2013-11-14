@@ -9,6 +9,7 @@
 **************************************************************************/
 
 #include "stateengine.h"
+#include "networkengine.h"
 #include "riddle.h"
 #include <iostream>
 #include <fstream>
@@ -154,22 +155,13 @@ void StateEngine::payLlama(int llamaID, int pesosToGive)
 void StateEngine::loseLlama(int llamaID)
 {
     Llama* llama = getLlama(llamaID);
-    //save username and score
-    Highscore *highscore = new Highscore(llama->getUsername(), llama->getPesos());
-    HighscoreList *highScoreList = new HighscoreList(); //incorrect! this should be stored on the server for all games played!
-    highScoreList->addHighscore(highscore);
-    //end game:
-    this->reset();
-    //delete world.children
-    //reenable "start new game" buttons
+    NetworkEngine::instance()->sendHiscoreToServer(llama->getUsername(),llama->getPesos() / (numTicks / 10));
 }
 void StateEngine::winLlama(int llamaID)
 {
     Llama* llama = getLlama(llamaID);
     //save username and score
-    Highscore *highscore = new Highscore(llama->getUsername(), llama->getPesos());
-    HighscoreList *highScoreList = new HighscoreList(); //incorrect! this should be stored on the server for all games played!
-    highScoreList->addHighscore(highscore);
+    NetworkEngine::instance()->sendHiscoreToServer(llama->getUsername(),llama->getPesos() / (numTicks / 10));
     //end game:
     this->reset();
     //delete world.children
