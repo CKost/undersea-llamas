@@ -131,7 +131,7 @@ public:
     bool isCheatMode() {return inCheatMode;}
     void setCheatMode(bool mode) {inCheatMode = mode;}
 
-    static void reset();
+    void reset();
 
     QString toStateString();
     void fromStateString(QString string);

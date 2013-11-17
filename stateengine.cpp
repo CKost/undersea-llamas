@@ -156,6 +156,7 @@ void StateEngine::loseLlama(int llamaID)
 {
     Llama* llama = getLlama(llamaID);
     NetworkEngine::instance()->sendHiscoreToServer(llama->getUsername(),llama->getPesos() / (numTicks / 10));
+    this->reset();
 }
 void StateEngine::winLlama(int llamaID)
 {
@@ -245,9 +246,8 @@ void StateEngine::on_timer_timeout()
 
 void StateEngine::reset()
 {
-    delete inst;
-    inst = new StateEngine();
-
+    for(Llama* ptr : llamas) delete ptr;
+    llamas.clear();
 }
 
 void StateEngine::fromStateString(QString string)
