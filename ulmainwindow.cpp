@@ -461,6 +461,8 @@ void ULMainWindow::on_btnCreateWorld_clicked()
     ui->easyStartButton->setStyleSheet("color: rgb(150, 150, 150);");
     ui->hardStartButton->setEnabled(false);
     ui->hardStartButton->setStyleSheet("color: rgb(150, 150, 150);");
+    ui->btnCreateWorld->setEnabled(false);
+    ui->btnCreateWorld->setStyleSheet("color: rgb(150,150,150);");
 
 }
 
