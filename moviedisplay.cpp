@@ -27,16 +27,13 @@ MovieDisplay::MovieDisplay(QWidget *parent) :
     processLabel->setMovie(movie);
     movie->start();
 
-
-      QMediaPlayer *player = new QMediaPlayer(this);
-      player->setVolume(50);
-        //player->setMedia(QUrl::fromLocalFile("://images/516941_SOUNDDOGS__do.wav")); FROM RESOURCE FILE???????????
-       player->setMedia(QUrl::fromLocalFile("/home/user/Desktop/p-undersea-llamas/images/649341_SOUNDDOGS__an.mp3"));
-       player->play();
-
-
-
+    QMediaPlayer *player = new QMediaPlayer(this);
+    player->setVolume(50);
+    //player->setMedia(QUrl::fromLocalFile("://images/516941_SOUNDDOGS__do.wav")); //won't work from resource file; must be hard-coded path
+    player->setMedia(QUrl::fromLocalFile("/home/user/Desktop/p-undersea-llamas/images/649341_SOUNDDOGS__an.mp3"));
+    player->play();
 }
+
 MovieDisplay::~MovieDisplay()
 {
     delete ui;

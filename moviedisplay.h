@@ -20,13 +20,15 @@ class MovieDisplay;
 class MovieDisplay : public QDialog
 {
     Q_OBJECT
-    
-public:
-    explicit MovieDisplay(QWidget *parent = 0);
-    ~MovieDisplay();
-    
+
 private:
     Ui::MovieDisplay *ui;
+    
+public:
+    /** MovieDisplay constructor*/
+    explicit MovieDisplay(QWidget *parent = 0);
+    /** MovieDisplay destructor*/
+    ~MovieDisplay();
 };
 
 #endif // MOVIEDISPLAY_H
