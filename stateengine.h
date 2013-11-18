@@ -2,7 +2,7 @@
 **
 **   stateengine.h
 **
-**   This file copyright 2013 Team Crackpot.
+**   This file copyright 2013 Alex Fischer, Benjamin Sparks, Curtis Koster.
 **   Work done for CpS 111 at Bob Jones University.
 **   Login IDs: afisc855 bspar145 ckost598
 **
@@ -11,7 +11,7 @@
 #ifndef STATEENGINE_H
 #define STATEENGINE_H
 
-#include "chests.h"
+#include "chest.h"
 #include "llama.h"
 #include "riddle.h"
 #include "world.h"

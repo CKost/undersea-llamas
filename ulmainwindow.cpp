@@ -2,22 +2,24 @@
 
 **   ulmainwindow.cpp
 **
-**   This file copyright 2013 Team Crackpot.
+**   This file copyright 2013 Alex Fischer, Benjamin Sparks, Curtis Koster.
 **   Work done for CpS 111 at Bob Jones University.
 **   Login IDs: afisc855 bspar145 ckost598
 **
 **************************************************************************/
-#include "moviedisplay.h"
-#include "chests.h"
+
+#include "chest.h"
 #include "llama.h"
 #include "llamalabel.h"
+#include "moviedisplay.h"
+#include "networkengine.h"
 #include "riddle.h"
 #include "stateengine.h"
-#include "ulmainwindow.h"
-#include "networkengine.h"
 #include "ui_ulmainwindow.h"
+#include "ulmainwindow.h"
 #include "world.h"
 #include "worldgenerator.h"
+
 #include <QMessageBox>
 #include <QLabel>
 #include <iostream>
@@ -58,30 +60,25 @@ ULMainWindow::~ULMainWindow()
     delete ui;
 }
 
-//Instructions for the game
+/** Displays QMessageBox with game instructions*/
 void ULMainWindow::on_buttonInstructions_clicked()
 {
     QMessageBox::information(this, "How to Play", "¡Hola!\n\
-    Necesita dinero. Tiene que pagar su crédito de universidad muy rapidamente, \
+    Usted está una llama, y necesita dinero. Tiene que pagar su crédito de universidad muy rapidamente, \
 y explora el oceánico para recoger tesoro. Su objetivo es recoger pesos para pagar su crédito de universidad.\n\n\
-Como jugar:\n\
-    Para comenzar un juego nuevo, haga clic en el botón «comenzar». \
-Entonces, empuje la tecla «W» para mover arriba, «A» para mover a la izquierda, «S» para mover abajo, y «D» para mover al derecho. \
-Empuje la tecla <<O>> para abrir un cofre. El cofre puede contener tesoro (muchos pesos), un enemigo (que va a matarse), \
-o un acertijo (que necesita contestar correctamente para ganar pesos). Necesita recoger pesos suficientes para ganar el juego, pero no perda su vida mientras trata ganar.\n\n\
-¡Diviértase!\n\n\n\
 En inglés: Hi!\n\
-    You need money. You\'ve got to pay off your student loan quickly, \
+    You\'re a llama, and you need money. You\'ve got to pay off your student loan quickly, \
 and you\'re exploring the ocean floor in search of treasure. Your goal is to find pesos to pay off your student loan.\n\n\
 How to play:\n\
-    To begin a new game, clic the \"Start Game\" button. \
+    To begin a new game, click the \"Easy,\" \"Hard,\" or \"Random World\" button. \
 Then, push the \"W\" key to move up, \"A\" to move left, \"S\" to move down, and \"D\" to move right. \
-Push the \"O\" key to open a chest. The chest can hold contain treasure (lots of pesos), an enemy (that will kill you), \
-or a riddle (that you need to answer correctly to get pesos). You need to collect enough pesos to win the game, but don\'t lose your life trying to win.\n\n\
+Push the \"O\" key to open a chest. The chest can hold contain treasure (lots of pesos), an enemy (that will steal one of your lives), \
+or a riddle (that you need to answer correctly to get pesos). You need to collect enough pesos to win the game. \
+Don\'t lose all your lives, and hurry! Your loan\'s interest is eating away at your money the longer you wait!\n\n\n\
 Have fun!");
 }
 
-
+/** Begins easy game*/
 void ULMainWindow::on_easyStartButton_clicked()
 {
     if (ui->labelLogo->isVisible()) {ui->labelLogo->setVisible(false);}
@@ -95,6 +92,7 @@ void ULMainWindow::on_easyStartButton_clicked()
     ui->hardStartButton->setStyleSheet("color: rgb(150, 150, 150);");
 }
 
+/** Begins hard game*/
 void ULMainWindow::on_hardStartButton_clicked()
 {
     if (ui->labelLogo->isVisible()) {ui->labelLogo->setVisible(false);}
@@ -109,9 +107,9 @@ void ULMainWindow::on_hardStartButton_clicked()
 
 }
 
+/** Determines when a keyboard key is pressed*/
 void ULMainWindow::keyPressEvent(QKeyEvent *keyevent)
 {
-
     if(keyevent->key() == Qt::Key_W) {
         wKey = true;
         qDebug() << "W key pressed.";
@@ -134,6 +132,7 @@ void ULMainWindow::keyPressEvent(QKeyEvent *keyevent)
     }
 }
 
+/** Provides riddle functionality*/
 void ULMainWindow::riddler(QString riddle, QString anwser, int pesos)
 {
     oKey = false;
@@ -168,6 +167,7 @@ void ULMainWindow::riddler(QString riddle, QString anwser, int pesos)
     }
 }
 
+/** Updates the game; makes the player win or lose*/
 void ULMainWindow::gameUpdate(int elapsedTicks)
 {
     if(!gameStarted) return;
@@ -215,7 +215,7 @@ void ULMainWindow::gameUpdate(int elapsedTicks)
 
     ui->labelPesos->setText("Pesos: " + QString::fromStdString(to_string(llama->getPesos())));
 
-    //lose the game
+    //lose the game via losing lives
     if (llama->getLives() == 0 && gameOver == false) {
         //display homescreen and win message
         ui->labelLogo->setVisible(true);
@@ -230,6 +230,8 @@ void ULMainWindow::gameUpdate(int elapsedTicks)
         StateEngine::instance()->loseLlama(this->playerID);
         resetGame();
     }
+
+    //lose the game via losing all your pesos
     if (llama->getPesos() == 0 && gameOver == false) {
         //display homescreen and win message
         ui->labelLogo->setVisible(true);
@@ -245,8 +247,10 @@ void ULMainWindow::gameUpdate(int elapsedTicks)
         resetGame();
     }
 
-    if ((StateEngine::instance()->isCheatMode() && llama->getPesos() >= 1000) ||
-            llama->getPesos() >= 3000 && gameOver == false) {
+    //win the game
+    if (((StateEngine::instance()->isCheatMode() && llama->getPesos() >= 1000) ||
+            llama->getPesos() >= 3000) &&
+            gameOver == false) {
         //display homescreen and win message
         ui->labelLogo->setVisible(true);
         ui->easyStartButton->setEnabled(true);
@@ -380,7 +384,7 @@ void ULMainWindow::gameUpdate(int elapsedTicks)
     }
 }
 
-
+/** Determines when a keyboard key is released*/
 void ULMainWindow::keyReleaseEvent(QKeyEvent *keyevent)
 {
     if (keyevent->key()==Qt::Key_A)
@@ -415,6 +419,7 @@ void ULMainWindow::keyReleaseEvent(QKeyEvent *keyevent)
 
    }
 
+/** Turns on cheat mode*/
 void ULMainWindow::on_cheatButton_clicked()
 {
     QMessageBox::information(this,"Warning!","Cheat mode activated. Cheaters never prosper; you have been warned.");
@@ -423,6 +428,7 @@ void ULMainWindow::on_cheatButton_clicked()
     else StateEngine::instance()->setCheatMode(true);
 }
 
+/** Loads a game state from a file*/
 void ULMainWindow::on_btnLoadState_clicked()
 {
     //if (gameStarted == false) {
@@ -435,6 +441,7 @@ void ULMainWindow::on_btnLoadState_clicked()
     //}
 }
 
+/** Saves a game state to a file*/
 void ULMainWindow::on_btnSaveState_clicked()
 {
     QString stuff = QFileDialog::getSaveFileName(this, tr("Save File"), ".", tr("UL State file (*.ulstate)"));
@@ -442,6 +449,7 @@ void ULMainWindow::on_btnSaveState_clicked()
         StateEngine::instance()->saveToFile(stuff);
 }
 
+/** Begins randomly generated game*/
 void ULMainWindow::on_btnCreateWorld_clicked()
 {
     QFile::remove("temp.ulworld");
@@ -466,6 +474,7 @@ void ULMainWindow::on_btnCreateWorld_clicked()
 
 }
 
+/** Prepares for multiplayer game*/
 void ULMainWindow::on_btnMP_clicked()
 {
     QString user = QInputDialog::getText(this,"Username Entry","Please enter a username:");
@@ -474,6 +483,7 @@ void ULMainWindow::on_btnMP_clicked()
 
 }
 
+/** Resets the game*/
 void ULMainWindow::resetGame()
 {
     gameOver = true;
@@ -488,6 +498,7 @@ void ULMainWindow::resetGame()
     currentUser = "LazDude";
 }
 
+/** Displays highscore list from server*/
 void ULMainWindow::on_hiscoreBtn_clicked()
 {
     NetworkEngine::instance()->getHiscoresFromServer();

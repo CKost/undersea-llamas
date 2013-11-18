@@ -2,7 +2,7 @@
 **
 **   ulmainwindow.h
 **
-**   This file copyright 2013 Team Crackpot.
+**   This file copyright 2013 Alex Fischer, Benjamin Sparks, Curtis Koster.
 **   Work done for CpS 111 at Bob Jones University.
 **   Login IDs: afisc855 bspar145 ckost598
 **
@@ -10,15 +10,17 @@
 
 #ifndef ULMAINWINDOW_H
 #define ULMAINWINDOW_H
-#include <QLabel>
-#include "stateengine.h"
-#include "worldgenerator.h"
-#include "ui_ulmainwindow.h"
-#include "llamalabel.h"
-#include "llama.h"
-#include "world.h"
+
+#include "chest.h"
 #include "chestlabel.h"
-#include "chests.h"
+#include "llama.h"
+#include "llamalabel.h"
+#include "stateengine.h"
+#include "ui_ulmainwindow.h"
+#include "world.h"
+#include "worldgenerator.h"
+
+#include <QLabel>
 #include <QWidget>
 #include <QMainWindow>
 #include <QKeyEvent>
@@ -63,7 +65,6 @@ private:
     Ui::ULMainWindow *ui;
     QString currentUser;
     int playerID;
-    //QLabel *chest;
     bool aKey;
     bool sKey;
     bool wKey;
@@ -72,8 +73,6 @@ private:
     bool gameStarted;
     bool gameOver;
     void resetGame();
-
 };
 
 #endif // ULMAINWINDOW_H
-
