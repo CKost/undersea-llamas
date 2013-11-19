@@ -418,6 +418,7 @@ void ULMainWindow::on_btnLoadState_clicked()
         QString stuff = QFileDialog::getOpenFileName(this, tr("Open File"), ".", tr("UL State file (*.ulstate)"));
         if(!stuff.isEmpty())
             StateEngine::instance()->loadFromFile(stuff);
+        currentUser = usernameGrabber();
         gameStarted = true;
         gameOver = false;
     //}
