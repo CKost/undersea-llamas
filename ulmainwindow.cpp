@@ -491,9 +491,10 @@ void ULMainWindow::resetGame()
 /** Displays highscore list from server*/
 void ULMainWindow::on_hiscoreBtn_clicked()
 {
+    StateEngine::instance()->scores.clear();
     NetworkEngine::instance()->getHiscoresFromServer();
     stringstream ss;
-    StateEngine::instance()->scores.clear();
+
     for(Highscore* ptr : StateEngine::instance()->scores)
     {
         ss << ptr->printAScore().toStdString() << endl;
