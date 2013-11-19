@@ -25,7 +25,14 @@ class WorldGenerator
 {
 public:
     vector<QString> tile1, tile2, tile3, tile4, tile5, tile6, tile7, tile8, tile9, tileA, tileB, tileC;
+
+    /** WorldGenerator constructor*/
     WorldGenerator();
+
+    /** Creates a random world and saves it to a file; returns true if successful
+     *@param QString name
+     *@return bool true if file written successfully
+     */
     bool generate(QString name);
 };
 
