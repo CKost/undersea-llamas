@@ -68,12 +68,6 @@ private slots:
      */
     void on_cheatButton_clicked();
     /**
-     * @brief on_hardStartButton_clicked is called when the user clicks the Hard button.
-     *
-     * Starts the game from the pre-defined hard file.
-     */
-    void on_hardStartButton_clicked();
-    /**
      * @brief gameUpdate updates the state of the game.
      * @param elapsedTicks The number of ticks since the start of the game.
      *
@@ -111,6 +105,12 @@ private slots:
      * It causes a new world to be randomly generated, and starts the game from this world.
      */
     void on_btnCreateWorld_clicked();
+    /**
+     * @brief on_btnStandWorld_clicked is called when the user clicks the Basic World button.
+     *
+     * Starts the game from the pre-defined hard file.
+     */
+    void on_btnStandWorld_clicked();
     /**
      * @brief on_hiscoreBtn_clicked is called when the user clicks the High Scores button.
      *

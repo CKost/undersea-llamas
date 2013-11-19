@@ -47,7 +47,7 @@ void StateEngine::saveToFile(QString filename)
     {
         Llama* llama = llamas.at(i);
         //<id>:<x>,<y>:<health>:<pesos>:<dumblevel>:<facing>:<optional username>
-        rvr << i << ":" << llama->getX() << "," << llama->getY() << ":" << llama->getPunish() <<
+        rvr << i << ":" << llama->getX() << "," << llama->getY() << ":" << llama->getLives() <<
                ":" << llama->getPesos() << ":" << llama->getDumbLevel() << ":" << llama->getDir() <<
                ":" << llama->getUsername().toStdString() << endl;
     }

@@ -32,7 +32,7 @@ MovieDisplay::MovieDisplay(QWidget *parent) :
     //IMPORTANT::Audio path must be hard coded to location of file! Copy of .mp3 can be found in resource file
     QMediaPlayer *player = new QMediaPlayer(this);
     player->setVolume(50);
-    player->setMedia(QUrl::fromLocalFile("/home/user/Desktop/p-undersea-llamas/images/649341_SOUNDDOGS__an.mp3"));
+    player->setMedia(QUrl("http://shredder.resnet.bju/sound/649341_SOUNDDOGS__an.mp3"));
     player->play();
 }
 

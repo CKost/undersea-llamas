@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <QTcpServer>
-#include <vector>
+#include <deque>
 #include <QString>
 #include <string>
 #include <sstream>
@@ -33,21 +33,21 @@ public:
 
 class HighscoreList {
 private:
-    vector<Highscore*> highScores;
+    deque<Highscore*> highScores;
 
 public:
     //constructor
     HighscoreList() {}
 
     //returns highScores vector
-    vector<Highscore*> getList() {
+    deque<Highscore*> getList() {
         return highScores;
     }
 
     bool isEmpty() { return highScores.empty(); }
 
     //adds a highscore to the list of highscores
-    void addHighscore(Highscore *h) {highScores.push_back(h);}
+    void addHighscore(Highscore *h);
 
     //returns highScores vector as QStrings
     QString returnScoreString() {
