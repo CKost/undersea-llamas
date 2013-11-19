@@ -22,7 +22,8 @@ class Riddle
 {
 private:
     static std::vector<QString> riddles;
-    static QString riddle1,riddle2,riddle3;
+    static QString riddle1,riddle2,riddle3,riddle4,riddle5,riddle6,riddle7,riddle8;
+    static QString riddle9,riddle10,riddle11,riddle12,riddle13,riddle14,riddle15;
 
 public:
     /** Gets the size of the riddles vector
