@@ -25,6 +25,11 @@ using namespace std;
 
 class Llama;
 
+/**
+ * @brief The LlamaLabel class represents a llama.
+ *
+ * LlamaLabel is the visual representation of a Llama.
+ */
 class LlamaLabel: public QLabel
 {
     Llama *llama;
@@ -33,15 +38,15 @@ public:
     /** LlamaLabel constructor*/
     LlamaLabel(QWidget *parent, Llama *_llama):QLabel(parent), llama(_llama) {}
 
-    /** Gets a llama pointer
-     *@param none
-     *@return llama pointer
+    /**
+     * Gets the label's llama.
+     * @return A pointer to the llama the label represents.
      */
     Llama* getLlama() { return llama; }
 
-    /** Sets the label's llama pointer
-     *@param Llama*
-     *@return void
+    /**
+     * Sets the label's llama.
+     * @param _llama The llama represented by the label.
      */
     void setLlama(Llama *_llama) { llama = _llama; }
 };
