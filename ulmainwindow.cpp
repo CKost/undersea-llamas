@@ -128,7 +128,7 @@ void ULMainWindow::riddler(QString riddle, QString anwser, int pesos)
     bool ok;
     QString text = QInputDialog::getText(this, tr("Riddle"),
                                              (riddle), QLineEdit::Normal,
-                                             tr("Type in Answer :)"), &ok);
+                                             tr(""), &ok);
     if(ok && text==anwser)
     {
 
@@ -150,6 +150,21 @@ void ULMainWindow::riddler(QString riddle, QString anwser, int pesos)
             about.show();
             about.exec();
     }
+}
+
+/** Gets username at start of new game*/
+QString ULMainWindow::usernameGrabber()
+{
+    oKey = false;
+    wKey = false;
+    aKey = false;
+    sKey = false;
+    dKey = false;
+    bool ok;
+    QString text = QInputDialog::getText(this, tr("Username"),
+                                         ("Enter your username: "), QLineEdit::Normal,
+                                             tr(""), &ok);
+    return text;
 }
 
 /** Updates the game; makes the player win or lose*/
@@ -416,6 +431,8 @@ void ULMainWindow::on_btnSaveState_clicked()
 /** Begins randomly generated game*/
 void ULMainWindow::on_btnCreateWorld_clicked()
 {
+    QString user = usernameGrabber();
+    qDebug << user;
     QFile::remove("temp.ulworld");
     WorldGenerator().generate("temp.ulworld");
     stringstream ss;
@@ -441,11 +458,6 @@ void ULMainWindow::resetGame()
     gameOver = true;
     gameStarted = false;
     qDeleteAll(ui->widgetGame->children());
-    //QByteArray geom = ui->widgetGame->saveGeometry();
-    //delete ui->widgetGame;
-    //ui->widgetGame = new QWidget(this);
-    //ui->widgetGame->setStyleSheet("border-image: url(:/images/ocean_floor.jpg);");
-    //ui->widgetGame->show();
     ui->labelLogo->setVisible(true);
     ui->btnCreateWorld->setEnabled(true);
     ui->btnCreateWorld->setStyleSheet("");
