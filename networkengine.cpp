@@ -49,11 +49,10 @@ void NetworkEngine::onDataReceived()
     {
         QString line = QString::fromLocal8Bit(sock->readLine());
         qDebug() << line;
-        QStringList splitline = line.trimmed().split(' ');
-        if(splitline[0] == "ULSCORELIST")
+        QStringList splitline = line.trimmed().split(" ");
+        if(splitline[0] == "ULBEGINSCORES")
         {
             mode = ScoreList;
-            StateEngine::instance()->scores.clear();
         }
         else if(splitline[0] == "ULSCORE")
         {
