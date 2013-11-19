@@ -86,6 +86,8 @@ void ULMainWindow::on_btnStandWorld_clicked()
     qDebug() << user;
     if (ui->labelLogo->isVisible()) {ui->labelLogo->setVisible(false);}
     StateEngine::instance()->loadFromFile(":/textfiles/hardstate.ulstate");
+    StateEngine::instance()->getLlama(0)->setUsername(user);
+    currentUser = user;
     gameStarted = true;
     gameOver = false;
     //Disable keys so user cant spam-click llamas
@@ -417,10 +419,11 @@ void ULMainWindow::on_cheatButton_clicked()
 void ULMainWindow::on_btnLoadState_clicked()
 {
     //if (gameStarted == false) {
-        if (ui->labelLogo) {ui->labelLogo->deleteLater();}
+
         QString stuff = QFileDialog::getOpenFileName(this, tr("Open File"), ".", tr("UL State file (*.ulstate)"));
-        if(!stuff.isEmpty())
-            StateEngine::instance()->loadFromFile(stuff);
+        if(stuff.isEmpty()) return;
+        if (ui->labelLogo) {ui->labelLogo->deleteLater();}
+        StateEngine::instance()->loadFromFile(stuff);
         currentUser = StateEngine::instance()->getLlama(0)->getUsername();
         gameStarted = true;
         gameOver = false;
