@@ -78,10 +78,12 @@ Don\'t lose all your lives, and hurry! Your loan\'s interest is eating away at y
 Have fun!");
 }
 
-/** Begins basic game*/
-void ULMainWindow::on_hardStartButton_clicked()
+/** Begins standard game*/
+void ULMainWindow::on_btnStandWorld_clicked()
 {
     QString user = usernameGrabber();
+    if (user == "") { user = "anonymous"; }
+    qDebug() << user;
     if (ui->labelLogo->isVisible()) {ui->labelLogo->setVisible(false);}
     StateEngine::instance()->loadFromFile(":/textfiles/hardstate.ulstate");
     gameStarted = true;
@@ -89,8 +91,8 @@ void ULMainWindow::on_hardStartButton_clicked()
     //Disable keys so user cant spam-click llamas
     ui->btnCreateWorld->setEnabled(false);
     ui->btnCreateWorld->setStyleSheet("color: rgb(150, 150, 150);");
-    ui->hardStartButton->setEnabled(false);
-    ui->hardStartButton->setStyleSheet("color: rgb(150, 150, 150);");
+    ui->btnStandWorld->setEnabled(false);
+    ui->btnStandWorld->setStyleSheet("color: rgb(150, 150, 150);");
 }
 
 /** Determines when a keyboard key is pressed*/
@@ -433,6 +435,7 @@ void ULMainWindow::on_btnSaveState_clicked()
 void ULMainWindow::on_btnCreateWorld_clicked()
 {
     QString user = usernameGrabber();
+    if (user == "") { user = "anonymous"; }
     qDebug() << user;
     QFile::remove("temp.ulworld");
     currentUser = user;
@@ -448,8 +451,8 @@ void ULMainWindow::on_btnCreateWorld_clicked()
     gameStarted = true;
     gameOver = false;
     //Disable keys so user cant spam-click llamas
-    ui->hardStartButton->setEnabled(false);
-    ui->hardStartButton->setStyleSheet("color: rgb(150, 150, 150);");
+    ui->btnStandWorld->setEnabled(false);
+    ui->btnStandWorld->setStyleSheet("color: rgb(150, 150, 150);");
     ui->btnCreateWorld->setEnabled(false);
     ui->btnCreateWorld->setStyleSheet("color: rgb(150,150,150);");
 
@@ -463,8 +466,8 @@ void ULMainWindow::resetGame()
     ui->labelLogo->setVisible(true);
     ui->btnCreateWorld->setEnabled(true);
     ui->btnCreateWorld->setStyleSheet("");
-    ui->hardStartButton->setEnabled(true);
-    ui->hardStartButton->setStyleSheet("");
+    ui->btnStandWorld->setEnabled(true);
+    ui->btnStandWorld->setStyleSheet("");
     playerID = -1;
     currentUser = "LazDude";
 }
@@ -484,3 +487,5 @@ void ULMainWindow::on_hiscoreBtn_clicked()
     answer += "\n" + QString::fromStdString(ss.str());
     QMessageBox::information(this,"Hi-scores",answer);
 }
+
+

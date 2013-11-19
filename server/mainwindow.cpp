@@ -49,6 +49,15 @@ void MainWindow::clientConnected()
     addToLog("Client connected.");
 }
 
+void HighscoreList::addHighscore(Highscore *h) {
+    while (highScores.size() >= 20) {
+        Highscore* delScore = highScores.front();
+        delete delScore;
+        highScores.pop_front();
+    }
+    highScores.push_back(h);
+}
+
 void MainWindow::dataReceived()
 {
     QTcpSocket *sock = dynamic_cast<QTcpSocket*>(sender());
