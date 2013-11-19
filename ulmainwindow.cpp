@@ -81,6 +81,7 @@ Have fun!");
 /** Begins basic game*/
 void ULMainWindow::on_hardStartButton_clicked()
 {
+    QString user = usernameGrabber();
     if (ui->labelLogo->isVisible()) {ui->labelLogo->setVisible(false);}
     StateEngine::instance()->loadFromFile(":/textfiles/hardstate.ulstate");
     gameStarted = true;
@@ -432,7 +433,7 @@ void ULMainWindow::on_btnCreateWorld_clicked()
 {
     QString user = usernameGrabber();
     qDebug ()<< user;
-    QFile::remove("temp.ulworld");
+  QFile::remove("temp.ulworld");
     currentUser = user;
     WorldGenerator().generate("temp.ulworld");
     stringstream ss;
@@ -441,8 +442,8 @@ void ULMainWindow::on_btnCreateWorld_clicked()
     ss << "0:2,2:3:400:0:0:" << user.trimmed().toStdString() << endl;
     ss << "endllamas" << endl;
     ss << "temp.ulworld" << endl;
-    StateEngine::instance()->fromStateString(QString::fromStdString(ss.str()));
     if (ui->labelLogo->isVisible()) {ui->labelLogo->setVisible(false);}
+    StateEngine::instance()->fromStateString(QString::fromStdString(ss.str()));
     gameStarted = true;
     gameOver = false;
     //Disable keys so user cant spam-click llamas
@@ -470,7 +471,6 @@ void ULMainWindow::resetGame()
 /** Displays highscore list from server*/
 void ULMainWindow::on_hiscoreBtn_clicked()
 {
-    StateEngine::instance()->scores.clear();
     NetworkEngine::instance()->getHiscoresFromServer();
     stringstream ss;
 
@@ -479,7 +479,7 @@ void ULMainWindow::on_hiscoreBtn_clicked()
         ss << ptr->printAScore().toStdString() << endl;
     }
     QString answer;
-    answer = "We calculate your score\n\based on your number of pesos and lives remaining.\n";
+    answer = "We calculate your score based on your number of pesos and lives remaining.\n";
     answer += "\n" + QString::fromStdString(ss.str());
-    QMessageBox::information(this,"Hi-scores",QString::fromStdString(ss.str()));
+    QMessageBox::information(this,"Hi-scores",answer);
 }
