@@ -465,5 +465,9 @@ void ULMainWindow::on_hiscoreBtn_clicked()
     {
         ss << ptr->printAScore().toStdString() << endl;
     }
-    QMessageBox::information(this,"Hi-scores",QString::fromStdString(ss.str()));
+    QString answer;
+    answer = "We calculate your score\n\
+    based on your number of pesos and lives remaining.\n";
+    answer += "\n" + QString::fromStdString(ss.str());
+    QMessageBox::information(this,"Hi-scores",answer);
 }

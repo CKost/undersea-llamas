@@ -44,12 +44,9 @@ public:
 private slots:
     void on_buttonInstructions_clicked();
     void on_cheatButton_clicked();
-    void on_easyStartButton_clicked();
     void on_hardStartButton_clicked();
     void gameUpdate(int elapsedTicks);
-    void riddler(QString riddle, QString anwser, int peso); //added in 11/12 for riddle method lol
-
-    //void on_easyStartButton_clicked();
+    void riddler(QString riddle, QString anwser, int peso);
 
     void on_btnLoadState_clicked();
 
