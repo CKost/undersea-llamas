@@ -20,8 +20,16 @@ using namespace std;
 class Chest;
 class WorldCell;
 
+/**
+ * @brief The TerrainType enum describes types of terrain. ROUGH is unused.
+ */
 enum TerrainType{ROUGH,OPEN,OBSTACLE};
 
+/**
+ * @brief The World class stores the map of the world.
+ *
+ * It is a singleton.
+ */
 class World
 {
 private:
@@ -68,7 +76,9 @@ public:
     static void reset() { delete inst; inst = new World(4); }
 };
 
-
+/**
+ * @brief The WorldCell class represents a single playing space, like a square in chess.
+ */
 class WorldCell
 {
 private:
