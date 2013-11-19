@@ -2,6 +2,7 @@
 #include "stateengine.h"
 #include <string>
 #include <sstream>
+#include <QDebug>
 
 NetworkEngine::NetworkEngine(QObject *parent) :
     QObject(parent), state(&statefile), world(&worldfile)
@@ -17,7 +18,7 @@ NetworkEngine* NetworkEngine::inst = new NetworkEngine();
 
 void NetworkEngine::getGamesFromServer()
 {
-    sock->write("ULGETLIST");
+    sock->write("ULGETLIST\n");
 }
 
 void NetworkEngine::tryConnect()
@@ -27,34 +28,35 @@ void NetworkEngine::tryConnect()
 
 void NetworkEngine::joinGame(int gameid, QString username)
 {
-    QString temp = QString("ULCONNECT ") + QString::fromStdString(to_string(gameid)) + QString(":") + username;
+    QString temp = QString("ULCONNECT ") + QString::fromStdString(to_string(gameid)) + QString(":") + username + QString("\n");
     sock->write(temp.toLocal8Bit());
 }
 
 void NetworkEngine::hangUp(int llama)
 {
-    string temp = string("ULREQUESTQUIT ") + to_string(llama);
+    string temp = string("ULREQUESTQUIT ") + to_string(llama) + string("\n");
     sock->write(temp.c_str());
 }
 void NetworkEngine::moveLlama(int llama, int x, int y)
 {
-    string temp = string("ULMOVE ") + to_string(llama) + string(":") + to_string(x) + string(":") + to_string(y);
+    string temp = string("ULMOVE ") + to_string(llama) + string(":") + to_string(x) + string(":") + to_string(y) + string("\n");
     sock->write(temp.c_str());
 }
 void NetworkEngine::openChest(int llama, int x, int y, int pesos, int damage)
 {
     stringstream ss;
-    ss << "ULOPEN " << llama << ":" << x << ":" << y << ":" << pesos << ":" << damage;
+    ss << "ULOPEN " << llama << ":" << x << ":" << y << ":" << pesos << ":" << damage << endl;
     sock->write(ss.str().c_str());
 }
 void NetworkEngine::getHiscoresFromServer()
 {
-    sock->write("ULGETSCORES");
+    sock->write("ULGETSCORES\n");
 }
 void NetworkEngine::sendHiscoreToServer(QString name, int score)
 {
-    string temp =string("ULADDSCORE ") + name.toStdString() + string(":") + to_string(score);
+    string temp =string("ULADDSCORE ") + name.toStdString() + string(" ") + to_string(score) + string("\n");
     sock->write(temp.c_str());
+    getHiscoresFromServer();
 }
 
 //END CLIENTSIDE CALLS
@@ -63,7 +65,8 @@ void NetworkEngine::onDataReceived()
 {
     while(sock->canReadLine())
     {
-        QString line = sock->readLine();
+        QString line = QString::fromLocal8Bit(sock->readLine()).trimmed();
+        qDebug() << line;
         QStringList splitline = line.split(" ");
         if(splitline[0] == "ULBEGINLIST")
             mode = GameList;
@@ -86,10 +89,13 @@ void NetworkEngine::onDataReceived()
             World::loadFromQString(worldfile);
         }
         else if(splitline[0] == "ULSCORELIST")
+        {
             mode = ScoreList;
+            StateEngine::instance()->scores.clear();
+        }
         else if(splitline[0] == "ULSCORE")
         {
-            StateEngine::instance()->scores.push_back(new Highscore(splitline[0],splitline[1].toInt()));
+            StateEngine::instance()->scores.push_back(new Highscore(splitline[1],splitline[2].toInt()));
         }
         else if(splitline[0] == "ULENDSCORES")
             mode = Idle;

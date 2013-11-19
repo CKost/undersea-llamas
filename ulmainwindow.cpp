@@ -466,14 +466,6 @@ void ULMainWindow::on_btnCreateWorld_clicked()
 
 }
 
-void ULMainWindow::on_btnMP_clicked()
-{
-    QString user = QInputDialog::getText(this,"Username Entry","Please enter a username:");
-    NetworkEngine::instance()->joinGame(0,user);
-    currentUser = user;
-
-}
-
 void ULMainWindow::resetGame()
 {
     gameOver = true;
@@ -494,7 +486,7 @@ void ULMainWindow::on_hiscoreBtn_clicked()
     stringstream ss;
     for(Highscore* ptr : StateEngine::instance()->scores)
     {
-        ss << ptr->printAScore().toStdString();
+        ss << ptr->printAScore().toStdString() << endl;
     }
     QMessageBox::information(this,"Hi-scores",QString::fromStdString(ss.str()));
 }
