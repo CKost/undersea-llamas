@@ -81,6 +81,7 @@ Have fun!");
 /** Begins basic game*/
 void ULMainWindow::on_hardStartButton_clicked()
 {
+    QString user = usernameGrabber();
     if (ui->labelLogo->isVisible()) {ui->labelLogo->setVisible(false);}
     StateEngine::instance()->loadFromFile(":/textfiles/hardstate.ulstate");
     gameStarted = true;
@@ -442,8 +443,8 @@ void ULMainWindow::on_btnCreateWorld_clicked()
     ss << "0:2,2:3:400:0:0:" << user.trimmed().toStdString() << endl;
     ss << "endllamas" << endl;
     ss << "temp.ulworld" << endl;
-    StateEngine::instance()->fromStateString(QString::fromStdString(ss.str()));
     if (ui->labelLogo->isVisible()) {ui->labelLogo->setVisible(false);}
+    StateEngine::instance()->fromStateString(QString::fromStdString(ss.str()));
     gameStarted = true;
     gameOver = false;
     //Disable keys so user cant spam-click llamas
