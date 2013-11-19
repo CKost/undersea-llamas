@@ -17,7 +17,9 @@
 #include <QString>
 
 using namespace std;
-
+/**
+ * @brief The Riddle class holds riddles.
+ */
 class Riddle
 {
 private:

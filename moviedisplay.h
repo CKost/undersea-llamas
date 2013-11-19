@@ -16,7 +16,9 @@
 namespace Ui {
 class MovieDisplay;
 }
-
+/**
+ * @brief The MovieDisplay class is a dialog that shows a GIF to the user.
+ */
 class MovieDisplay : public QDialog
 {
     Q_OBJECT

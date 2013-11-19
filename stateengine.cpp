@@ -156,18 +156,17 @@ void StateEngine::payLlama(int llamaID, int pesosToGive)
 void StateEngine::loseLlama(int llamaID)
 {
     Llama* llama = getLlama(llamaID);
-    NetworkEngine::instance()->sendHiscoreToServer(llama->getUsername(),llama->getPesos() / (numTicks / 10));
+    NetworkEngine::instance()->sendHiscoreToServer(llama->getUsername(),llama->getPesos() + 100 * llama->getLives());
     this->reset();
 }
 void StateEngine::winLlama(int llamaID)
 {
     Llama* llama = getLlama(llamaID);
     //save username and score
-    NetworkEngine::instance()->sendHiscoreToServer(llama->getUsername(),llama->getPesos() / (numTicks / 10));
+    NetworkEngine::instance()->sendHiscoreToServer(llama->getUsername(),llama->getPesos() + 100 * llama->getLives());
     //end game:
     this->reset();
     //delete world.children
-    //reenable "start new game" buttons
 }
 
 bool StateEngine::moveLlama(int llamaID, double x, double y)

@@ -47,11 +47,12 @@ void NetworkEngine::onDataReceived()
 {
     while(sock->canReadLine())
     {
-        QStringList splitline = QString::fromLocal8Bit(sock->readLine()).trimmed().split(' ');
-        if(splitline[0] == "ULSCORELIST")
+        QString line = QString::fromLocal8Bit(sock->readLine());
+        qDebug() << line;
+        QStringList splitline = line.trimmed().split(" ");
+        if(splitline[0] == "ULBEGINSCORES")
         {
             mode = ScoreList;
-            StateEngine::instance()->scores.clear();
         }
         else if(splitline[0] == "ULSCORE")
         {

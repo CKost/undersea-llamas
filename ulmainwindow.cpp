@@ -78,21 +78,7 @@ Don\'t lose all your lives, and hurry! Your loan\'s interest is eating away at y
 Have fun!");
 }
 
-/** Begins easy game*/
-void ULMainWindow::on_easyStartButton_clicked()
-{
-    if (ui->labelLogo->isVisible()) {ui->labelLogo->setVisible(false);}
-    StateEngine::instance()->loadFromFile(":/textfiles/statefile.ulstate");
-    gameStarted = true;
-    gameOver = false;
-    //Disable so user cant spam-click llamas
-    ui->easyStartButton->setEnabled(false);
-    ui->easyStartButton->setStyleSheet("color: rgb(150, 150, 150);");
-    ui->hardStartButton->setEnabled(false);
-    ui->hardStartButton->setStyleSheet("color: rgb(150, 150, 150);");
-}
-
-/** Begins hard game*/
+/** Begins basic game*/
 void ULMainWindow::on_hardStartButton_clicked()
 {
     if (ui->labelLogo->isVisible()) {ui->labelLogo->setVisible(false);}
@@ -100,11 +86,10 @@ void ULMainWindow::on_hardStartButton_clicked()
     gameStarted = true;
     gameOver = false;
     //Disable keys so user cant spam-click llamas
-    ui->easyStartButton->setEnabled(false);
-    ui->easyStartButton->setStyleSheet("color: rgb(150, 150, 150);");
+    ui->btnCreateWorld->setEnabled(false);
+    ui->btnCreateWorld->setStyleSheet("color: rgb(150, 150, 150);");
     ui->hardStartButton->setEnabled(false);
     ui->hardStartButton->setStyleSheet("color: rgb(150, 150, 150);");
-
 }
 
 /** Determines when a keyboard key is pressed*/
@@ -143,7 +128,7 @@ void ULMainWindow::riddler(QString riddle, QString anwser, int pesos)
     bool ok;
     QString text = QInputDialog::getText(this, tr("Riddle"),
                                              (riddle), QLineEdit::Normal,
-                                             tr("Type in Answer :)"), &ok);
+                                             tr(""), &ok);
     if(ok && text==anwser)
     {
 
@@ -165,6 +150,21 @@ void ULMainWindow::riddler(QString riddle, QString anwser, int pesos)
             about.show();
             about.exec();
     }
+}
+
+/** Gets username at start of new game*/
+QString ULMainWindow::usernameGrabber()
+{
+    oKey = false;
+    wKey = false;
+    aKey = false;
+    sKey = false;
+    dKey = false;
+    bool ok;
+    QString text = QInputDialog::getText(this, tr("Username"),
+                                         ("Enter your username: "), QLineEdit::Normal,
+                                             tr(""), &ok);
+    return text;
 }
 
 /** Updates the game; makes the player win or lose*/
@@ -217,15 +217,8 @@ void ULMainWindow::gameUpdate(int elapsedTicks)
 
     //lose the game via losing lives
     if (llama->getLives() == 0 && gameOver == false) {
-        //display homescreen and win message
-        ui->labelLogo->setVisible(true);
-        ui->easyStartButton->setEnabled(true);
-        ui->easyStartButton->setStyleSheet("color: rgb(250, 250, 250);");
-        ui->hardStartButton->setEnabled(true);
-        ui->hardStartButton->setStyleSheet("");
+        //display message
         QMessageBox::warning(this, "Game over.", "Sorry, you opened one too many enemy chests! Maybe if you try again, you can get the pesos you need. ¡Buena suerte!");
-        //display high scores
-        /////////////////////
         //reset game
         StateEngine::instance()->loseLlama(this->playerID);
         resetGame();
@@ -233,15 +226,8 @@ void ULMainWindow::gameUpdate(int elapsedTicks)
 
     //lose the game via losing all your pesos
     if (llama->getPesos() == 0 && gameOver == false) {
-        //display homescreen and win message
-        ui->labelLogo->setVisible(true);
-        ui->easyStartButton->setEnabled(true);
-        ui->easyStartButton->setStyleSheet("color: rgb(250, 250, 250);");
-        ui->hardStartButton->setEnabled(true);
-        ui->hardStartButton->setStyleSheet("");
+        //display message
         QMessageBox::warning(this, "Game over.", "Sorry, you got bankrupted by interest! Maybe if you try again, you can get the pesos you need. ¡Buena suerte!");
-        //display high scores
-        /////////////////////
         //reset game
         StateEngine::instance()->loseLlama(this->playerID);
         resetGame();
@@ -251,15 +237,8 @@ void ULMainWindow::gameUpdate(int elapsedTicks)
     if (((StateEngine::instance()->isCheatMode() && llama->getPesos() >= 1000) ||
             llama->getPesos() >= 3000) &&
             gameOver == false) {
-        //display homescreen and win message
-        ui->labelLogo->setVisible(true);
-        ui->easyStartButton->setEnabled(true);
-        ui->easyStartButton->setStyleSheet("color: rgb(250, 250, 250);");
-        ui->hardStartButton->setEnabled(true);
-        ui->hardStartButton->setStyleSheet("");
+        //display message
         QMessageBox::warning(this, "You won!", "¡Felicidades! Congratulations on collecting your treasure! Now get back to the surface and pay off your debt, or enjoy another dive!");
-        //display high scores
-        /////////////////////
         //reset game
         StateEngine::instance()->winLlama(this->playerID);
         resetGame();
@@ -452,12 +431,15 @@ void ULMainWindow::on_btnSaveState_clicked()
 /** Begins randomly generated game*/
 void ULMainWindow::on_btnCreateWorld_clicked()
 {
+    QString user = usernameGrabber();
+    qDebug << user;
     QFile::remove("temp.ulworld");
+    currentUser = user;
     WorldGenerator().generate("temp.ulworld");
     stringstream ss;
     ss << "[ULState File v1.0]" << endl;
     ss << "beginllamas" << endl;
-    ss << "0:2,2:3:400:0:0:LazDude" << endl;
+    ss << "0:2,2:3:400:0:0:" << user.trimmed().toStdString() << endl;
     ss << "endllamas" << endl;
     ss << "temp.ulworld" << endl;
     StateEngine::instance()->fromStateString(QString::fromStdString(ss.str()));
@@ -465,8 +447,6 @@ void ULMainWindow::on_btnCreateWorld_clicked()
     gameStarted = true;
     gameOver = false;
     //Disable keys so user cant spam-click llamas
-    ui->easyStartButton->setEnabled(false);
-    ui->easyStartButton->setStyleSheet("color: rgb(150, 150, 150);");
     ui->hardStartButton->setEnabled(false);
     ui->hardStartButton->setStyleSheet("color: rgb(150, 150, 150);");
     ui->btnCreateWorld->setEnabled(false);
@@ -479,11 +459,11 @@ void ULMainWindow::resetGame()
     gameOver = true;
     gameStarted = false;
     qDeleteAll(ui->widgetGame->children());
-    //QByteArray geom = ui->widgetGame->saveGeometry();
-    //delete ui->widgetGame;
-    //ui->widgetGame = new QWidget(this);
-    //ui->widgetGame->setStyleSheet("border-image: url(:/images/ocean_floor.jpg);");
-    //ui->widgetGame->show();
+    ui->labelLogo->setVisible(true);
+    ui->btnCreateWorld->setEnabled(true);
+    ui->btnCreateWorld->setStyleSheet("");
+    ui->hardStartButton->setEnabled(true);
+    ui->hardStartButton->setStyleSheet("");
     playerID = -1;
     currentUser = "LazDude";
 }
@@ -491,11 +471,16 @@ void ULMainWindow::resetGame()
 /** Displays highscore list from server*/
 void ULMainWindow::on_hiscoreBtn_clicked()
 {
+    StateEngine::instance()->scores.clear();
     NetworkEngine::instance()->getHiscoresFromServer();
     stringstream ss;
+
     for(Highscore* ptr : StateEngine::instance()->scores)
     {
         ss << ptr->printAScore().toStdString() << endl;
     }
+    QString answer;
+    answer = "We calculate your score\n\based on your number of pesos and lives remaining.\n";
+    answer += "\n" + QString::fromStdString(ss.str());
     QMessageBox::information(this,"Hi-scores",QString::fromStdString(ss.str()));
 }
