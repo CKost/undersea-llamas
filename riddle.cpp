@@ -29,6 +29,7 @@ QString Riddle::riddle1="It wanders far - sometimes high, sometimes low - but al
 QString Riddle::riddle2=" What goes round the house and in the house, but never touches the house?%sun";
 QString Riddle::riddle3="The more you take, the more you leave behind. What are they?%footsteps";
 
+//Load Riddles
 void Riddle::add_riddlesToriddles()
 {
     riddles.push_back(riddle1);
@@ -36,6 +37,7 @@ void Riddle::add_riddlesToriddles()
     riddles.push_back(riddle3);
 }
 
+//Return a random riddle
 QString Riddle::get_riddle()
 {
     QString ranRiddle;

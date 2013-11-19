@@ -218,27 +218,6 @@ void StateEngine::openRChest(int /*llamaID*/, double x, double y)
         rchest->setEmpty(true);
     }
 }
-/*void StateEngine::openChest(int llamaID, double x, double y)
-{
-    Chest* chest = World::instance()->getCell(x,y)->getChest();
-    if(chest == NULL || chest->empty) return;
-    else
-    {
-        TreasureChest* tchest = dynamic_cast<TreasureChest*>(chest);
-        if(tchest != NULL) payLlama(llamaID,tchest->pesos);
-        EnemyChest* echest = dynamic_cast<EnemyChest*>(chest);
-        if(echest != NULL) punishLlama(llamaID,echest->damage);
-        RiddleChest* rchest = dynamic_cast<RiddleChest*>(chest);
-        if(rchest != NULL)
-        {
-            QString riddleline = QString::fromStdString(riddleEngine.get_riddle());
-            QStringList riddle = riddleline.split("%");
-            currentRiddle = riddle.at(0);
-            currentAnswer = riddle.at(1);
-            emit askRiddle(currentRiddle,currentAnswer,rchest->pesos);
-        }
-    }
-}*/
 
 void StateEngine::on_timer_timeout()
 {
