@@ -167,7 +167,6 @@ void StateEngine::winLlama(int llamaID)
     //end game:
     this->reset();
     //delete world.children
-    //reenable "start new game" buttons
 }
 
 bool StateEngine::moveLlama(int llamaID, double x, double y)
