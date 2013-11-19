@@ -44,6 +44,6 @@ void unitTest()
 
     assert(Riddle::get_SizeRiddles()==0);
     Riddle::add_riddlesToriddles();
-    assert(Riddle::get_SizeRiddles()==3);
+    assert(Riddle::get_SizeRiddles()==15);
     se->reset();
 }
