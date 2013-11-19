@@ -26,6 +26,11 @@ using namespace std;
 
 class Chest;
 
+/**
+ * @brief The ChestLabel class represents a chest.
+ *
+ * ChestLabel is a visual representation of a Chest to display to the user.
+ */
 class ChestLabel: public QLabel
 {
 public:
@@ -34,15 +39,14 @@ public:
     /** ChestLabel constructor*/
     ChestLabel(QWidget *parent, Chest *_chest):QLabel(parent), chest(_chest) {}
 
-    /** Gets a chest pointer
-     *@param none
-     *@return chest pointer
+    /**
+     * Gets the pointer to the chest the label represents.
+     * @return A pointer to the chest.
      */
     Chest* getChest() { return chest; }
 
-    /** Sets the label's chest pointer
-     *@param Chest*
-     *@return void
+    /** Sets the chest the label is representing.
+     * @param _chest A pointer to the chest the label represents.
      */
     void setChest(Chest *_chest) { chest = _chest; }
 };

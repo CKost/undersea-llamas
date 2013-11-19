@@ -21,6 +21,11 @@
 
 using namespace std;
 
+/**
+ * @brief The Llama class stores a llama.
+ *
+ * Llama is a class holding the data for a llama.
+ */
 class Llama
 {
 private:

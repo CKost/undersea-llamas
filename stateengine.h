@@ -22,13 +22,19 @@
 #include <QTimer>
 #include <QString>
 #include <string>
-
+/**
+ * @brief The Highscore class is a simple data structure to store high-scores.
+ */
 class Highscore {
     QString name;
     int score;
 public:
     //constructor
     Highscore(QString initName, int initScore):name(initName), score(initScore) {}
+    /**
+     * @brief printAScore is a to-string method.
+     * @return The best string representation of the score.
+     */
     QString printAScore() {
         return QString::fromStdString(name.toStdString() + string(" ") + to_string(score));
     }
@@ -36,13 +42,19 @@ public:
 
 class Llama;
 
+/**
+ * @brief The StateEngine class is the main model class of the game.
+ *
+ * StateEngine is MainWindow's connector to the data model, the Llamas, the
+ * It is a singleton.
+ */
 class StateEngine : public QObject
 {
     Q_OBJECT
 
 public:
-    /** Creates the ONE copy of StateEngine which is used to keep track of state of game
-     *@param none
+    /**
+     *Creates the ONE copy of StateEngine which is used to keep track of the state of the game.
      *@return refernce to variable
      */
     static StateEngine* instance();

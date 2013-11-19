@@ -16,7 +16,12 @@
 #include "stateengine.h"
 #include "ulmainwindow.h"
 #include "worldgenerator.h"
-
+/**
+ * @brief The Chest class is a base type for chests.
+ *
+ * Represents the data stored in each chest. Chest is an abstract type,
+ * inherited by EnemyChest, TreasureChest, and RiddleChest.
+ */
 class Chest {
 public:
     bool empty;
@@ -41,6 +46,11 @@ public:
     virtual int getLivesLost() { return 0; }
 };
 
+/**
+ * @brief The TreasureChest class stores treasure.
+ *
+ * TreasureChest is a Chest that stores pesos to give to the llama upon opening.
+ */
 class TreasureChest: public Chest {
 public:
     int pesos;
@@ -55,6 +65,13 @@ public:
     int getPesos() { return this->pesos; }
 };
 
+/**
+ * @brief The EnemyChest class steals lives.
+ *
+ * EnemyChest is a Chest that stores lives to steal from the llama upon opening.
+ * (Presumably, it does this via an elaborate Rube Goldberg machine involving
+ * piranhas.)
+ */
 class EnemyChest: public Chest {
 public:
     int livesLost;
@@ -69,6 +86,13 @@ public:
     int getLivesLost() { return this->livesLost; }
 };
 
+/**
+ * @brief The RiddleChest class asks the player a riddle.
+ *
+ * RiddleChest is a Chest that stores riddles to ask the player upon opening.
+ * You do not want to know how many clones of Alex Trebek we had to make in
+ * order to get these working.
+ */
 class RiddleChest: public Chest {
 public:
     int pesos;
@@ -76,7 +100,8 @@ public:
     /** RiddleChest constructor*/
     RiddleChest(bool _empty = false, int _pesos = 600):Chest(_empty), pesos(_pesos){}
 
-    /** Gets the number of pesos in the chest
+    /**
+     *Gets the number of pesos in the chest
      *@param none
      *@return int pesos
      */
