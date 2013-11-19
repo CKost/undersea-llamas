@@ -52,6 +52,7 @@ void NetworkEngine::onDataReceived()
         QStringList splitline = line.trimmed().split(" ");
         if(splitline[0] == "ULBEGINSCORES")
         {
+            StateEngine::instance()->scores.clear();
             mode = ScoreList;
         }
         else if(splitline[0] == "ULSCORE")

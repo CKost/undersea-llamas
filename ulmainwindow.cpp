@@ -432,7 +432,7 @@ void ULMainWindow::on_btnSaveState_clicked()
 void ULMainWindow::on_btnCreateWorld_clicked()
 {
     QString user = usernameGrabber();
-    qDebug << user;
+    qDebug() << user;
     QFile::remove("temp.ulworld");
     currentUser = user;
     WorldGenerator().generate("temp.ulworld");
@@ -471,7 +471,6 @@ void ULMainWindow::resetGame()
 /** Displays highscore list from server*/
 void ULMainWindow::on_hiscoreBtn_clicked()
 {
-    StateEngine::instance()->scores.clear();
     NetworkEngine::instance()->getHiscoresFromServer();
     stringstream ss;
 
@@ -480,7 +479,7 @@ void ULMainWindow::on_hiscoreBtn_clicked()
         ss << ptr->printAScore().toStdString() << endl;
     }
     QString answer;
-    answer = "We calculate your score\n\based on your number of pesos and lives remaining.\n";
+    answer = "We calculate your score based on your number of pesos and lives remaining.\n";
     answer += "\n" + QString::fromStdString(ss.str());
-    QMessageBox::information(this,"Hi-scores",QString::fromStdString(ss.str()));
+    QMessageBox::information(this,"Hi-scores",answer);
 }
