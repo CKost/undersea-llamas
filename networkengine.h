@@ -1,3 +1,13 @@
+/**************************************************************************
+**
+**   networkengine.h
+**
+**   This file copyright 2013 Alex Fischer, Benjamin Sparks, Curtis Koster.
+**   Work done for CpS 111 at Bob Jones University.
+**   Login IDs: afisc855 bspar145 ckost598
+**
+**************************************************************************/
+
 #ifndef NETWORKENGINE_H
 #define NETWORKENGINE_H
 
