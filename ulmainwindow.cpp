@@ -434,11 +434,12 @@ void ULMainWindow::on_btnCreateWorld_clicked()
     QString user = usernameGrabber();
     qDebug << user;
     QFile::remove("temp.ulworld");
+    currentUser = user;
     WorldGenerator().generate("temp.ulworld");
     stringstream ss;
     ss << "[ULState File v1.0]" << endl;
     ss << "beginllamas" << endl;
-    ss << "0:2,2:3:400:0:0:LazDude" << endl;
+    ss << "0:2,2:3:400:0:0:" << user.trimmed().toStdString() << endl;
     ss << "endllamas" << endl;
     ss << "temp.ulworld" << endl;
     StateEngine::instance()->fromStateString(QString::fromStdString(ss.str()));
