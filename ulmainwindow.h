@@ -47,6 +47,7 @@ private slots:
     void on_hardStartButton_clicked();
     void gameUpdate(int elapsedTicks);
     void riddler(QString riddle, QString anwser, int peso);
+    QString usernameGrabber();
 
     void on_btnLoadState_clicked();
 
