@@ -138,8 +138,7 @@ void ULMainWindow::riddler(QString riddle, QString anwser, int pesos)
 
         StateEngine::instance()->payLlama(playerID,pesos);
     } else {
-        //QMessageBox msgBox;
-       // msgBox.information(this,"Incorrect Anwser","You anwsered it incorrectly"); //If just want basic messagebox, no image
+
             QMessageBox about;
 
             about.setInformativeText("Riddle solution was incorrect.");
@@ -432,7 +431,7 @@ void ULMainWindow::on_btnSaveState_clicked()
 void ULMainWindow::on_btnCreateWorld_clicked()
 {
     QString user = usernameGrabber();
-    qDebug << user;
+    qDebug ()<< user;
     QFile::remove("temp.ulworld");
     currentUser = user;
     WorldGenerator().generate("temp.ulworld");
