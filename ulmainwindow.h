@@ -38,7 +38,7 @@ class ULMainWindow : public QMainWindow
 public:
     explicit ULMainWindow(QWidget *parent = 0);
     ~ULMainWindow();
-    void SetPos(QPoint pnt,int x,int y);
+//    void SetPos(QPoint pnt,int x,int y); not sure why this is here. it is not defined, and commenting it out the program still compiles.
     void keyPressEvent(QKeyEvent *keyevent);
     void keyReleaseEvent(QKeyEvent *keyevent);
 private slots:
@@ -56,8 +56,6 @@ private slots:
     void on_btnSaveState_clicked();
 
     void on_btnCreateWorld_clicked();
-
-    void on_btnMP_clicked();
 
     void on_hiscoreBtn_clicked();
 

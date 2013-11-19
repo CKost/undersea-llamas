@@ -269,28 +269,6 @@ color: rgb(255, 255, 255);</string>
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QPushButton" name="btnMP">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>440</y>
-      <width>98</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <property name="cursor">
-     <cursorShape>PointingHandCursor</cursorShape>
-    </property>
-    <property name="text">
-     <string>MultiPlayer</string>
-    </property>
-    <property name="checkable">
-     <bool>false</bool>
-    </property>
-   </widget>
    <widget class="QPushButton" name="hiscoreBtn">
     <property name="enabled">
      <bool>true</bool>

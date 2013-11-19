@@ -474,12 +474,6 @@ void ULMainWindow::on_btnCreateWorld_clicked()
 
 }
 
-/** Prepares for multiplayer game*/
-void ULMainWindow::on_btnMP_clicked()
-{
-
-}
-
 void ULMainWindow::resetGame()
 {
     gameOver = true;

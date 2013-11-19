@@ -17,6 +17,7 @@
 #include <vector>
 #include <QFile>
 #include <QTextStream>
+#include <QStringList>
 
 using namespace std;
 
