@@ -82,7 +82,7 @@ Have fun!");
 void ULMainWindow::on_btnStandWorld_clicked()
 {
     QString user = usernameGrabber();
-    if (user == "") { user = "anonymous"; }
+    if (user == "") { user = "player"; }
     qDebug() << user;
     if (ui->labelLogo->isVisible()) {ui->labelLogo->setVisible(false);}
     StateEngine::instance()->loadFromFile(":/textfiles/hardstate.ulstate");
@@ -93,6 +93,10 @@ void ULMainWindow::on_btnStandWorld_clicked()
     ui->btnCreateWorld->setStyleSheet("color: rgb(150, 150, 150);");
     ui->btnStandWorld->setEnabled(false);
     ui->btnStandWorld->setStyleSheet("color: rgb(150, 150, 150);");
+    ui->btnLoadState->setEnabled(false);
+    ui->btnLoadState->setStyleSheet("color: rgb(150, 150, 150);");
+    ui->btnSaveState->setEnabled(true);
+    ui->btnSaveState->setStyleSheet("");
 }
 
 /** Determines when a keyboard key is pressed*/
@@ -435,7 +439,7 @@ void ULMainWindow::on_btnSaveState_clicked()
 void ULMainWindow::on_btnCreateWorld_clicked()
 {
     QString user = usernameGrabber();
-    if (user == "") { user = "anonymous"; }
+    if (user == "") { user = "player"; }
     qDebug() << user;
     QFile::remove("temp.ulworld");
     currentUser = user;
@@ -455,7 +459,10 @@ void ULMainWindow::on_btnCreateWorld_clicked()
     ui->btnStandWorld->setStyleSheet("color: rgb(150, 150, 150);");
     ui->btnCreateWorld->setEnabled(false);
     ui->btnCreateWorld->setStyleSheet("color: rgb(150,150,150);");
-
+    ui->btnLoadState->setEnabled(false);
+    ui->btnLoadState->setStyleSheet("color: rgb(150, 150, 150);");
+    ui->btnSaveState->setEnabled(true);
+    ui->btnSaveState->setStyleSheet("");
 }
 
 void ULMainWindow::resetGame()
@@ -468,8 +475,12 @@ void ULMainWindow::resetGame()
     ui->btnCreateWorld->setStyleSheet("");
     ui->btnStandWorld->setEnabled(true);
     ui->btnStandWorld->setStyleSheet("");
+    ui->btnLoadState->setEnabled(true);
+    ui->btnLoadState->setStyleSheet("");
+    ui->btnSaveState->setEnabled(false);
+    ui->btnSaveState->setStyleSheet("color: rgb(150, 150, 150);");
     playerID = -1;
-    currentUser = "LazDude";
+    currentUser = "player";
 }
 
 /** Displays highscore list from server*/
