@@ -82,20 +82,40 @@ private slots:
      */
     void gameUpdate(int elapsedTicks);
     /**
-     * @brief riddler
-     * @param riddle
-     * @param anwser
-     * @param peso
+     * @brief riddler asks the user a riddle.
+     * @param riddle The riddle to ask.
+     * @param anwser The answer to the riddle.
+     * @param peso The number of pesos the player will win.
      */
     void riddler(QString riddle, QString anwser, int peso);
+    /**
+     * @brief usernameGrabber asks the user for their username.
+     * @return the username.
+     */
     QString usernameGrabber();
-
+    /**
+     * @brief on_btnLoadState_clicked is called when the user clicks the Load button.
+     *
+     * It loads the state from a state file.
+     */
     void on_btnLoadState_clicked();
-
+    /**
+     * @brief on_btnSaveState_clicked is called when the user clicks the Save button.
+     *
+     * It saves the state to a state file.
+     */
     void on_btnSaveState_clicked();
-
+    /**
+     * @brief on_btnCreateWorld_clicked is called when the user clicks the Create World button.
+     *
+     * It causes a new world to be randomly generated, and starts the game from this world.
+     */
     void on_btnCreateWorld_clicked();
-
+    /**
+     * @brief on_hiscoreBtn_clicked is called when the user clicks the High Scores button.
+     *
+     * It retrieves the high scores from the server, and displays them to the user.
+     */
     void on_hiscoreBtn_clicked();
 
 private:
@@ -109,6 +129,9 @@ private:
     bool oKey;
     bool gameStarted;
     bool gameOver;
+    /**
+     * @brief resetGame readies MainWindow for the next game after a game is completed.
+     */
     void resetGame();
 };
 

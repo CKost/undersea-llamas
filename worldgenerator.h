@@ -20,7 +20,12 @@
 
 #include <QObject>
 #include <QString>
-
+/**
+ * @brief The WorldGenerator class is a prodecural world generator.
+ *
+ * It uses a set of 12 pre-defined tiles, picks 16 randomly from those 12, and arranges them haphazardly in a way that will
+ * not box the player in 9 times out of 10.
+ */
 class WorldGenerator
 {
 public:
@@ -29,9 +34,9 @@ public:
     /** WorldGenerator constructor*/
     WorldGenerator();
 
-    /** Creates a random world and saves it to a file; returns true if successful
-     *@param QString name
-     *@return bool true if file written successfully
+    /** Creates a random world and saves it to a file.
+     *@param name the name of the world file.
+     *@return true if file written successfully, otherwise false
      */
     bool generate(QString name);
 };
