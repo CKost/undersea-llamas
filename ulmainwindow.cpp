@@ -493,6 +493,7 @@ void ULMainWindow::on_hiscoreBtn_clicked()
 {
     NetworkEngine::instance()->getHiscoresFromServer();
     stringstream ss;
+    StateEngine::instance()->scores.clear();
     for(Highscore* ptr : StateEngine::instance()->scores)
     {
         ss << ptr->printAScore().toStdString() << endl;
