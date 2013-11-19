@@ -191,7 +191,6 @@ void ULMainWindow::gameUpdate(int elapsedTicks)
                 playerID = i;
         }
     }
-
     Llama* llama = se->getLlama(playerID);
 
     //Move llama if necessary.
@@ -416,7 +415,7 @@ void ULMainWindow::on_btnLoadState_clicked()
         QString stuff = QFileDialog::getOpenFileName(this, tr("Open File"), ".", tr("UL State file (*.ulstate)"));
         if(!stuff.isEmpty())
             StateEngine::instance()->loadFromFile(stuff);
-        currentUser = usernameGrabber();
+        currentUser = StateEngine::instance()->getLlama(0)->getUsername();
         gameStarted = true;
         gameOver = false;
     //}
