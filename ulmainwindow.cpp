@@ -147,8 +147,7 @@ void ULMainWindow::riddler(QString riddle, QString anwser, int pesos)
 
         StateEngine::instance()->payLlama(playerID,pesos);
     } else {
-        //QMessageBox msgBox;
-       // msgBox.information(this,"Incorrect Anwser","You anwsered it incorrectly"); //If just want basic messagebox, no image
+
             QMessageBox about;
 
             about.setInformativeText("Riddle solution was incorrect.");
@@ -501,5 +500,3 @@ void ULMainWindow::on_hiscoreBtn_clicked()
     answer += "\n" + QString::fromStdString(ss.str());
     QMessageBox::information(this,"Hi-scores",answer);
 }
-
-
