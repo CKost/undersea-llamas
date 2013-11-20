@@ -28,7 +28,7 @@ NetworkEngine* NetworkEngine::inst = new NetworkEngine();
 //BEGIN CLIENTSIDE CALLS
 void NetworkEngine::tryConnect()
 {
-    sock->connectToHost("localhost",5000);
+    sock->connectToHost("shredder.resnet.bju",5000);
 }
 void NetworkEngine::getHiscoresFromServer()
 {
