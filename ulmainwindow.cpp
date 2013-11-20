@@ -53,6 +53,8 @@ ULMainWindow::ULMainWindow(QWidget *parent) :
     aKey = false; wKey = false; sKey = false; dKey = false;
     NetworkEngine::instance()->tryConnect();
     NetworkEngine::instance()->getHiscoresFromServer();
+    ui->btnSaveState->setEnabled(false);
+    ui->btnSaveState->setStyleSheet("color: rgb(150, 150, 150);");
 }
 
 ULMainWindow::~ULMainWindow()
@@ -70,11 +72,14 @@ En inglés: Hi!\n\
     You\'re a llama, and you need money. You\'ve got to pay off your student loan quickly, \
 and you\'re exploring the ocean floor in search of treasure. Your goal is to find pesos to pay off your student loan.\n\n\
 How to play:\n\
-    To begin a new game, click the \"Easy,\" \"Hard,\" or \"Random World\" button. \
+    To begin a new game, click the \"Create World\" or \"Basic World\" button. \
 Then, push the \"W\" key to move up, \"A\" to move left, \"S\" to move down, and \"D\" to move right. \
-Push the \"O\" key to open a chest. The chest can hold contain treasure (lots of pesos), an enemy (that will steal one of your lives), \
-or a riddle (that you need to answer correctly to get pesos). You need to collect enough pesos to win the game. \
-Don\'t lose all your lives, and hurry! Your loan\'s interest is eating away at your money the longer you wait!\n\n\n\
+Push the \"O\" key to open a chest. The chest can hold contain treasure (lots of pesos), \
+an enemy (that will steal one of your lives), or a riddle (that you need to answer correctly to get pesos).\n\
+    You need to collect enough pesos to win the game. Don\'t lose all your lives, and hurry! \
+Your interest rate is eating away at your money the longer you take to win!\n\
+    Save your progress by clicking the \"Save\" button and saving your file with a .ulstate extension. \
+Pick up where you left off by clicking the \"Load\" button.\n\n\
 Have fun!");
 }
 
@@ -142,7 +147,7 @@ void ULMainWindow::riddler(QString riddle, QString anwser, int pesos)
     {
 
         MovieDisplay dlg;
-        dlg.setGeometry(QRect(this->x()+this->width()/2-100,this->y()+this->height()/2-65,200,160));
+        dlg.setGeometry(QRect(this->x()+this->width()/2-100,this->y()+this->height()/2-65,240,152));
         dlg.exec();
 
         StateEngine::instance()->payLlama(playerID,pesos);
@@ -408,10 +413,13 @@ void ULMainWindow::keyReleaseEvent(QKeyEvent *keyevent)
 /** Turns on cheat mode*/
 void ULMainWindow::on_cheatButton_clicked()
 {
-    QMessageBox::information(this,"Warning!","Cheat mode activated. Cheaters never prosper; you have been warned.");
-    if(StateEngine::instance()->isCheatMode())
+    if(StateEngine::instance()->isCheatMode()) {
+        QMessageBox::information(this,"Cheat Mode","Cheat mode is now off. Thanks for playing fair!");
         StateEngine::instance()->setCheatMode(false);
-    else StateEngine::instance()->setCheatMode(true);
+    } else {
+        QMessageBox::warning(this,"Cheat Mode","Warning! Cheat mode activated. Cheaters never prosper; you have been warned.");
+        StateEngine::instance()->setCheatMode(true);
+    }
 }
 
 /** Loads a game state from a file*/
@@ -498,5 +506,5 @@ void ULMainWindow::on_hiscoreBtn_clicked()
     QString answer;
     answer = "We calculate your score based on your number of pesos and lives remaining.\n";
     answer += "\n" + QString::fromStdString(ss.str());
-    QMessageBox::information(this,"Hi-scores",answer);
+    QMessageBox::information(this,"High Scores",answer);
 }

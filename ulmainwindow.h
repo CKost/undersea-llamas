@@ -43,7 +43,6 @@ class ULMainWindow : public QMainWindow
 public:
     explicit ULMainWindow(QWidget *parent = 0);
     ~ULMainWindow();
-//    void SetPos(QPoint pnt,int x,int y); not sure why this is here. it is not defined, and commenting it out the program still compiles.
     /**
      * @brief keyPressEvent is called when a key is pressed.
      * @param keyevent The current state of the keyboard. (Kind of.)

@@ -28,11 +28,12 @@ MovieDisplay::MovieDisplay(QWidget *parent) :
     processLabel->setMovie(movie);
     movie->start();
 
-    //This block of codes plays a audio file when a riddle is anwsered correctly.
-    //IMPORTANT::Audio path must be hard coded to location of file! Copy of .mp3 can be found in resource file
+    //This block of code plays an audio file when a riddle is answered correctly.
+    //IMPORTANT::Audio path must be hard coded to location of file!
     QMediaPlayer *player = new QMediaPlayer(this);
     player->setVolume(50);
     player->setMedia(QUrl("http://shredder.resnet.bju/sound/649341_SOUNDDOGS__an.mp3"));
+    player->setVolume(100);
     player->play();
 }
 
